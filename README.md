@@ -30,11 +30,11 @@
 
 ### 3. 팀 소개
 
-이태훈 (says7869@gmail.com)
-이인평 (jinipyung@gamil.com) 
-김성수  
-이주형 (srlee96@kookmin.ac.kr) 
-김민재  
+이태훈 (says7869@gmail.com)  
+이인평 (jinipyung@gamil.com)   
+김성수    
+이주형 (srlee96@kookmin.ac.kr)   
+김민재    
 
 ### 4. 사용법
 
