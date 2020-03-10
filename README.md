@@ -34,7 +34,7 @@
 이인평 (jinipyung@gamil.com)   
 김성수    
 이주형 (srlee96@kookmin.ac.kr)   
-김민재    
+김민재 (minjae103030@naver.com)    
 
 ### 4. 사용법
 
