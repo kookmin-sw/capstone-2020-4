@@ -11,9 +11,8 @@
 영상과 음성을 모두 필터링 하는데, 영상 필터링은 선정적이거나 폭력적인 장면, 미성년자들에게 유해한 담배, 술, 마약 등을 적극 권장하는 장면을 감지하는 시스템이다. 또한 음성 필터링은 욕설을 감지하는 시스템이다.
 
 필터링 기준은 다음과 같이 Youtube 이용정책 - 가이드라인을 기준으로 하였다.
-![initial](https://user-images.githubusercontent.com/43363576/76515513-08e3a080-649d-11ea-84a4-cc9fd0632258.PNG)
-![initial](https://user-images.githubusercontent.com/43363576/76515517-0aad6400-649d-11ea-8f1c-0e5e6bd9ef1b.PNG)
-![initial](https://user-images.githubusercontent.com/43363576/76515522-0bde9100-649d-11ea-956b-0b4463b89503.PNG)
+<img src="/doc/img/adult.PNG" width="466.5" height="173"><img src="/doc/img/fight.PNG" width="461.25" height="156">
+<img src="/doc/img/fight2.PNG" width="456.75" height="191">
 
 ## 2. 소개 영상
 
