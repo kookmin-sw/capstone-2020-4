@@ -11,9 +11,8 @@
 영상과 음성을 모두 필터링 하는데, 영상 필터링은 선정적이거나 폭력적인 장면, 미성년자들에게 유해한 담배, 술, 마약 등을 적극 권장하는 장면을 감지하는 시스템이다. 또한 음성 필터링은 욕설을 감지하는 시스템이다.
 
 필터링 기준은 다음과 같이 Youtube 이용정책 - 가이드라인을 기준으로 하였다.
-![initial](https://user-images.githubusercontent.com/43363576/76515513-08e3a080-649d-11ea-84a4-cc9fd0632258.PNG)
-![initial](https://user-images.githubusercontent.com/43363576/76515517-0aad6400-649d-11ea-8f1c-0e5e6bd9ef1b.PNG)
-![initial](https://user-images.githubusercontent.com/43363576/76515522-0bde9100-649d-11ea-956b-0b4463b89503.PNG)
+<img src="/doc/img/adult.PNG" width="400" height="148"><img src="/doc/img/fight.PNG" width="400" height="136">
+<img src="/doc/img/fight2.PNG" width="400" height="168">
 
 ## 2. 소개 영상
 
@@ -49,27 +48,3 @@
 
 My Project's goal is to prevent people who watch youtube or video platform website from watching a nasty videos. So we have to filter about video and voice. Video filter is filtered from CRNN DeepLearning Model. The scene we are trying to filter is either sensational or violent. We also want to include scenes of alchol, arug, and cigarettes. And then voice filter  is filtered through two processes. First we have to convert voice to text by using STT(Speech To text) technology. Second, use fasttext to detect whether the translated text contains swear words. After filtering, If any one is detected, uploading is restricted. Also we tell you where it was detected.
 
-
-## Markdown을 사용하여 내용꾸미기
-
-Markdown은 작문을 스타일링하기위한 가볍고 사용하기 쉬운 구문입니다. 여기에는 다음을위한 규칙이 포함됩니다.
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-자세한 내용은 [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
