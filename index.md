@@ -7,8 +7,8 @@
 목표는 유튜브나 다양한 플랫폼에서 적용가능한 영상 필터링 시스템을 구현하는 것이다. 구체적으로는 영상과 음성을 모두 필터링 하는데, 영상 필터링은 선정적이거나 폭력적인 장면, 미성년자들에게 유해한 담배, 술, 마약 등을 적극 권장하는 장면을 감지하는 시스템이다. 또한 음성 필터링은 욕설을 감지하는 시스템이다.
 
 필터링 기준은 다음과 같이 Youtube 이용정책 - 가이드라인을 기준으로 하였다.
-<img src="{{site.baseurl}}/doc/img/adult.PNG" width="400" height="148"><img src="{{site.baseurl}}/doc/img/fight.PNG" width="400" height="136">
-<img src="{{site.baseurl}}/doc/img/fight2.PNG" width="400" height="168">
+<img src="/doc/img/adult.PNG" width="400" height="148"><img src="/doc/img/fight.PNG" width="400" height="136">
+<img src="/doc/img/fight2.PNG" width="400" height="168">
 
 ### 영상 필터링
   CRNN 딥러닝 모델을 사용하여 영상 분류 학습을 실시하는데, 선정적이거나 폭력적인 장면, 흡연, 마약, 술을 적극 권장하는 장면들을 데이터셋으로 
