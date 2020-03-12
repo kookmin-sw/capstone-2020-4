@@ -9,7 +9,7 @@
 필터링 기준은 다음과 같이 Youtube 이용정책 - 가이드라인을 기준으로 하였다.
 ![initial](https://user-images.githubusercontent.com/43363576/76519484-721ae200-64a4-11ea-96f5-e07e83e0b977.PNG)
 ![initial](https://user-images.githubusercontent.com/43363576/76515517-0aad6400-649d-11ea-8f1c-0e5e6bd9ef1b.PNG)
-![initial](https://user-images.githubusercontent.com/43363
+![initial](https://user-images.githubusercontent.com/43363)
 
 ### 영상 필터링
   CRNN 딥러닝 모델을 사용하여 영상 분류 학습을 실시하는데, 선정적이거나 폭력적인 장면, 흡연, 마약, 술을 적극 권장하는 장면들을 데이터셋으로 
