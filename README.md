@@ -20,6 +20,9 @@
 
 1. 20153216 이태훈 - 팀장 (says7869@gmail.com)  
 
+<img src="/doc/img/Lee_Tae_Hoon.png">
+
+
    역할: Video Classification 모델링과 학습 및 AWS 서버를 이용한 전체적인 소프트웨어 설계
 
 2. 20153211 이인평 (jinipyung@gamil.com) 
