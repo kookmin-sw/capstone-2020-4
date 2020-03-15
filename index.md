@@ -28,13 +28,19 @@
 
 1. 20153216 이태훈 - 팀장 (says7869@gmail.com)  
 
+   [!initial](https://user-images.githubusercontent.com/43363576/76700307-8dcaf600-66f9-11ea-8cea-80ea67524223.jpg)
+
    역할: Video Classification 모델링과 학습 및 AWS 서버를 이용한 전체적인 소프트웨어 설계
 
 2. 20153211 이인평 (jinipyung@gamil.com) 
 
+   [!initial](https://user-images.githubusercontent.com/43363576/76700306-8d325f80-66f9-11ea-865d-17abdfa10c93.jpg)
+
    역할: Video Classfication, FastText 학습을 위한 데이터셋 구축 및 FastText 모델링과 학습
 
 3. 20153214 이주형 (srlee96@kookmin.ac.kr) 
+
+   [!intial](https://user-images.githubusercontent.com/43363576/76700373-1cd80e00-66fa-11ea-8220-f90495757dfe.jpg)
 
    역할: STT(Speech To Text) API 적용 및 Video Classfication 데이터셋 구축
 
@@ -43,6 +49,8 @@
    역할: Kaldi-Zeroth 모델링과 학습 및 웹페이지와 웹서버 구축
 
 5. 김민재 (minjae103030@naver.com)
+
+   ![initial](https://user-images.githubusercontent.com/43363576/76700376-1e093b00-66fa-11ea-908d-768cead4acfe.jpg)
 
    역할: Video Classfication, FastText 학습을 위한 데이터셋 구축 및 웹페이지 디자인 UI 제작
 
@@ -53,3 +61,5 @@
 ## 5. Abstract
 
 My Project's goal is to prevent people who watch youtube or video platform website from watching a nasty videos. So we have to filter about video and voice. Video filter is filtered from CRNN DeepLearning Model. The scene we are trying to filter is either sensational or violent. We also want to include scenes of alchol, arug, and cigarettes. And then voice filter  is filtered through two processes. First we have to convert voice to text by using STT(Speech To text) technology. Second, use fasttext to detect whether the translated text contains swear words. After filtering, If any one is detected, uploading is restricted. Also we tell you where it was detected.
+For our filtering criteria, we refer to the Youtube usage policy-Restriction level by age as follows.
+
