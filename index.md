@@ -6,7 +6,7 @@
 
 목표는 유튜브나 다양한 플랫폼에서 적용가능한 영상 필터링 시스템을 구현하는 것이다. 구체적으로는 영상과 음성을 모두 필터링 하는데, 영상 필터링은 선정적이거나 폭력적인 장면, 미성년자들에게 유해한 담배, 술, 마약 등을 적극 권장하는 장면을 감지하는 시스템이다. 또한 음성 필터링은 욕설을 감지하는 시스템이다.
 
-필터링 기준은 다음과 같이 Youtube 이용정책 - 가이드라인을 기준으로 하였다.
+필터링 기준은 다음과 같이 Youtube 이용정책 - 연령별 등급제한을 참고하였다.
 ![initial](https://user-images.githubusercontent.com/43363576/76699997-4000be80-66f6-11ea-9ffb-a41810ecb981.png)
 
 ### 영상 필터링
@@ -28,19 +28,19 @@
 
 1. 20153216 이태훈 - 팀장 (says7869@gmail.com)  
 
-   [!initial](https://user-images.githubusercontent.com/43363576/76700307-8dcaf600-66f9-11ea-8cea-80ea67524223.jpg)
+   ![initial](https://user-images.githubusercontent.com/43363576/76700307-8dcaf600-66f9-11ea-8cea-80ea67524223.jpg)
 
    역할: Video Classification 모델링과 학습 및 AWS 서버를 이용한 전체적인 소프트웨어 설계
 
 2. 20153211 이인평 (jinipyung@gamil.com) 
 
-   [!initial](https://user-images.githubusercontent.com/43363576/76700306-8d325f80-66f9-11ea-865d-17abdfa10c93.jpg)
+   ![initial](https://user-images.githubusercontent.com/43363576/76700306-8d325f80-66f9-11ea-865d-17abdfa10c93.jpg)
 
    역할: Video Classfication, FastText 학습을 위한 데이터셋 구축 및 FastText 모델링과 학습
 
 3. 20153214 이주형 (srlee96@kookmin.ac.kr) 
 
-   [!intial](https://user-images.githubusercontent.com/43363576/76700373-1cd80e00-66fa-11ea-8220-f90495757dfe.jpg)
+   ![initial](https://user-images.githubusercontent.com/43363576/76700373-1cd80e00-66fa-11ea-8220-f90495757dfe.jpg)
 
    역할: STT(Speech To Text) API 적용 및 Video Classfication 데이터셋 구축
 
