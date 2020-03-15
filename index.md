@@ -30,11 +30,7 @@
 
    ![initial](https://user-images.githubusercontent.com/43363576/76700307-8dcaf600-66f9-11ea-8cea-80ea67524223.jpg)
    
-   <pre>
-    <code>
-    역할: Video Classification 모델링과 학습 및 AWS 서버를 이용한 전체적인 소프트웨어 설계
-    </code>
-</pre>
+    <code>역할: Video Classification 모델링과 학습 및 AWS 서버를 이용한 전체적인 소프트웨어 설계</code>
 
    
 2. 20153211 이인평 (jinipyung@gamil.com) 
