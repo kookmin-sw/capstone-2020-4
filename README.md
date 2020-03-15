@@ -20,16 +20,19 @@
 
 1. 20153216 이태훈 - 팀장 (says7869@gmail.com)  
 
-<img src="/doc/img/Lee_Tae_Hoon.jpg">
-
+   <img src="/doc/img/Lee_Tae_Hoon.jpg">
 
    역할: Video Classification 모델링과 학습 및 AWS 서버를 이용한 전체적인 소프트웨어 설계
 
 2. 20153211 이인평 (jinipyung@gamil.com) 
 
+   <img src="/doc/img/Lee_In_Pyeong.jpg">
+
    역할: Video Classfication, FastText 학습을 위한 데이터셋 구축 및 FastText 모델링과 학습
 
 3. 20153214 이주형 (srlee96@kookmin.ac.kr) 
+
+   <img src="/doc/img/Lee_Ju_Hyeong.jpg">
 
    역할: STT(Speech To Text) API 적용 및 Video Classfication 데이터셋 구축
 
@@ -38,6 +41,8 @@
    역할: Kaldi-Zeroth 모델링과 학습 및 웹페이지와 웹서버 구축
 
 5. 김민재 (minjae103030@naver.com)
+
+   <img src="/doc/img/Kim_Min_Jae.jpg">
 
    역할: Video Classfication, FastText 학습을 위한 데이터셋 구축 및 웹페이지 디자인 UI 제작
 
