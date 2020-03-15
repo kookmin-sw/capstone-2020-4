@@ -1,4 +1,4 @@
-# Welcome to YouHa! 
+# Welcome to YouHi! 
 
 ## 1. 프로젝트 소개
 
