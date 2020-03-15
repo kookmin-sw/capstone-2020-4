@@ -1,9 +1,10 @@
 # Welcome to YouHi! 
 
 
-**팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2020-4/
-
 ![YouHi](https://user-images.githubusercontent.com/43363576/76705438-65f08800-6723-11ea-9302-77e61b476f45.png)
+
+
+**팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2020-4/
 
 ## 1. 프로젝트 소개
 
