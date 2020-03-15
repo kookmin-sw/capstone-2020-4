@@ -1,4 +1,4 @@
-# Welcome to YouH! 
+# Welcome to YouHi! 
 
 
 **팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2020-4/
