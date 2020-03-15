@@ -19,45 +19,49 @@
   을 고려한 순환 신경망인 FastText 모델을 이용하여 감지한다. 욕설이 감지되면 업로드에 제한이 된다. 또한 음성에서 해당 감지부분을 출력하여,
   업로드하는 이용자에게 제공한다. 이러한 영상과 음성 필터링을 통해, 동영상 플랫폼을 통해 동영상을 시청하는 사람들이 부적합한 영상을 접하지
   않게 1차 검열하는 것이 목표이다.
+  
 
 ## 2. 소개 영상
 
 프로젝트 소개하는 영상을 추가하세요
 
+
 ## 3. 팀 소개
 
-1. 20153216 이태훈 - 팀장 (says7869@gmail.com)  
+   #### 20153216 이태훈 - 팀장 (says7869@gmail.com)  
 
    ![initial](https://user-images.githubusercontent.com/43363576/76700307-8dcaf600-66f9-11ea-8cea-80ea67524223.jpg)
    
-    <code>역할: Video Classification 모델링과 학습 및 AWS 서버를 이용한 전체적인 소프트웨어 설계</code>
+   역할: Video Classification 모델링과 학습 및 AWS 서버를 이용한 전체적인 소프트웨어 설계
 
    
-2. 20153211 이인평 (jinipyung@gamil.com) 
+   #### 20153211 이인평 (jinipyung@gamil.com) 
 
    ![initial](https://user-images.githubusercontent.com/43363576/76700306-8d325f80-66f9-11ea-865d-17abdfa10c93.jpg)
 
    역할: Video Classfication, FastText 학습을 위한 데이터셋 구축 및 FastText 모델링과 학습
 
-3. 20153214 이주형 (srlee96@kookmin.ac.kr) 
+   #### 20153214 이주형 (srlee96@kookmin.ac.kr) 
 
    ![initial](https://user-images.githubusercontent.com/43363576/76700373-1cd80e00-66fa-11ea-8220-f90495757dfe.jpg)
 
    역할: STT(Speech To Text) API 적용 및 Video Classfication 데이터셋 구축
 
-4. 20153158 김성수
+   #### 20153158 김성수
 
    역할: Kaldi-Zeroth 모델링과 학습 및 웹페이지와 웹서버 구축
 
-5. 김민재 (minjae103030@naver.com)
+   #### 김민재 (minjae103030@naver.com)
 
    ![initial](https://user-images.githubusercontent.com/43363576/76700376-1e093b00-66fa-11ea-908d-768cead4acfe.jpg)
 
    역할: Video Classfication, FastText 학습을 위한 데이터셋 구축 및 웹페이지 디자인 UI 제작
+   
 
 ## 4. 사용법
 
 소스코드제출시 설치법이나 사용법을 작성하세요.
+
 
 ## 5. Abstract
 
