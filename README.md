@@ -3,6 +3,7 @@
 
 **팀페이지 주소** -> https://kookmin-sw.github.io/capstone-2020-4/
 
+![YouHi](https://user-images.githubusercontent.com/43363576/76705438-65f08800-6723-11ea-9302-77e61b476f45.png)
 
 ## 1. 프로젝트 소개
 
@@ -11,7 +12,13 @@
 영상과 음성을 모두 필터링 하는데, 영상 필터링은 선정적이거나 폭력적인 장면, 미성년자들에게 유해한 담배, 술, 마약 등을 적극 권장하는 장면을 감지하는 시스템이다. 또한 음성 필터링은 욕설을 감지하는 시스템이다.
 
 필터링 기준은 다음과 같이 Youtube 이용정책 - 연령별 제한 등급을 참고하였다.
-<img src="/doc/img/guide_line.png">
+
+![guide_line](https://user-images.githubusercontent.com/43363576/76705513-de574900-6723-11ea-89ee-8fc098de78bb.png)
+![KakaoTalk_20200316_010854814](https://user-images.githubusercontent.com/43363576/76705434-6426c480-6723-11ea-8876-4f0705c51fb1.png)
+![KakaoTalk_20200316_010921028](https://user-images.githubusercontent.com/43363576/76705435-6557f180-6723-11ea-93a2-896e7a2a41d5.png)
+![KakaoTalk_20200316_010924644](https://user-images.githubusercontent.com/43363576/76705436-6557f180-6723-11ea-8453-3efa56ae93d2.png)
+![KakaoTalk_20200316_010930747](https://user-images.githubusercontent.com/43363576/76705437-65f08800-6723-11ea-99da-c56caad2c054.png)
+
 ## 2. 소개 영상
 
 프로젝트 소개하는 영상을 추가하세요
