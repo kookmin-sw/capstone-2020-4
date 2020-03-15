@@ -10,7 +10,7 @@
 
 영상과 음성을 모두 필터링 하는데, 영상 필터링은 선정적이거나 폭력적인 장면, 미성년자들에게 유해한 담배, 술, 마약 등을 적극 권장하는 장면을 감지하는 시스템이다. 또한 음성 필터링은 욕설을 감지하는 시스템이다.
 
-필터링 기준은 다음과 같이 Youtube 이용정책 - 가이드라인을 기준으로 하였다.
+필터링 기준은 다음과 같이 Youtube 이용정책 - 연령별 제한 등급을 참고하였다.
 <img src="/doc/img/guide_line.png">
 ## 2. 소개 영상
 
@@ -24,7 +24,7 @@
 
    역할: Video Classification 모델링과 학습 및 AWS 서버를 이용한 전체적인 소프트웨어 설계
 
-2. 20153211 이인평 (jinipyung@gamil.com) 
+2. 20153211 이인평 (jinipyung@gmail.com) 
 
    <img src="/doc/img/Lee_In_Pyeong.jpg">
 
@@ -34,7 +34,7 @@
 
    <img src="/doc/img/Lee_Ju_Hyeong.jpg">
 
-   역할: STT(Speech To Text) API 적용 및 Video Classfication 데이터셋 구축
+   역할: STT(Speech To Text) API 적용 및 Video Classification 데이터셋 구축
 
 4. 20153158 김성수
 
@@ -52,5 +52,6 @@
 
 ## 5. Abstract
 
-My Project's goal is to prevent people who watch youtube or video platform website from watching a nasty videos. So we have to filter about video and voice. Video filter is filtered from CRNN DeepLearning Model. The scene we are trying to filter is either sensational or violent. We also want to include scenes of alchol, arug, and cigarettes. And then voice filter  is filtered through two processes. First we have to convert voice to text by using STT(Speech To text) technology. Second, use fasttext to detect whether the translated text contains swear words. After filtering, If any one is detected, uploading is restricted. Also we tell you where it was detected.
+My Project's goal is to prevent people who watch youtube or video platform website from watching a nasty videos. So we have to filter about video and voice. Video filter is filtered from CRNN DeepLearning Model. The scene we are trying to filter is either sensational or violent. We also want to include scenes of alchol, arug, and cigarettes. And then voice filter  is filtered through two processes. First we have to convert voice to text by using STT(Speech To text) technology. Second, use fasttext to detect whether the translated text contains swear words. After filtering, If any one is detected, uploading is restricted. Also we tell you where it was detected. 
+For our filtering criteria, we refer to the Youtube usage policy-Restriction level by age as follows.
 
