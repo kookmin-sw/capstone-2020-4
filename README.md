@@ -15,10 +15,6 @@
 필터링 기준은 다음과 같이 Youtube 이용정책 - 연령별 제한 등급을 참고하였다.
 
 ![guide_line](https://user-images.githubusercontent.com/43363576/76705513-de574900-6723-11ea-89ee-8fc098de78bb.png)
-![KakaoTalk_20200316_010854814](https://user-images.githubusercontent.com/43363576/76705434-6426c480-6723-11ea-8876-4f0705c51fb1.png)
-![KakaoTalk_20200316_010921028](https://user-images.githubusercontent.com/43363576/76705435-6557f180-6723-11ea-93a2-896e7a2a41d5.png)
-![KakaoTalk_20200316_010924644](https://user-images.githubusercontent.com/43363576/76705436-6557f180-6723-11ea-8453-3efa56ae93d2.png)
-![KakaoTalk_20200316_010930747](https://user-images.githubusercontent.com/43363576/76705437-65f08800-6723-11ea-99da-c56caad2c054.png)
 
 ## 2. 소개 영상
 
