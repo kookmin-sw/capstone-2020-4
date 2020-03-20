@@ -14,10 +14,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from sklearn.metrics import accuracy_score
 import pickle
-
+from multiprocessing import Process, freeze_support
 # set path
-data_path = "./jpegs_256/"    # define UCF-101 RGB data path
-action_name_path = './UCF101actions.pkl'
+data_path = "./dataset"    # define UCF-101 RGB data path
+action_name_path = './youhi_label.pkl'
 save_model_path = "./ResNetCRNN_ckpt/"
 
 # EncoderCNN architecture
@@ -33,8 +33,8 @@ RNN_FC_dim = 256
 
 # training parameters
 k = 101             # number of target category
-epochs = 120        # training epochs
-batch_size = 40  
+epochs = 80        # training epochs
+batch_size = 30
 learning_rate = 1e-3
 log_interval = 10   # interval for displaying training info
 
@@ -78,8 +78,7 @@ def train(log_interval, model, device, train_loader, optimizer, epoch):
 
     return losses, scores
 
-
-def validation(model, device, optimizer, test_loader):
+def validation(model, device, optimizer, test_loader, epoch):
     # set model as testing mode
     cnn_encoder, rnn_decoder = model
     cnn_encoder.eval()
@@ -127,7 +126,7 @@ use_cuda = torch.cuda.is_available()                   # check if GPU exists
 device = torch.device("cuda" if use_cuda else "cpu")   # use CPU or GPU
 
 # Data loading parameters
-params = {'batch_size': batch_size, 'shuffle': True, 'num_workers': 4, 'pin_memory': True} if use_cuda else {}
+params = {'batch_size': batch_size, 'shuffle': True, 'num_workers': 1, 'pin_memory': True} if use_cuda else {}
 
 
 # load UCF101 actions names
@@ -185,7 +184,7 @@ valid_loader = data.DataLoader(valid_set, **params)
 
 # Create model
 cnn_encoder = ResCNNEncoder(fc_hidden1=CNN_fc_hidden1, fc_hidden2=CNN_fc_hidden2, drop_p=dropout_p, CNN_embed_dim=CNN_embed_dim).to(device)
-rnn_decoder = DecoderRNN(CNN_embed_dim=CNN_embed_dim, h_RNN_layers=RNN_hidden_layers, h_RNN=RNN_hidden_nodes, 
+rnn_decoder = DecoderRNN(CNN_embed_dim=CNN_embed_dim, h_RNN_layers=RNN_hidden_layers, h_RNN=RNN_hidden_nodes,
                          h_FC_dim=RNN_FC_dim, drop_p=dropout_p, num_classes=k).to(device)
 
 # Parallelize model to multiple GPUs
@@ -216,45 +215,50 @@ epoch_test_losses = []
 epoch_test_scores = []
 
 # start training
-for epoch in range(epochs):
-    # train, test model
-    train_losses, train_scores = train(log_interval, [cnn_encoder, rnn_decoder], device, train_loader, optimizer, epoch)
-    epoch_test_loss, epoch_test_score = validation([cnn_encoder, rnn_decoder], device, optimizer, valid_loader)
+def main():
+    for epoch in range(epochs):
+        # train, test model
+        train_losses, train_scores = train(log_interval, [cnn_encoder, rnn_decoder], device, train_loader, optimizer,
+                                           epoch)
+        epoch_test_loss, epoch_test_score = validation([cnn_encoder, rnn_decoder], device, optimizer, valid_loader, epoch)
 
-    # save results
-    epoch_train_losses.append(train_losses)
-    epoch_train_scores.append(train_scores)
-    epoch_test_losses.append(epoch_test_loss)
-    epoch_test_scores.append(epoch_test_score)
+        # save results
+        epoch_train_losses.append(train_losses)
+        epoch_train_scores.append(train_scores)
+        epoch_test_losses.append(epoch_test_loss)
+        epoch_test_scores.append(epoch_test_score)
 
-    # save all train test results
-    A = np.array(epoch_train_losses)
-    B = np.array(epoch_train_scores)
-    C = np.array(epoch_test_losses)
-    D = np.array(epoch_test_scores)
-    np.save('./CRNN_epoch_training_losses.npy', A)
-    np.save('./CRNN_epoch_training_scores.npy', B)
-    np.save('./CRNN_epoch_test_loss.npy', C)
-    np.save('./CRNN_epoch_test_score.npy', D)
+        # save all train test results
+        A = np.array(epoch_train_losses)
+        B = np.array(epoch_train_scores)
+        C = np.array(epoch_test_losses)
+        D = np.array(epoch_test_scores)
+        np.save('./CRNN_epoch_training_losses.npy', A)
+        np.save('./CRNN_epoch_training_scores.npy', B)
+        np.save('./CRNN_epoch_test_loss.npy', C)
+        np.save('./CRNN_epoch_test_score.npy', D)
 
-# plot
-fig = plt.figure(figsize=(10, 4))
-plt.subplot(121)
-plt.plot(np.arange(1, epochs + 1), A[:, -1])  # train loss (on epoch end)
-plt.plot(np.arange(1, epochs + 1), C)         #  test loss (on epoch end)
-plt.title("model loss")
-plt.xlabel('epochs')
-plt.ylabel('loss')
-plt.legend(['train', 'test'], loc="upper left")
-# 2nd figure
-plt.subplot(122)
-plt.plot(np.arange(1, epochs + 1), B[:, -1])  # train accuracy (on epoch end)
-plt.plot(np.arange(1, epochs + 1), D)         #  test accuracy (on epoch end)
-plt.title("training scores")
-plt.xlabel('epochs')
-plt.ylabel('accuracy')
-plt.legend(['train', 'test'], loc="upper left")
-title = "./fig_UCF101_ResNetCRNN.png"
-plt.savefig(title, dpi=600)
-# plt.close(fig)
-plt.show()
+    fig = plt.figure(figsize=(10, 4))
+    plt.subplot(121)
+    plt.plot(np.arange(1, epochs + 1), A[:, -1])  # train loss (on epoch end)
+    plt.plot(np.arange(1, epochs + 1), C)  # test loss (on epoch end)
+    plt.title("model loss")
+    plt.xlabel('epochs')
+    plt.ylabel('loss')
+    plt.legend(['train', 'test'], loc="upper left")
+    # 2nd figure
+    plt.subplot(122)
+    plt.plot(np.arange(1, epochs + 1), B[:, -1])  # train accuracy (on epoch end)
+    plt.plot(np.arange(1, epochs + 1), D)  # test accuracy (on epoch end)
+    plt.title("training scores")
+    plt.xlabel('epochs')
+    plt.ylabel('accuracy')
+    plt.legend(['train', 'test'], loc="upper left")
+    title = "./fig_UCF101_ResNetCRNN.png"
+    plt.savefig(title, dpi=600)
+    # plt.close(fig)
+    plt.show()
+
+
+if __name__ == '__main__':
+    main()
