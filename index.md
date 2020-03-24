@@ -31,12 +31,7 @@ _필터링 기준은 다음과 같이 [YouTube 이용정책 - 연령별 제한 �
 ![guide_line](https://user-images.githubusercontent.com/43363576/76705513-de574900-6723-11ea-89ee-8fc098de78bb.png)
 
 
-
-## 2. 소개 영상
-
-프로젝트 소개하는 영상을 추가하세요
-
-## 3. 팀 소개
+## 2. 팀 소개
 
 
    ### Professor 임은진 교수님
@@ -83,11 +78,16 @@ _필터링 기준은 다음과 같이 [YouTube 이용정책 - 연령별 제한 �
 역할: Video Classfication, FastText 학습을 위한 데이터셋 구축 및 웹페이지 디자인 UI 제작
 </pre>
 
-## 4. 사용법
-
-소스코드제출시 설치법이나 사용법을 작성하세요.
-
-## 5. Abstract
+## 3. Abstract
 
 Our Project's goal is to prevent people who watch youtube or video platform website from watching a nasty videos. So we have to filter about video and voice. Video filter is filtered from CRNN DeepLearning Model. The scene we are trying to filter is either sensational or violent. We also want to include scenes of alchol, arug, and cigarettes. And then voice filter  is filtered through two processes. First we have to convert voice to text by using STT(Speech To text) technology. Second, use fasttext to detect whether the translated text contains swear words. After filtering, If any one is detected, uploading is restricted. Also we tell you where it was detected. 
 For our filtering criteria, we refer to the Youtube usage policy-Restriction level by age as follows.
+
+## 4. 소개 영상
+
+프로젝트 소개하는 영상을 추가하세요
+
+
+## 5. 결과 영상
+
+
