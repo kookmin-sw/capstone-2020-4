@@ -89,8 +89,7 @@ For our filtering criteria, we refer to the Youtube usage policy-Restriction lev
 프로젝트 소개하는 영상을 추가하세요
 
 
-## 5. 사용법
+## 5. 결과 영상
 
-소스코드제출시 설치법이나 사용법을 작성하세요.
 
 
