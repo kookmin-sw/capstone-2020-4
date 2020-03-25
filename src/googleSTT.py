@@ -2,10 +2,19 @@
 import io
 import os
 import json
+#from cutAudio import cutAudioFile
+import wave
 from makeData import writeCSV
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
+
+def frame_rate_channel(audio_file_name):
+    print(audio_file_name)
+    with wave.open(audio_file_name, "r") as wave_file:
+        frame_rate = wave_file.getframerate()
+        channels = wave_file.getnchannels()
+        return frame_rate,channels
 
 def transcribe_gcs(gcs_uri):
     """Asynchronously transcribes the audio file specified by the gcs_uri."""
@@ -64,7 +73,7 @@ def sample_recognize(local_file_path):
         # First alternative is the most probable result
         alternative = result.alternatives[0]
         print(u"Transcript: {}".format(alternative.transcript))
-
+        writeCSV(result.alternatives[0].transcript)  #save csv file
 
 def implicit():
     from google.cloud import storage
@@ -80,4 +89,8 @@ def implicit():
 
 #implicit()
 #transcribe_gcs('gs://youtubespeech/theaudio.wav')
-sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\test03.wav')
+
+# for i in range(2):
+#     sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile' + str(i) + '.wav')
+sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile777.wav')
+# print(frame_rate_channel('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile12.wav'))
