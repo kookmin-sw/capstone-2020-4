@@ -1,10 +1,10 @@
 import csv
 
 def writeCSV(sentence):
-    f = open('write.csv', 'w', newline='')
+    f = open('C:\\Users\\01097\\PycharmProjects\\untitled\\csv\\write.csv', 'a', newline='')
     wr = csv.writer(f)
-    wr.writerow([1, 'test', sentence])
+    wr.writerow(["1", sentence])
+
 
     f.close()
 
-writeCSV("abcd")
