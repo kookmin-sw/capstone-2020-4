@@ -10,6 +10,6 @@ ex)C:\ffmpeg-4.1.1-win64-static\bin
 
 
 
-Download and extract libav from Windows binaries provided here.
-Add the libav /bin folder to your PATH envvar
-pip install pydub
+Download and extract libav from Windows binaries provided here.  
+Add the libav /bin folder to your PATH envvar  
+pip install pydub  
