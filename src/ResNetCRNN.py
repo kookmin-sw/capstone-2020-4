@@ -34,12 +34,12 @@ RNN_FC_dim = 256
 # training parameters
 k = 101             # number of target category
 epochs = 80        # training epochs
-batch_size = 30
+batch_size = 10
 learning_rate = 1e-3
 log_interval = 10   # interval for displaying training info
 
 # Select which frame to begin & end in videos
-begin_frame, end_frame, skip_frame = 1, 29, 1
+begin_frame, end_frame, skip_frame = 1, 10, 1
 
 
 def train(log_interval, model, device, train_loader, optimizer, epoch):
