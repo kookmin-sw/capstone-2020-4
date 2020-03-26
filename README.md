@@ -86,8 +86,7 @@ For our filtering criteria, we refer to the Youtube usage policy-Restriction lev
 
 ## 4. 소개 영상
 
-프로젝트 소개하는 영상을 추가하세요
-
+[![Video Label](http://img.youtube.com/vi/mlV6VbhF1As0.jpg)](https://youtu.be/mlV6VbhF1As?t=0s)
 
 ## 5. 결과 영상
 
