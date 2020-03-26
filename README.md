@@ -86,7 +86,7 @@ For our filtering criteria, we refer to the Youtube usage policy-Restriction lev
 
 ## 4. 소개 영상
 
-[![Video Label](http://img.youtube.com/vi/mlV6VbhF1As0.jpg)](https://youtu.be/mlV6VbhF1As?t=0s)
+[![youtube_img](https://img.youtube.com/vi/mlV6VbhF1As/0.jpg)](https://www.youtube.com/watch?v=mlV6VbhF1As)
 
 ## 5. 결과 영상
 
