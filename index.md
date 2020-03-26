@@ -75,7 +75,7 @@ For our filtering criteria, we refer to the Youtube usage policy-Restriction lev
 
 ## 4. 소개 영상
 
-[![youtube_img](https://img.youtube.com/vi/mlV6VbhF1As/0.jpg)](https://www.youtube.com/watch?v=mlV6VbhF1As?t=0s)
+[![youtube_img](https://img.youtube.com/vi/erF77e0dOsg/0.jpg)](https://www.youtube.com/watch?v=erF77e0dOsg?t=0s)
 
 
 ## 5. 결과 영상
