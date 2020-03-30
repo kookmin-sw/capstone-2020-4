@@ -5,6 +5,7 @@ import json
 #from cutAudio import cutAudioFile
 import wave
 from makeData import writeCSV
+from makeData import printTime
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
@@ -72,6 +73,7 @@ def sample_recognize(local_file_path):
     for result in response.results:
         # First alternative is the most probable result
         alternative = result.alternatives[0]
+
         print(u"Transcript: {}".format(alternative.transcript))
         writeCSV(result.alternatives[0].transcript)  #save csv file
 
@@ -90,7 +92,8 @@ def implicit():
 #implicit()
 #transcribe_gcs('gs://youtubespeech/theaudio.wav')
 
-# for i in range(2):
-#     sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile' + str(i) + '.wav')
-sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile777.wav')
+for i in range(6):
+    #printTime(i)
+    sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile' + str(i) + '.wav')
+# sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile888.wav')
 # print(frame_rate_channel('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile12.wav'))
