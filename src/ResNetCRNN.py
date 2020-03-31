@@ -20,6 +20,17 @@ data_path = "./dataset"    # define UCF-101 RGB data path
 action_name_path = './youhi_label.pkl'
 save_model_path = "./ResNetCRNN_ckpt/"
 
+# youhi_label = ['Knife', 'Game', 'Smoke']
+#
+# with open(action_name_path, 'wb') as f:
+#  pickle.dump(youhi_label, f)
+#
+# if os.path.getsize(action_name_path) > 0:
+#   with open(action_name_path,'rb') as f:
+#     new_pkl = pickle.load(f)
+#
+# print(new_pkl)
+
 # EncoderCNN architecture
 CNN_fc_hidden1, CNN_fc_hidden2 = 1024, 768
 CNN_embed_dim = 512   # latent dim extracted by 2D CNN
@@ -32,21 +43,19 @@ RNN_hidden_nodes = 512
 RNN_FC_dim = 256
 
 # training parameters
-k = 101             # number of target category
+k = 4             # number of target category
 epochs = 80        # training epochs
 batch_size = 10
 learning_rate = 1e-3
 log_interval = 10   # interval for displaying training info
 
 # Select which frame to begin & end in videos
-begin_frame, end_frame, skip_frame = 1, 10, 1
+begin_frame, end_frame, skip_frame = 1, 29, 1
 
 
-def train(log_interval, model, device, train_loader, optimizer, epoch):
+def train(log_interval, model:nn.Sequential, device, train_loader, optimizer, epoch):
     # set model as training mode
-    cnn_encoder, rnn_decoder = model
-    cnn_encoder.train()
-    rnn_decoder.train()
+    model.train()
 
     losses = []
     scores = []
@@ -58,7 +67,7 @@ def train(log_interval, model, device, train_loader, optimizer, epoch):
         N_count += X.size(0)
 
         optimizer.zero_grad()
-        output = rnn_decoder(cnn_encoder(X))   # output has dim = (batch, number of classes)
+        output = model(X)   # output has dim = (batch, number of classes)
 
         loss = F.cross_entropy(output, y)
         losses.append(loss.item())
@@ -78,11 +87,9 @@ def train(log_interval, model, device, train_loader, optimizer, epoch):
 
     return losses, scores
 
-def validation(model, device, optimizer, test_loader, epoch):
+def validation(model:nn.Sequential, device, optimizer, test_loader, epoch):
     # set model as testing mode
-    cnn_encoder, rnn_decoder = model
-    cnn_encoder.eval()
-    rnn_decoder.eval()
+    model.eval()
 
     test_loss = 0
     all_y = []
@@ -92,9 +99,10 @@ def validation(model, device, optimizer, test_loader, epoch):
             # distribute data to device
             X, y = X.to(device), y.to(device).view(-1, )
 
-            output = rnn_decoder(cnn_encoder(X))
+            output = model(X)
 
             loss = F.cross_entropy(output, y, reduction='sum')
+            print(loss)
             test_loss += loss.item()                 # sum up batch loss
             y_pred = output.max(1, keepdim=True)[1]  # (y_pred != output) get the index of the max log-probability
 
@@ -111,12 +119,17 @@ def validation(model, device, optimizer, test_loader, epoch):
 
     # show information
     print('\nTest set ({:d} samples): Average loss: {:.4f}, Accuracy: {:.2f}%\n'.format(len(all_y), test_loss, 100* test_score))
-
+    torch.save({
+        'epoch': epoch,
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict(),
+        'label_map': train_loader.dataset.labels
+    }, os.path.join(save_model_path, 'model_epoch{}.pth'.format(epoch + 1)))
     # save Pytorch models of best record
-    torch.save(cnn_encoder.state_dict(), os.path.join(save_model_path, 'cnn_encoder_epoch{}.pth'.format(epoch + 1)))  # save spatial_encoder
-    torch.save(rnn_decoder.state_dict(), os.path.join(save_model_path, 'rnn_decoder_epoch{}.pth'.format(epoch + 1)))  # save motion_encoder
-    torch.save(optimizer.state_dict(), os.path.join(save_model_path, 'optimizer_epoch{}.pth'.format(epoch + 1)))      # save optimizer
-    print("Epoch {} model saved!".format(epoch + 1))
+    # torch.save(cnn_encoder.state_dict(), os.path.join(save_model_path, 'cnn_encoder_epoch{}.pth'.format(epoch + 1)))  # save spatial_encoder
+    # torch.save(rnn_decoder.state_dict(), os.path.join(save_model_path, 'rnn_decoder_epoch{}.pth'.format(epoch + 1)))  # save motion_encoder
+    # torch.save(optimizer.state_dict(), os.path.join(save_model_path, 'optimizer_epoch{}.pth'.format(epoch + 1)))      # save optimizer
+    print('[Epoch %3d]Test avg loss: %0.4f, acc: %0.2f\n' % (epoch, test_loss, test_score))
 
     return test_loss, test_score
 
@@ -152,12 +165,11 @@ enc.fit(action_category)
 
 actions = []
 fnames = os.listdir(data_path)
-
 all_names = []
 for f in fnames:
     loc1 = f.find('v_')
     loc2 = f.find('_g')
-    actions.append(f[(loc1 + 2): loc2])
+    actions.append(f[loc1+2: loc2])
 
     all_names.append(f)
 
@@ -183,29 +195,34 @@ valid_loader = data.DataLoader(valid_set, **params)
 
 
 # Create model
-cnn_encoder = ResCNNEncoder(fc_hidden1=CNN_fc_hidden1, fc_hidden2=CNN_fc_hidden2, drop_p=dropout_p, CNN_embed_dim=CNN_embed_dim).to(device)
-rnn_decoder = DecoderRNN(CNN_embed_dim=CNN_embed_dim, h_RNN_layers=RNN_hidden_layers, h_RNN=RNN_hidden_nodes,
-                         h_FC_dim=RNN_FC_dim, drop_p=dropout_p, num_classes=k).to(device)
+
+model = nn.Sequential(
+    ResCNNEncoder(fc_hidden1=CNN_fc_hidden1, fc_hidden2=CNN_fc_hidden2, drop_p=dropout_p,
+                              CNN_embed_dim=CNN_embed_dim),
+    DecoderRNN(CNN_embed_dim=CNN_embed_dim, h_RNN_layers=RNN_hidden_layers, h_RNN=RNN_hidden_nodes,
+                         h_FC_dim=RNN_FC_dim, drop_p=dropout_p, num_classes=k)
+)
+model.to(device)
 
 # Parallelize model to multiple GPUs
 if torch.cuda.device_count() > 1:
     print("Using", torch.cuda.device_count(), "GPUs!")
-    cnn_encoder = nn.DataParallel(cnn_encoder)
-    rnn_decoder = nn.DataParallel(rnn_decoder)
+    model = nn.DataParallel(model)
 
     # Combine all EncoderCNN + DecoderRNN parameters
-    crnn_params = list(cnn_encoder.module.fc1.parameters()) + list(cnn_encoder.module.bn1.parameters()) + \
-                  list(cnn_encoder.module.fc2.parameters()) + list(cnn_encoder.module.bn2.parameters()) + \
-                  list(cnn_encoder.module.fc3.parameters()) + list(rnn_decoder.parameters())
+    # crnn_params = list(cnn_encoder.module.fc1.parameters()) + list(cnn_encoder.module.bn1.parameters()) + \
+    #               list(cnn_encoder.module.fc2.parameters()) + list(cnn_encoder.module.bn2.parameters()) + \
+    #               list(cnn_encoder.module.fc3.parameters()) + list(rnn_decoder.parameters())
 
 elif torch.cuda.device_count() == 1:
     print("Using", torch.cuda.device_count(), "GPU!")
     # Combine all EncoderCNN + DecoderRNN parameters
-    crnn_params = list(cnn_encoder.fc1.parameters()) + list(cnn_encoder.bn1.parameters()) + \
-                  list(cnn_encoder.fc2.parameters()) + list(cnn_encoder.bn2.parameters()) + \
-                  list(cnn_encoder.fc3.parameters()) + list(rnn_decoder.parameters())
+    # crnn_params = list(cnn_encoder.fc1.parameters()) + list(cnn_encoder.bn1.parameters()) + \
+    #               list(cnn_encoder.fc2.parameters()) + list(cnn_encoder.bn2.parameters()) + \
+    #               list(cnn_encoder.fc3.parameters()) + list(rnn_decoder.parameters())
 
-optimizer = torch.optim.Adam(crnn_params, lr=learning_rate)
+model_params = model.parameters()
+optimizer = torch.optim.Adam(model_params, lr=learning_rate)
 
 
 # record training process
@@ -218,9 +235,9 @@ epoch_test_scores = []
 def main():
     for epoch in range(epochs):
         # train, test model
-        train_losses, train_scores = train(log_interval, [cnn_encoder, rnn_decoder], device, train_loader, optimizer,
+        train_losses, train_scores = train(log_interval, model, device, train_loader, optimizer,
                                            epoch)
-        epoch_test_loss, epoch_test_score = validation([cnn_encoder, rnn_decoder], device, optimizer, valid_loader, epoch)
+        epoch_test_loss, epoch_test_score = validation(model, device, optimizer, valid_loader, epoch)
 
         # save results
         epoch_train_losses.append(train_losses)
