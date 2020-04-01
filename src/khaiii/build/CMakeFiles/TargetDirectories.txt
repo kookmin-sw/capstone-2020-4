@@ -1,0 +1,16 @@
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/install/local.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/install/strip.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/list_install_components.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/edit_cache.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/install.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/test_khaiii.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/bin_khaiii.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/package.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/test.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/khaiii.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/rebuild_cache.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/large_resource.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/obj_khaiii.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/package_python.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/resource.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/CMakeFiles/package_source.dir
