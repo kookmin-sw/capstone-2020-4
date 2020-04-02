@@ -20,16 +20,16 @@ data_path = "./dataset"    # define UCF-101 RGB data path
 action_name_path = './youhi_label.pkl'
 save_model_path = "./ResNetCRNN_ckpt/"
 
-# youhi_label = ['Knife', 'Game', 'Smoke']
+# youhi_label = ['Knife', 'Smoke', 'Adult', 'Game']
 #
 # with open(action_name_path, 'wb') as f:
 #  pickle.dump(youhi_label, f)
-#
-# if os.path.getsize(action_name_path) > 0:
-#   with open(action_name_path,'rb') as f:
-#     new_pkl = pickle.load(f)
-#
-# print(new_pkl)
+
+if os.path.getsize(action_name_path) > 0:
+  with open(action_name_path,'rb') as f:
+    new_pkl = pickle.load(f)
+
+print(new_pkl)
 
 # EncoderCNN architecture
 CNN_fc_hidden1, CNN_fc_hidden2 = 1024, 768
@@ -45,13 +45,13 @@ RNN_FC_dim = 256
 # training parameters
 k = 4             # number of target category
 epochs = 80        # training epochs
-batch_size = 10
+batch_size = 4
 learning_rate = 1e-3
 log_interval = 10   # interval for displaying training info
 
 # Select which frame to begin & end in videos
 begin_frame, end_frame, skip_frame = 1, 29, 1
-
+best_accuracy = 0
 
 def train(log_interval, model:nn.Sequential, device, train_loader, optimizer, epoch):
     # set model as training mode
@@ -87,51 +87,9 @@ def train(log_interval, model:nn.Sequential, device, train_loader, optimizer, ep
 
     return losses, scores
 
-def validation(model:nn.Sequential, device, optimizer, test_loader, epoch):
-    # set model as testing mode
-    model.eval()
-
-    test_loss = 0
-    all_y = []
-    all_y_pred = []
-    with torch.no_grad():
-        for X, y in test_loader:
-            # distribute data to device
-            X, y = X.to(device), y.to(device).view(-1, )
-
-            output = model(X)
-
-            loss = F.cross_entropy(output, y, reduction='sum')
-            print(loss)
-            test_loss += loss.item()                 # sum up batch loss
-            y_pred = output.max(1, keepdim=True)[1]  # (y_pred != output) get the index of the max log-probability
-
-            # collect all y and y_pred in all batches
-            all_y.extend(y)
-            all_y_pred.extend(y_pred)
-
-    test_loss /= len(test_loader.dataset)
-
-    # compute accuracy
-    all_y = torch.stack(all_y, dim=0)
-    all_y_pred = torch.stack(all_y_pred, dim=0)
-    test_score = accuracy_score(all_y.cpu().data.squeeze().numpy(), all_y_pred.cpu().data.squeeze().numpy())
-
-    # show information
-    print('\nTest set ({:d} samples): Average loss: {:.4f}, Accuracy: {:.2f}%\n'.format(len(all_y), test_loss, 100* test_score))
-    torch.save({
-        'epoch': epoch,
-        'model_state_dict': model.state_dict(),
-        'optimizer_state_dict': optimizer.state_dict(),
-        'label_map': train_loader.dataset.labels
-    }, os.path.join(save_model_path, 'model_epoch{}.pth'.format(epoch + 1)))
-    # save Pytorch models of best record
-    # torch.save(cnn_encoder.state_dict(), os.path.join(save_model_path, 'cnn_encoder_epoch{}.pth'.format(epoch + 1)))  # save spatial_encoder
-    # torch.save(rnn_decoder.state_dict(), os.path.join(save_model_path, 'rnn_decoder_epoch{}.pth'.format(epoch + 1)))  # save motion_encoder
-    # torch.save(optimizer.state_dict(), os.path.join(save_model_path, 'optimizer_epoch{}.pth'.format(epoch + 1)))      # save optimizer
-    print('[Epoch %3d]Test avg loss: %0.4f, acc: %0.2f\n' % (epoch, test_loss, test_score))
-
-    return test_loss, test_score
+# def validation(model:nn.Sequential, device, optimizer, test_loader, epochs):
+#     # set model as testing mode
+#
 
 
 # Detect devices
@@ -177,7 +135,6 @@ for f in fnames:
 # list all data files
 all_X_list = all_names                  # all video file names
 all_y_list = labels2cat(le, actions)    # all video labels
-
 # train, test split
 train_list, test_list, train_label, test_label = train_test_split(all_X_list, all_y_list, test_size=0.25, random_state=42)
 
@@ -233,48 +190,55 @@ epoch_test_scores = []
 
 # start training
 def main():
+    best_accuracy = 0
     for epoch in range(epochs):
         # train, test model
         train_losses, train_scores = train(log_interval, model, device, train_loader, optimizer,
                                            epoch)
-        epoch_test_loss, epoch_test_score = validation(model, device, optimizer, valid_loader, epoch)
+        model.eval()
+        test_loss = 0
+        all_y = []
+        all_y_pred = []
+        with torch.no_grad():
+            for X, y in valid_loader:
+                # distribute data to device
+                X, y = X.to(device), y.to(device).view(-1, )
 
-        # save results
-        epoch_train_losses.append(train_losses)
-        epoch_train_scores.append(train_scores)
-        epoch_test_losses.append(epoch_test_loss)
-        epoch_test_scores.append(epoch_test_score)
+                output = model(X)
 
-        # save all train test results
-        A = np.array(epoch_train_losses)
-        B = np.array(epoch_train_scores)
-        C = np.array(epoch_test_losses)
-        D = np.array(epoch_test_scores)
-        np.save('./CRNN_epoch_training_losses.npy', A)
-        np.save('./CRNN_epoch_training_scores.npy', B)
-        np.save('./CRNN_epoch_test_loss.npy', C)
-        np.save('./CRNN_epoch_test_score.npy', D)
+                loss = F.cross_entropy(output, y, reduction='sum')
+                test_loss += loss.item()  # sum up batch loss
+                y_pred = output.max(1, keepdim=True)[1]  # (y_pred != output) get the index of the max log-probability
 
-    fig = plt.figure(figsize=(10, 4))
-    plt.subplot(121)
-    plt.plot(np.arange(1, epochs + 1), A[:, -1])  # train loss (on epoch end)
-    plt.plot(np.arange(1, epochs + 1), C)  # test loss (on epoch end)
-    plt.title("model loss")
-    plt.xlabel('epochs')
-    plt.ylabel('loss')
-    plt.legend(['train', 'test'], loc="upper left")
-    # 2nd figure
-    plt.subplot(122)
-    plt.plot(np.arange(1, epochs + 1), B[:, -1])  # train accuracy (on epoch end)
-    plt.plot(np.arange(1, epochs + 1), D)  # test accuracy (on epoch end)
-    plt.title("training scores")
-    plt.xlabel('epochs')
-    plt.ylabel('accuracy')
-    plt.legend(['train', 'test'], loc="upper left")
-    title = "./fig_UCF101_ResNetCRNN.png"
-    plt.savefig(title, dpi=600)
-    # plt.close(fig)
-    plt.show()
+                # collect all y and y_pred in all batches
+                all_y.extend(y)
+                all_y_pred.extend(y_pred)
+
+        test_loss /= len(valid_loader.dataset)
+
+        # compute accuracy
+        all_y = torch.stack(all_y, dim=0)
+        all_y_pred = torch.stack(all_y_pred, dim=0)
+        test_score = accuracy_score(all_y.cpu().data.squeeze().numpy(), all_y_pred.cpu().data.squeeze().numpy())
+
+        # show information
+        print('\nTest set ({:d} samples): Average loss: {:.4f}, Accuracy: {:.2f}%\n'.format(len(all_y), test_loss,
+                                                                                            100 * test_score))
+        cur_accuracy = 100 * test_score
+        if best_accuracy < cur_accuracy:
+            torch.save({
+                'epoch': epoch,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'label_map': all_y_list
+            }, os.path.join(save_model_path, 'model_epoch{}.pth'.format(epoch + 1)))
+            best_accuracy = cur_accuracy
+
+        # save Pytorch models of best record
+        # torch.save(cnn_encoder.state_dict(), os.path.join(save_model_path, 'cnn_encoder_epoch{}.pth'.format(epoch + 1)))  # save spatial_encoder
+        # torch.save(rnn_decoder.state_dict(), os.path.join(save_model_path, 'rnn_decoder_epoch{}.pth'.format(epoch + 1)))  # save motion_encoder
+        # torch.save(optimizer.state_dict(), os.path.join(save_model_path, 'optimizer_epoch{}.pth'.format(epoch + 1)))      # save optimizer
+        print('[Epoch %3d]Test avg loss: %0.4f, acc: %0.2f\n' % (epoch, test_loss, test_score))
 
 
 if __name__ == '__main__':
