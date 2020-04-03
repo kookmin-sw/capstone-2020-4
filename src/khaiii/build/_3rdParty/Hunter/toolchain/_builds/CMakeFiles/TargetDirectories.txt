@@ -1,0 +1,2 @@
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/rebuild_cache.dir
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/build/_3rdParty/Hunter/toolchain/_builds/CMakeFiles/edit_cache.dir
