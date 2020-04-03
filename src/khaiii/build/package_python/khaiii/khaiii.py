@@ -1,0 +1,1 @@
+/home/kmusw/바탕화면/capstone-2020-4/src/khaiii/src/main/python/khaiii/khaiii.py
