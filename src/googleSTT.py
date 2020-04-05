@@ -4,7 +4,9 @@ import os
 import json
 #from cutAudio import cutAudioFile
 import wave
+from cutAudio import countFile
 from makeData import writeCSV
+from makeData import writeTXT
 from makeData import printTime
 from google.cloud import speech
 from google.cloud.speech import enums
@@ -75,7 +77,8 @@ def sample_recognize(local_file_path):
         alternative = result.alternatives[0]
 
         print(u"Transcript: {}".format(alternative.transcript))
-        writeCSV(result.alternatives[0].transcript)  #save csv file
+        #writeCSV(result.alternatives[0].transcript)  #save csv file
+        writeTXT(result.alternatives[0].transcript)  # save txt file
 
 def implicit():
     from google.cloud import storage
@@ -92,8 +95,11 @@ def implicit():
 #implicit()
 #transcribe_gcs('gs://youtubespeech/theaudio.wav')
 
-for i in range(6):
+#num = countFile('C:\\Users\\01097\\PycharmProjects\\untitled\\voice', '.wav')
+num = countFile('/home/ubuntu/capstone-2020-4/src/voice', '.wav')
+for i in range(num):
     #printTime(i)
-    sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile' + str(i) + '.wav')
+    #sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile' + str(i) + '.wav')
+    sample_recognize('/home/ubuntu/capstone-2020-4/src/voice/cutfile' + str(i) + '.wav')
 # sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile888.wav')
 # print(frame_rate_channel('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile12.wav'))
