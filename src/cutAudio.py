@@ -74,16 +74,26 @@ def cutting(AUDIO_FILE):
     for i in range(round(lenOfWav/5)):
         print(i)
         section = wav[five_seconds*i:five_seconds*(i+1)]
-        section.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile"+str(i)+".wav", format = 'wav')
-
-
+        #section.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile"+str(i)+".wav", format = 'wav')
+        section.export("/home/ubuntu/capstone-2020-4/src/voice/cutfile" + str(i) + ".wav", format='wav')
 
     # beginning.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile888.wav", format = 'wav')
 
 
+def countFile(path,extension):
+  list_dir = []
+  list_dir = os.listdir(path)
+  count = 0
+  for file in list_dir:
+    if file.endswith(extension): # eg: '.txt'
+      count += 1
+
+  return count
 
 
 
 #make_stereo("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile2.wav", "stereo.wav")
 # cutAudioFile("test07.wav")
 cutting("test07.wav")
+
+#countFile("C:\\Users\\01097\\PycharmProjects\\untitled\\voice", ".wav")
