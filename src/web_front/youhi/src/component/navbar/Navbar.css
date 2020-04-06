@@ -1,0 +1,19 @@
+.nav-wrapper {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  background-color: #24292e;
+  height: 100px;
+}
+
+#project-name {
+  padding-top: 4px;
+  font-size: 23px;
+  font-weight: 900;
+  color: white;
+}
+
+#main-logo {
+  height: 50px;
+  margin-left: 20px;
+}   
