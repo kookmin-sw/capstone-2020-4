@@ -94,6 +94,6 @@ def countFile(path,extension):
 
 #make_stereo("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile2.wav", "stereo.wav")
 # cutAudioFile("test07.wav")
-cutting("test07.wav")
+cutting("/home/ubuntu/capstone-2020-4/src/voice_raw/test10.wav")
 
 #countFile("C:\\Users\\01097\\PycharmProjects\\untitled\\voice", ".wav")
