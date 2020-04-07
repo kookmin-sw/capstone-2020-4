@@ -3,6 +3,7 @@ import os
 import sys
 import uuid
 import cv2
+import socketio
 
 s3_client = boto3.client('s3')
 
