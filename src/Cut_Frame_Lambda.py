@@ -53,5 +53,10 @@ def lambda_handler(event, context):
         for upload_path in result_path:
             s3_client.upload_file(upload_path, 'test7868-resized', upload_path.split("/")[FILE_NAME_INDEX])
 
+        sio = socketio.Client()
+        sio.connect('http://13.125.127.181:4567')
+        sio.emit('msg', 'complete')
+        sio.sleep(1)
+        sio.disconnect()
         print ("S3 Upload Done ...")
 
