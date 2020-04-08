@@ -1,28 +1,36 @@
-import cv2
-import numpy as np
+from moviepy.tools import subprocess_call
+from moviepy.config import get_setting
+import os
+from moviepy.editor import VideoFileClip
+import math
 
-#for videoNum in np.arange(1, 2):
-  # 영상 번호
-  # 영상의 의미지를 연속적으로 캡쳐할 수 있게 하는 class
-vidcap = cv2.VideoCapture('MP4 file in S3 bucket')
+def ffmpeg_extract_subclip(filename, t1, t2, targetname=None):
+    """ Makes a new video file playing video file ``filename`` between
+    the times ``t1`` and ``t2``. """
+    name, ext = os.path.splitext(filename)
+    if not targetname:
+        T1, T2 = [int(1000*t) for t in [t1, t2]]
+        targetname = "%sSUB%d_%d.%s" % (name, T1, T2, ext)
 
-count = 0
+    cmd = [get_setting("FFMPEG_BINARY"),
+           "-i", filename,
+           "-ss", "%0.2f"%t1,
+           "-t", "%0.2f"%(t2-t1),
+           "-c:v",  "libx264",  "-c:a", "aac",
+           "-strict", "experimental", "-b:a", "128k",
+           targetname]
 
-while(vidcap.isOpened()):
-    # read()는 grab()와 retrieve() 두 함수를 한 함수로 불러옴
-    # 두 함수를 동시에 불러오는 이유는 프레임이 존재하지 않을 때
-    # grab() 함수를 이용하여 return false 혹은 NULL 값을 넘겨 주기 때문
-    ret, image = vidcap.read()
+    subprocess_call(cmd)
 
-    #print(ret)
-    if ret:
-      # 캡쳐된 이미지를 저장하는 함수 
-      cv2.imwrite("" % count, image)
+clip = VideoFileClip("./sin.mp4")
 
-      print('Saved frame%d.jpg' % count)
-      count += 1
-    else:
-      print("The work(video number : " + str(videoNum) + ") is done!")
-      break;
+f = open("filename.txt", "r")
+if f.mode == "r":
+    content = (f.read())
 
-vidcap.release()  
+content_list = content.split("\n")
+print(content_list)
+
+for time in content_list:
+    t = int(time)
+    ffmpeg_extract_subclip("./sin.mp4", t, t+4, targetname=f"{t}.mp4")
