@@ -44,7 +44,6 @@ def lambda_handler(event, context):
         key = unquote_plus(record['s3']['object']['key'])
         download_path = '/tmp/{}{}'.format(uuid.uuid4(), key)
         s3_client.download_file(bucket, key, download_path)
-        print ("jot")
         file_name = key
         result_path = video_processing(file_name, download_path)
         tmpkey = key.split(".")
