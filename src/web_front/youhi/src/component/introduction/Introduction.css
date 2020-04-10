@@ -79,3 +79,7 @@
   line-height: 2em;
   letter-spacing: -0.25px;
 }
+
+a:link {
+  text-decoration: none;
+}

@@ -27,7 +27,16 @@ const Introduction = () => {
             필터링의 기준은 YouTube 가이드라인의 연령 제한 콘텐츠에 명시되어
             있는
             <br />
-            연령 제한 적용 고려 사항이며 자세한 내용은           여기를 참고하세요.
+            연령 제한 적용 고려 사항이며 자세한 내용은{" "}
+            <a
+              className="Introduction-link"
+              href="https://support.google.com/youtube/answer/2802167?hl=ko"
+              rel="noopener noreferrer "
+              target="_blank"
+            >
+              여기
+            </a>
+            를 참고하세요.
           </div>
         </div>
       </div>
