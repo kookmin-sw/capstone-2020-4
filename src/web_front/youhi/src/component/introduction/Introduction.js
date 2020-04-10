@@ -4,7 +4,7 @@ import './Introduction.css';
 const Introduction = () => {
   return (
     <div className="Introduction">
-      <div className="Introduction-first-flex-items-wrapper">
+      <div className="Introduction-first-flex-items-container">
         <div className="Introduction-first-flex-items">
           <div className="Introduction-text-header">
             
