@@ -18,7 +18,7 @@
   padding-bottom: 55px;
 }
 
-.Introduction-text-header {
+.Introduction-first-flex-items .Introduction-text-title {
   width: 505px;
   height: 128px;
   font-size: 130px;
@@ -26,7 +26,7 @@
   margin-bottom: 45px;
 }
 
-.Introduction-text-description {
+.Introduction-first-flex-items .Introduction-text-description {
   font-size: 17px;
   text-align: center;
   line-height: 1.5;
