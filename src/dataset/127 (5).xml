@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>127 (5).jpg</filename>
+	<path>/home/kmucs/다운로드/images/127 (5).jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>342</width>
+		<height>256</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>smoke</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>108</xmin>
+			<ymin>210</ymin>
+			<xmax>125</xmax>
+			<ymax>229</ymax>
+		</bndbox>
+	</object>
+</annotation>

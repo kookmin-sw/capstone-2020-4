@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>19 (4).jpg</filename>
+	<path>/home/kmucs/다운로드/images/19 (4).jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>342</width>
+		<height>256</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>smoke</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>198</xmin>
+			<ymin>79</ymin>
+			<xmax>214</xmax>
+			<ymax>100</ymax>
+		</bndbox>
+	</object>
+</annotation>

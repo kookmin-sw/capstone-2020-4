@@ -1,0 +1,38 @@
+<annotation>
+	<folder>images</folder>
+	<filename>85 (2).jpg</filename>
+	<path>/home/kmucs/다운로드/images/85 (2).jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>342</width>
+		<height>256</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>smoke</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>203</xmin>
+			<ymin>155</ymin>
+			<xmax>220</xmax>
+			<ymax>168</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>smoke</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>127</xmin>
+			<ymin>166</ymin>
+			<xmax>135</xmax>
+			<ymax>179</ymax>
+		</bndbox>
+	</object>
+</annotation>
