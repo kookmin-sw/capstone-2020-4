@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import "./Upload.css";
 import UploadElementor from "./upload_elementor/UploadElementor"
+import "./Upload.css";
 
 class Upload extends Component {
   render() {
