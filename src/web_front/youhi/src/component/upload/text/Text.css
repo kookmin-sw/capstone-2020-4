@@ -31,3 +31,9 @@
 .Text-text-description li {
   padding-bottom: 20px;
 }
+
+.Text-text-emphasis {
+  display: inline;
+  color: black;
+  font-weight: 600
+}
