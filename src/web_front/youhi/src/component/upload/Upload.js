@@ -9,7 +9,7 @@ class Upload extends Component {
     return (
       <div className="Upload">
         <UploadElementor />
-        <div className="Upload-content">
+        <div className="Upload-outer-flex-items">
           <Dropzone />  
         </div>
       </div>
