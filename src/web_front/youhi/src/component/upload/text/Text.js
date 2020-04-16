@@ -21,7 +21,8 @@ class Text extends Component {
                 <div className="Text-text-emphasis">
                   연령제한 컨텐츠로 설정합니다.
                 </div>
-                <input type="checkbox" className="Text-checkbox" />                
+                <input type="checkbox" className="Text-checkbox" />     
+                <div className="Text-checkmark"></div>           
               </label>
             </li>
           </ul>
