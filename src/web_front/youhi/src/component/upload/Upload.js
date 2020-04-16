@@ -11,13 +11,22 @@ class Upload extends Component {
       uploaing: false,
       successfullUploaded: false,
     }
+    this.onFilesAdded = this.onFilesAdded.bind(this);
   }
+
+  onFilesAdded(files) {
+    this.setState((prevState) => ({
+      files: prevState.files.concat(files),
+    }));
+  }
+  
   render() {
     return (
       <div className="Upload">
         <UploadElementor />
         <div className="Upload-outer-flex-items">
           <Dropzone 
+            onFilesAdded={this.onFilesAdded}
             disabled={this.state.uploading || this.state.successfullUploaded}
           />  
           <div className="Upload-inner-flex-items">
