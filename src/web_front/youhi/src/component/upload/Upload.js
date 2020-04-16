@@ -5,13 +5,21 @@ import Text from "./text/Text";
 import "./Upload.css";
 
 class Upload extends Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      uploaing: false,
+      successfullUploaded: false,
+    }
+  }
   render() {
     return (
       <div className="Upload">
         <UploadElementor />
         <div className="Upload-outer-flex-items">
-          <Dropzone />  
+          <Dropzone 
+            disabled={this.state.uploading || this.state.successfullUploaded}
+          />  
           <div className="Upload-inner-flex-items">
             <Text />
           </div>
