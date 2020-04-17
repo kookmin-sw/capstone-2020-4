@@ -124,7 +124,7 @@ class Spatial_CNN():
             nn_output += self.model(frame)
 
             # vote for class with 25 consecutive frames
-            if frame_count % 10 == 0:
+            if frame_count % 15 == 0:
                 nn_output = softmax(nn_output)
                 nn_output = nn_output.data.cpu().numpy()
                 preds = nn_output.argsort()[0][-5:][::-1]
@@ -141,15 +141,12 @@ class Spatial_CNN():
                 cv2.putText(orig_frame, '{} - {:.2f}'.format(pred_classes[i][0], pred_classes[i][1]),
                             (5, y), font, 1, (0, 0, 255), 2)
 
-            cv2.imshow('Webcam', orig_frame)
+            cv2.imwrite('./record/test1/' + str(frame_count) + '.jpg', orig_frame)
             frame_count += 1
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-
+          
         # When everything done, release the capture
         vs.release()
-        cv2.destroyAllWindows()
-
+        
 
     def build_model(self):
         print ('==> Build model and setup loss and optimizer')
