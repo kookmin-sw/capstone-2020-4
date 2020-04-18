@@ -8,6 +8,7 @@ class Upload extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      files: [],
       uploaing: false,
       successfullUploaded: false,
     }
@@ -41,6 +42,15 @@ class Upload extends Component {
           />  
           <div className="Upload-inner-flex-items">
             <Text />
+            <div>
+              {this.state.files.map((file) => {
+                return (
+                  <div key={file.name}>
+                    <span>{file.name}</span>
+                  </div>
+                );
+              })}
+            </div>
             {this.renderActions()}
           </div>
         </div>
