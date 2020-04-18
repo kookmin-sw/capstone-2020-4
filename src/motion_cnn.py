@@ -87,50 +87,55 @@ class Motion_CNN():
         idx_to_class = {v: k for k, v in class_to_idx.iteritems()}
 
         # Start looping on frames received from webcam
-        vs = cv2.VideoCapture(-1)
+        vs = cv2.VideoCapture("test6.mp4")
         softmax = torch.nn.Softmax()
-        nn_output = torch.tensor(np.zeros((1, 101)), dtype=torch.float32).cuda()
-
-        while True:
-            # read each frame and prepare it for feedforward in nn (resize and type)
-            ret, orig_frame = vs.read()
-            if ret is False:
-                print "Camera disconnected or not recognized by computer"
+        nn_output = torch.FloatTensor(2*10,self.img_rows,self.img_cols)
+        
+        origin_list = os.listdir("./tmp/origin/")
+        origin_list = natsort.natsorted(origin_list)
+        frame1 = cv2.imread("./tmp/origin/0.jpg")
+        prvs = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
+        idx = 1
+        for origin in origin_list:
+            if idx == 10:
                 break
+            origin_path = "./tmp/origin/" + origin
+            frame2 = cv2.imread(origin_path)
+            next = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
+            flow = cv2.calcOpticalFlowFarneback(prvs, next, 1, 0.5, 3, 15, 3, 5, 1.2, 0)
 
-            frame = cv2.cvtColor(orig_frame, cv2.COLOR_BGR2RGB)
-            frame = Image.fromarray(frame)
-            frame = transform(frame).view(1, 3, 224, 224).cuda()
+            # Normalize horizontal and vertical components
+            horz = cv2.normalize(flow[..., 0], None, 0, 255, cv2.NORM_MINMAX)
+            vert = cv2.normalize(flow[..., 1], None, 0, 255, cv2.NORM_MINMAX)
+            horz = horz.astype('uint8')
+            vert = vert.astype('uint8')
+            imgH = Image.fromarray(horz)
+            imgV = Image.fromarray(vert)
 
-            # feed the frame to the neural network
-            nn_output += self.model(frame)
+            H = transform(imgH)
+            V = transform(imgV)
 
-            # vote for class with 25 consecutive frames
-            if frame_count % 10 == 0:
-                nn_output = softmax(nn_output)
-                nn_output = nn_output.data.cpu().numpy()
-                preds = nn_output.argsort()[0][-5:][::-1]
-                pred_classes = [(idx_to_class[str(pred+1)], nn_output[0, pred]) for pred in preds]
+            nn_output[2 * (idx - 1), :, :] = H
+            nn_output[2 * (idx - 1) + 1, :, :] = V
+            imgH.close()
+            imgV.close()
+            idx += 1
 
-                # reset the process
-                nn_output = torch.tensor(np.zeros((1, 101)), dtype=torch.float32).cuda()
-
-            # Display the resulting frame and the classified action
+            input_var = nn_output.view(1, 20, 224, 224).cuda()
+            output = self.model(input_var)
+            output = softmax(output)
+            output = output.data.cpu().numpy()
+            preds = output.argsort()[0][-5:][::-1]
+            pred_classes = [(idx_to_class[str(pred + 1)], output[0, pred]) for pred in preds]
             font = cv2.FONT_HERSHEY_SIMPLEX
             y0, dy = 300, 40
             for i in xrange(5):
                 y = y0 + i * dy
-                cv2.putText(orig_frame, '{} - {:.2f}'.format(pred_classes[i][0], pred_classes[i][1]),
-                            (5, y), font, 1, (0, 0, 255), 2)
+            cv2.putText(orig_frame, '{} - {:.2f}'.format(pred_classes[i][0], pred_classes[i][1]),
+                        (5, y), font, 1, (0, 0, 255), 2)
 
-            cv2.imshow('frame', orig_frame)
-            frame_count += 1
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-
-        # When everything done, release the capture
-        vs.release()
-        cv2.destroyAllWindows()
+            cv2.imwrite('./record/test1/' + str(frame_count) + '.jpg', orig_frame)
+            vs.release()
 
 
     def build_model(self):
