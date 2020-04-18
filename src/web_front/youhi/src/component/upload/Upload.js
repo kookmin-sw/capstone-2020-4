@@ -42,11 +42,11 @@ class Upload extends Component {
           />  
           <div className="Upload-inner-flex-items">
             <Text />
-            <div>
+            <div className="Upload-files">
               {this.state.files.map((file) => {
                 return (
-                  <div key={file.name}>
-                    <span>{file.name}</span>
+                  <div key={file.name} className="Upload-Row">
+                    <span className="Upload-Filename">{file.name}</span>
                   </div>
                 );
               })}
