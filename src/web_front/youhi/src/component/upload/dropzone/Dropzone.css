@@ -16,3 +16,13 @@
 .Highlight {
   background-color: rgb(188, 185, 236);
 }
+
+.Icon {
+  opacity: 0.3;
+  height: 64px;
+  width: 64px;
+}
+
+.Dropzone-FileInput {
+  display: none;
+}
