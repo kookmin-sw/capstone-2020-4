@@ -16,6 +16,14 @@
   margin-bottom: 100px;
 }
 
+.Upload-inner-flex-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20px;
+}
+
 .Upload-button {
   font-family: "Roboto medium", sans-serif;
   font-size: 14px;
