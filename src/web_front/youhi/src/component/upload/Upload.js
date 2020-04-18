@@ -12,12 +12,22 @@ class Upload extends Component {
       successfullUploaded: false,
     }
     this.onFilesAdded = this.onFilesAdded.bind(this);
+    this.renderActions = this.renderActions.bind(this);
   }
 
   onFilesAdded(files) {
     this.setState((prevState) => ({
       files: prevState.files.concat(files),
     }));
+  }
+
+  renderActions() {
+    return (
+      <div>
+        <button>업로드</button>
+        <button>필터</button>
+      </div>
+    );
   }
   
   render() {
@@ -31,6 +41,7 @@ class Upload extends Component {
           />  
           <div className="Upload-inner-flex-items">
             <Text />
+            {this.renderActions()}
           </div>
         </div>
       </div>
