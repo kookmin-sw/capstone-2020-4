@@ -23,9 +23,9 @@ class Upload extends Component {
 
   renderActions() {
     return (
-      <div>
-        <button>업로드</button>
-        <button>필터</button>
+      <div className="Actions">
+        <button className="Upload-button Upload-upload-button">업로드</button>
+        <button className="Upload-button Upload-filter-button">필터</button>
       </div>
     );
   }

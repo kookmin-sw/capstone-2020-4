@@ -15,3 +15,34 @@
   box-sizing: border-box;
   margin-bottom: 100px;
 }
+
+.Upload-button {
+  font-family: "Roboto medium", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+  height: 36px;
+  min-width: 88px;
+  padding: 6px 16px;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0;
+  border-radius: 100px;
+  background: rgb(99, 68, 198);
+  color: #fff;
+  outline: 0;
+}
+
+.Upload-upload-button {
+  margin-right: 30px;
+}
+
