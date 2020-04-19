@@ -38,6 +38,11 @@ class Filter extends Component {
             </div>
           </div>
         </div>
+        <div className="Filter-feedback-button-wrapper">
+          <button className="Filter-feedback-button">
+            이의신청 및 문의하기
+          </button>
+        </div>
       </div>
     );
   }
