@@ -35,3 +35,12 @@
   border-width: 0;
   cursor: pointer;
 }
+
+.Filter-voice-filter {
+  max-width: 684px;
+  background-image: url('../../img/Voice_filter_box.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  border-width: 0;
+  cursor: pointer;
+}

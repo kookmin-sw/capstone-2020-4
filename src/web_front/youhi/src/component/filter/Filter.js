@@ -32,6 +32,10 @@ class Filter extends Component {
                 onClick={this.showFilterResult}
               />
             </div>
+            <div className = "filter-box-space"></div>            
+            <div className = "inner-filter-wrapper">
+              <button className="Filter-box Filter-voice-filter" />
+            </div>
           </div>
         </div>
       </div>
