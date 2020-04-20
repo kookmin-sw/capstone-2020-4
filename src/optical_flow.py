@@ -42,6 +42,7 @@ for dir in dir_list:
         cv2.imwrite('u/'+dir + "/" +file_list[counter], horz)
         cv2.imwrite('v/'+dir +"/" + file_list[counter], vert)
         counter += 1
+        prev = next.copy()
 
     idx += 1 
 
