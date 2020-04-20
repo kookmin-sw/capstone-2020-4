@@ -5,7 +5,7 @@ import glob
 import random
 import fnmatch
 
-def parse_directory(path, rgb_prefix='img_', flow_x_prefix='flow_x_', flow_y_prefix='flow_y_'):
+def parse_directory(path, rgb_prefix='img_', flow_x_prefix='flow_u_', flow_y_prefix='flow_v_'):
     """
     Parse directories holding extracted frames from standard benchmarks
     """
@@ -23,7 +23,7 @@ def parse_directory(path, rgb_prefix='img_', flow_x_prefix='flow_x_', flow_y_pre
         all_cnt = count_files(f, (rgb_prefix, flow_x_prefix, flow_y_prefix))
         k = f.split('/')[-1]
         rgb_counts[k] = all_cnt[0]
-
+        
         x_cnt = all_cnt[1]
         y_cnt = all_cnt[2]
         if x_cnt != y_cnt:
@@ -118,9 +118,9 @@ if __name__ == '__main__':
 
     parser.add_argument('--rgb_prefix', type=str, default='img_',
                         help="prefix of RGB frames")
-    parser.add_argument('--flow_x_prefix', type=str, default='flow_x',
+    parser.add_argument('--flow_x_prefix', type=str, default='flow_u',
                         help="prefix of x direction flow images")
-    parser.add_argument('--flow_y_prefix', type=str, default='flow_y',
+    parser.add_argument('--flow_y_prefix', type=str, default='flow_v',
                         help="prefix of y direction flow images", )
 
     parser.add_argument('--num_split', type=int, default=3,
