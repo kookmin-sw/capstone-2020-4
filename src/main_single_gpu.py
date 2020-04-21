@@ -79,7 +79,10 @@ os.environ["CUDA_VISIBLE_DEVICES"]="0"
 def main():
     global args, best_prec1
     args = parser.parse_args()
-
+    global resume
+    resume = args.resume
+    global demo
+    demo = args.demo
     # create model
     print("Building model ... ")
     model = build_model()
@@ -91,118 +94,142 @@ def main():
     optimizer = torch.optim.SGD(model.parameters(), args.lr,
                                 momentum=args.momentum,
                                 weight_decay=args.weight_decay)
-
-    if not os.path.exists(args.resume):
-        os.makedirs(args.resume)
-    print("Saving everything to directory %s." % (args.resume))
-
-    cudnn.benchmark = True
-
-    # Data transforming
-    if args.modality == "rgb":
-        is_color = True
-        scale_ratios = [1.0, 0.875, 0.75, 0.66]
-        clip_mean = [0.485, 0.456, 0.406] * args.new_length
-        clip_std = [0.229, 0.224, 0.225] * args.new_length
-    elif args.modality == "flow":
-        is_color = False
-        scale_ratios = [1.0, 0.875, 0.75]
-        clip_mean = [0.5, 0.5] * args.new_length
-        clip_std = [0.226, 0.226] * args.new_length
+    if demo:
+        resume_and_evaluate(optimizer)
     else:
-        print("No such modality. Only rgb and flow supported.")
+        # create model
+        if not os.path.exists(args.resume):
+            os.makedirs(args.resume)
+        print("Saving everything to directory %s." % (args.resume))
 
-    normalize = video_transforms.Normalize(mean=clip_mean,
-                                           std=clip_std)
-    train_transform = video_transforms.Compose([
-            # video_transforms.Scale((256)),
-            video_transforms.MultiScaleCrop((224, 224), scale_ratios),
-            video_transforms.RandomHorizontalFlip(),
-            video_transforms.ToTensor(),
-            normalize,
-        ])
+        cudnn.benchmark = True
 
-    val_transform = video_transforms.Compose([
-            # video_transforms.Scale((256)),
-            video_transforms.CenterCrop((224)),
-            video_transforms.ToTensor(),
-            normalize,
-        ])
+        # Data transforming
+        if args.modality == "rgb":
+            is_color = True
+            scale_ratios = [1.0, 0.875, 0.75, 0.66]
+            clip_mean = [0.485, 0.456, 0.406] * args.new_length
+            clip_std = [0.229, 0.224, 0.225] * args.new_length
+        elif args.modality == "flow":
+            is_color = False
+            scale_ratios = [1.0, 0.875, 0.75]
+            clip_mean = [0.5, 0.5] * args.new_length
+            clip_std = [0.226, 0.226] * args.new_length
+        else:
+            print("No such modality. Only rgb and flow supported.")
 
-    # data loading
-    train_setting_file = "train_%s_split%d.txt" % (args.modality, args.split)
-    train_split_file = os.path.join(args.settings, args.dataset, train_setting_file)
-    val_setting_file = "val_%s_split%d.txt" % (args.modality, args.split)
-    val_split_file = os.path.join(args.settings, args.dataset, val_setting_file)
-    if not os.path.exists(train_split_file) or not os.path.exists(val_split_file):
-        print("No split file exists in %s directory. Preprocess the dataset first" % (args.settings))
+        normalize = video_transforms.Normalize(mean=clip_mean,
+                                               std=clip_std)
+        train_transform = video_transforms.Compose([
+                # video_transforms.Scale((256)),
+                video_transforms.MultiScaleCrop((224, 224), scale_ratios),
+                video_transforms.RandomHorizontalFlip(),
+                video_transforms.ToTensor(),
+                normalize,
+            ])
 
-    train_dataset = datasets.__dict__[args.dataset](root=args.data,
-                                                    source=train_split_file,
-                                                    phase="train",
-                                                    modality=args.modality,
-                                                    is_color=is_color,
-                                                    new_length=args.new_length,
-                                                    new_width=args.new_width,
-                                                    new_height=args.new_height,
-                                                    video_transform=train_transform)
-    val_dataset = datasets.__dict__[args.dataset](root=args.data,
-                                                  source=val_split_file,
-                                                  phase="val",
-                                                  modality=args.modality,
-                                                  is_color=is_color,
-                                                  new_length=args.new_length,
-                                                  new_width=args.new_width,
-                                                  new_height=args.new_height,
-                                                  video_transform=val_transform)
+        val_transform = video_transforms.Compose([
+                # video_transforms.Scale((256)),
+                video_transforms.CenterCrop((224)),
+                video_transforms.ToTensor(),
+                normalize,
+            ])
 
-    print('{} samples found, {} train samples and {} test samples.'.format(len(val_dataset)+len(train_dataset),
-                                                                           len(train_dataset),
-                                                                           len(val_dataset)))
+        # data loading
+        train_setting_file = "train_%s_split%d.txt" % (args.modality, args.split)
+        train_split_file = os.path.join(args.settings, args.dataset, train_setting_file)
+        val_setting_file = "val_%s_split%d.txt" % (args.modality, args.split)
+        val_split_file = os.path.join(args.settings, args.dataset, val_setting_file)
+        if not os.path.exists(train_split_file) or not os.path.exists(val_split_file):
+            print("No split file exists in %s directory. Preprocess the dataset first" % (args.settings))
 
-    train_loader = torch.utils.data.DataLoader(
-        train_dataset,
-        batch_size=args.batch_size, shuffle=True,
-        num_workers=args.workers, pin_memory=True)
-    val_loader = torch.utils.data.DataLoader(
-        val_dataset,
-        batch_size=args.batch_size, shuffle=True,
-        num_workers=args.workers, pin_memory=True)
+        train_dataset = datasets.__dict__[args.dataset](root=args.data,
+                                                        source=train_split_file,
+                                                        phase="train",
+                                                        modality=args.modality,
+                                                        is_color=is_color,
+                                                        new_length=args.new_length,
+                                                        new_width=args.new_width,
+                                                        new_height=args.new_height,
+                                                        video_transform=train_transform)
+        val_dataset = datasets.__dict__[args.dataset](root=args.data,
+                                                      source=val_split_file,
+                                                      phase="val",
+                                                      modality=args.modality,
+                                                      is_color=is_color,
+                                                      new_length=args.new_length,
+                                                      new_width=args.new_width,
+                                                      new_height=args.new_height,
+                                                      video_transform=val_transform)
 
-    if args.evaluate:
-        validate(val_loader, model, criterion)
-        return
+        print('{} samples found, {} train samples and {} test samples.'.format(len(val_dataset)+len(train_dataset),
+                                                                               len(train_dataset),
+                                                                               len(val_dataset)))
 
-    for epoch in range(args.start_epoch, args.epochs):
-        adjust_learning_rate(optimizer, epoch)
+        train_loader = torch.utils.data.DataLoader(
+            train_dataset,
+            batch_size=args.batch_size, shuffle=True,
+            num_workers=args.workers, pin_memory=True)
+        val_loader = torch.utils.data.DataLoader(
+            val_dataset,
+            batch_size=args.batch_size, shuffle=True,
+            num_workers=args.workers, pin_memory=True)
 
-        # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch)
+        if args.evaluate:
+            validate(val_loader, model, criterion)
+            return
 
-        # evaluate on validation set
-        prec1 = 0.0
-        if (epoch + 1) % args.save_freq == 0:
-            prec1 = validate(val_loader, model, criterion)
+        for epoch in range(args.start_epoch, args.epochs):
+            adjust_learning_rate(optimizer, epoch)
 
-        # remember best prec@1 and save checkpoint
-        is_best = prec1 > best_prec1
-        best_prec1 = max(prec1, best_prec1)
+            # train for one epoch
+            train(train_loader, model, criterion, optimizer, epoch)
 
-        if (epoch + 1) % args.save_freq == 0:
-            checkpoint_name = "%03d_%s" % (epoch + 1, "checkpoint.pth.tar")
-            save_checkpoint({
-                'epoch': epoch + 1,
-                'arch': args.arch,
-                'state_dict': model.state_dict(),
-                'best_prec1': best_prec1,
-                'optimizer' : optimizer.state_dict(),
-            }, is_best, checkpoint_name, args.resume)
+            # evaluate on validation set
+            prec1 = 0.0
+            if (epoch + 1) % args.save_freq == 0:
+                prec1 = validate(val_loader, model, criterion)
+
+            # remember best prec@1 and save checkpoint
+            is_best = prec1 > best_prec1
+            best_prec1 = max(prec1, best_prec1)
+
+            if (epoch + 1) % args.save_freq == 0:
+                checkpoint_name = "%03d_%s" % (epoch + 1, "checkpoint.pth.tar")
+                save_checkpoint({
+                    'epoch': epoch + 1,
+                    'arch': args.arch,
+                    'state_dict': model.state_dict(),
+                    'best_prec1': best_prec1,
+                    'optimizer' : optimizer.state_dict(),
+                }, is_best, checkpoint_name, args.resume)
 
 def build_model():
 
     model = models.__dict__[args.arch](pretrained=True, num_classes=101)
     model.cuda()
     return model
+
+
+def resume_and_evaluate(param_optimizer):
+    model = build_model()
+    optimizer = param_optimizer
+    if resume:
+        if os.path.isfile(resume):
+
+            print("==> loading checkpoint '{}'".format(resume))
+            checkpoint = torch.load(resume)
+            start_epoch = checkpoint['epoch']
+            best_prec1 = checkpoint['best_prec1']
+            model.load_state_dict(checkpoint['state_dict'])
+            optimizer.load_state_dict(checkpoint['optimizer'])
+        else:
+            print("==> no checkpoint found at '{}'".format(resume))
+
+    if demo:
+        model.eval()
+        webcam_inference(model)
+
 
 def train(train_loader, model, criterion, optimizer, epoch):
     batch_time = AverageMeter()
