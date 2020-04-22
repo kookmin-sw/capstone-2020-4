@@ -11,7 +11,7 @@ class Dropzone extends Component {
     this.onFilesAdded = this.onFilesAdded.bind(this);
     // this.onDragOver = this.onDragOver.bind(this);
     // this.onDragLeave = this.onDragLeave.bind(this);
-    // this.onDrop = this.onDrop.bind(this);
+    this.onDrop = this.onDrop.bind(this);
   }
 
   openFileDialog() {
@@ -28,6 +28,17 @@ class Dropzone extends Component {
     }
   }
 
+  onDrop(event) {
+    event.preventDefault();
+    if (this.props.disabled) return;
+    const files = event.dataTransfer.files;
+    if (this.props.onFilesAdded) {
+      const array = this.fileListToArray(files);
+      this.props.onFilesAdded(array);
+    }
+    this.setState({ highlight: false});
+  }
+
   fileListToArray(list) {
     const array = [];
     for (var i = 0; i < list.length; i++) {
@@ -39,6 +50,7 @@ class Dropzone extends Component {
   render() {
     return (
       <div className={`Dropzone ${this.state.highlight ? "Highlight" : ""}`}
+        onDrop={this.onDrop}
         onClick={this.openFileDialog}
       >
         <input
