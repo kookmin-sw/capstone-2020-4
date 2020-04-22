@@ -73,7 +73,7 @@ parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
                     help='evaluate model on validation set')
 
 best_prec1 = 0
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 def main():
@@ -94,122 +94,119 @@ def main():
     optimizer = torch.optim.SGD(model.parameters(), args.lr,
                                 momentum=args.momentum,
                                 weight_decay=args.weight_decay)
-    if demo:
-        resume_and_evaluate(optimizer)
+
+
+    if not os.path.exists(args.resume):
+        os.makedirs(args.resume)
+    print("Saving everything to directory %s." % (args.resume))
+
+    cudnn.benchmark = True
+
+    # Data transforming
+    if args.modality == "rgb":
+        is_color = True
+        scale_ratios = [1.0, 0.875, 0.75, 0.66]
+        clip_mean = [0.485, 0.456, 0.406] * args.new_length
+        clip_std = [0.229, 0.224, 0.225] * args.new_length
+    elif args.modality == "flow":
+        is_color = False
+        scale_ratios = [1.0, 0.875, 0.75]
+        clip_mean = [0.5, 0.5] * args.new_length
+        clip_std = [0.226, 0.226] * args.new_length
     else:
-        # create model
-        if not os.path.exists(args.resume):
-            os.makedirs(args.resume)
-        print("Saving everything to directory %s." % (args.resume))
+        print("No such modality. Only rgb and flow supported.")
 
-        cudnn.benchmark = True
+    normalize = video_transforms.Normalize(mean=clip_mean,
+                                           std=clip_std)
+    train_transform = video_transforms.Compose([
+            # video_transforms.Scale((256)),
+            video_transforms.MultiScaleCrop((224, 224), scale_ratios),
+            video_transforms.RandomHorizontalFlip(),
+            video_transforms.ToTensor(),
+            normalize,
+        ])
 
-        # Data transforming
-        if args.modality == "rgb":
-            is_color = True
-            scale_ratios = [1.0, 0.875, 0.75, 0.66]
-            clip_mean = [0.485, 0.456, 0.406] * args.new_length
-            clip_std = [0.229, 0.224, 0.225] * args.new_length
-        elif args.modality == "flow":
-            is_color = False
-            scale_ratios = [1.0, 0.875, 0.75]
-            clip_mean = [0.5, 0.5] * args.new_length
-            clip_std = [0.226, 0.226] * args.new_length
-        else:
-            print("No such modality. Only rgb and flow supported.")
+    val_transform = video_transforms.Compose([
+            # video_transforms.Scale((256)),
+            video_transforms.CenterCrop((224)),
+            video_transforms.ToTensor(),
+            normalize,
+        ])
 
-        normalize = video_transforms.Normalize(mean=clip_mean,
-                                               std=clip_std)
-        train_transform = video_transforms.Compose([
-                # video_transforms.Scale((256)),
-                video_transforms.MultiScaleCrop((224, 224), scale_ratios),
-                video_transforms.RandomHorizontalFlip(),
-                video_transforms.ToTensor(),
-                normalize,
-            ])
+    # data loading
+    train_setting_file = "train_%s_split%d.txt" % (args.modality, args.split)
+    train_split_file = os.path.join(args.settings, args.dataset, train_setting_file)
+    val_setting_file = "val_%s_split%d.txt" % (args.modality, args.split)
+    val_split_file = os.path.join(args.settings, args.dataset, val_setting_file)
+    if not os.path.exists(train_split_file) or not os.path.exists(val_split_file):
+        print("No split file exists in %s directory. Preprocess the dataset first" % (args.settings))
 
-        val_transform = video_transforms.Compose([
-                # video_transforms.Scale((256)),
-                video_transforms.CenterCrop((224)),
-                video_transforms.ToTensor(),
-                normalize,
-            ])
+    train_dataset = datasets.__dict__[args.dataset](root=args.data,
+                                                    source=train_split_file,
+                                                    phase="train",
+                                                    modality=args.modality,
+                                                    is_color=is_color,
+                                                    new_length=args.new_length,
+                                                    new_width=args.new_width,
+                                                    new_height=args.new_height,
+                                                    video_transform=train_transform)
+    val_dataset = datasets.__dict__[args.dataset](root=args.data,
+                                                  source=val_split_file,
+                                                  phase="val",
+                                                  modality=args.modality,
+                                                  is_color=is_color,
+                                                  new_length=args.new_length,
+                                                  new_width=args.new_width,
+                                                  new_height=args.new_height,
+                                                  video_transform=val_transform)
 
-        # data loading
-        train_setting_file = "train_%s_split%d.txt" % (args.modality, args.split)
-        train_split_file = os.path.join(args.settings, args.dataset, train_setting_file)
-        val_setting_file = "val_%s_split%d.txt" % (args.modality, args.split)
-        val_split_file = os.path.join(args.settings, args.dataset, val_setting_file)
-        if not os.path.exists(train_split_file) or not os.path.exists(val_split_file):
-            print("No split file exists in %s directory. Preprocess the dataset first" % (args.settings))
+    print('{} samples found, {} train samples and {} test samples.'.format(len(val_dataset)+len(train_dataset),
+                                                                           len(train_dataset),
+                                                                           len(val_dataset)))
 
-        train_dataset = datasets.__dict__[args.dataset](root=args.data,
-                                                        source=train_split_file,
-                                                        phase="train",
-                                                        modality=args.modality,
-                                                        is_color=is_color,
-                                                        new_length=args.new_length,
-                                                        new_width=args.new_width,
-                                                        new_height=args.new_height,
-                                                        video_transform=train_transform)
-        val_dataset = datasets.__dict__[args.dataset](root=args.data,
-                                                      source=val_split_file,
-                                                      phase="val",
-                                                      modality=args.modality,
-                                                      is_color=is_color,
-                                                      new_length=args.new_length,
-                                                      new_width=args.new_width,
-                                                      new_height=args.new_height,
-                                                      video_transform=val_transform)
+    train_loader = torch.utils.data.DataLoader(
+        train_dataset,
+        batch_size=args.batch_size, shuffle=True,
+        num_workers=args.workers, pin_memory=True)
+    val_loader = torch.utils.data.DataLoader(
+        val_dataset,
+        batch_size=args.batch_size, shuffle=True,
+        num_workers=args.workers, pin_memory=True)
 
-        print('{} samples found, {} train samples and {} test samples.'.format(len(val_dataset)+len(train_dataset),
-                                                                               len(train_dataset),
-                                                                               len(val_dataset)))
+    if args.evaluate:
+        validate(val_loader, model, criterion)
+        return
 
-        train_loader = torch.utils.data.DataLoader(
-            train_dataset,
-            batch_size=args.batch_size, shuffle=True,
-            num_workers=args.workers, pin_memory=True)
-        val_loader = torch.utils.data.DataLoader(
-            val_dataset,
-            batch_size=args.batch_size, shuffle=True,
-            num_workers=args.workers, pin_memory=True)
+    for epoch in range(args.start_epoch, args.epochs):
+        adjust_learning_rate(optimizer, epoch)
 
-        if args.evaluate:
-            validate(val_loader, model, criterion)
-            return
+        # train for one epoch
+        train(train_loader, model, criterion, optimizer, epoch)
 
-        for epoch in range(args.start_epoch, args.epochs):
-            adjust_learning_rate(optimizer, epoch)
+        # evaluate on validation set
+        prec1 = 0.0
+        if (epoch + 1) % args.save_freq == 0:
+            prec1 = validate(val_loader, model, criterion)
 
-            # train for one epoch
-            train(train_loader, model, criterion, optimizer, epoch)
+        # remember best prec@1 and save checkpoint
+        is_best = prec1 > best_prec1
+        best_prec1 = max(prec1, best_prec1)
 
-            # evaluate on validation set
-            prec1 = 0.0
-            if (epoch + 1) % args.save_freq == 0:
-                prec1 = validate(val_loader, model, criterion)
-
-            # remember best prec@1 and save checkpoint
-            is_best = prec1 > best_prec1
-            best_prec1 = max(prec1, best_prec1)
-
-            if (epoch + 1) % args.save_freq == 0:
-                checkpoint_name = "%03d_%s" % (epoch + 1, "checkpoint.pth.tar")
-                save_checkpoint({
-                    'epoch': epoch + 1,
-                    'arch': args.arch,
-                    'state_dict': model.state_dict(),
-                    'best_prec1': best_prec1,
-                    'optimizer' : optimizer.state_dict(),
-                }, is_best, checkpoint_name, args.resume)
+        if (epoch + 1) % args.save_freq == 0:
+            checkpoint_name = "%03d_%s" % (epoch + 1, "checkpoint.pth.tar")
+            save_checkpoint({
+                'epoch': epoch + 1,
+                'arch': args.arch,
+                'state_dict': model.state_dict(),
+                'best_prec1': best_prec1,
+                'optimizer' : optimizer.state_dict(),
+            }, is_best, checkpoint_name, args.resume)
 
 def build_model():
 
     model = models.__dict__[args.arch](pretrained=True, num_classes=101)
     model.cuda()
     return model
-
 
 def resume_and_evaluate(param_optimizer):
     model = build_model()
@@ -230,7 +227,106 @@ def resume_and_evaluate(param_optimizer):
         model.eval()
         webcam_inference(model)
 
+def webcam_inference(param_model):
+    model = param_model
+    frame_count = 0
+    clip_mean = [0.5, 0.5] * args.new_length
+    clip_std = [0.226, 0.226] * args.new_length
 
+    normalize = video_transforms.Normalize(mean=clip_mean,
+                                               std=clip_std)
+    # config the transform to match the network's format
+    transform = video_transforms.Compose([
+                # video_transforms.Scale((256)),
+                video_transforms.CenterCrop((224)),
+                video_transforms.ToTensor(),
+                normalize,
+            ])
+
+    # prepare the translation dictionary label-action
+    data_handler = UCF101_splitter(os.getcwd()+'/datasets/ucf101_splits/', None)
+    data_handler.get_action_index()
+    class_to_idx = data_handler.action_label
+    print("hi")
+    print(class_to_idx)
+    idx_to_class = {v: k for k, v in class_to_idx.items()}
+
+    # Start looping on frames received from webcam
+    vs = cv2.VideoCapture("test.avi")
+    softmax = torch.nn.Softmax()
+    nn_output = torch.FloatTensor(2*10,224,224)
+    count = 0
+    idx = 0
+    temp = ''
+    x = []
+    sampled_list = []
+    while (vs.isOpened()):
+        ret, image = vs.read()
+        image = cv2.resize(image,(340, 256), interpolation=cv2.INTER_LINEAR)
+        x.append(temp)
+        if ret is False:
+            break
+
+        if count == 11:
+            sampled_list = []
+#             input_var = torch.autograd.Variable(clip_input, volatile=True)
+            temp = ''
+            input_var = clip_input.view(1, 20, 224, 224).cuda()
+            output = model(input_var)
+            output = softmax(output)
+            output = output.data.cpu().numpy()
+            preds = output.argsort()[0][-5:][::-1]
+            pred_classes = [(idx_to_class[str(pred+1)], output[0, pred]) for pred in preds]
+            for i in xrange(5):
+                temp += '{} - {:.2f}\n'.format(pred_classes[i][0], pred_classes[i][1])
+
+            print(temp)
+            nn_output = torch.FloatTensor(2*10,224,224)
+#             print(nn_output)
+            count = 0
+
+        if count == 0:
+            old_frame = image.copy()
+            prev = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
+            count += 1
+
+        else:
+            next = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            flow = cv2.calcOpticalFlowFarneback(prev, next, 1, 0.5, 3, 15, 3, 5, 1.2, 0)
+            horz = cv2.normalize(flow[...,0], None, 0, 255, cv2.NORM_MINMAX)
+            vert = cv2.normalize(flow[...,1], None, 0, 255, cv2.NORM_MINMAX)
+            horz = horz.astype('uint8')
+            vert = vert.astype('uint8')
+            imgH = Image.fromarray(horz)
+            imgV = Image.fromarray(vert)
+
+#             H = transform(imgH)
+#             V = transform(imgV)
+
+            sampled_list.append(np.expand_dims(imgH, 2))
+            sampled_list.append(np.expand_dims(imgV, 2))
+
+            clip_input = np.concatenate(sampled_list, axis=2)
+            clip_input = transform(clip_input)
+            clip_input = clip_input.float().cuda(async=True)
+#             sampled_list.append("sibal")
+#             nn_output[2*(count-1),:,:] = H
+#             nn_output[2*(count-1)+1,:,:] = V
+            imgH.close()
+            imgV.close()
+            prev = next.copy()
+            count += 1
+
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        y0, dy = 180, 20
+        for i, line in enumerate(x[idx].split('\n')):
+            y = y0 + i*dy
+            cv2.putText(image, line, (5, y ), font, 0.5, (0, 0, 255), 2)
+
+        cv2.imwrite('./record/' + str(idx) + '.jpg', image)
+        idx += 1
+
+    vs.release()
 def train(train_loader, model, criterion, optimizer, epoch):
     batch_time = AverageMeter()
     losses = AverageMeter()
@@ -377,3 +473,4 @@ def accuracy(output, target, topk=(1,)):
 
 if __name__ == '__main__':
     main()
+
