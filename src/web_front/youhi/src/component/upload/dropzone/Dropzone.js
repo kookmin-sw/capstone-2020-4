@@ -7,11 +7,16 @@ class Dropzone extends Component {
     this.state = { highlight: false };
     this.fileInputRef = React.createRef();
 
-    // this.openFileDialog = this.openFileDialog.bind(this);
+    this.openFileDialog = this.openFileDialog.bind(this);
     this.onFilesAdded = this.onFilesAdded.bind(this);
     // this.onDragOver = this.onDragOver.bind(this);
     // this.onDragLeave = this.onDragLeave.bind(this);
     // this.onDrop = this.onDrop.bind(this);
+  }
+
+  openFileDialog() {
+    if (this.props.disabled) return;
+    this.fileInputRef.current.click();
   }
 
   onFilesAdded(evt) {
@@ -33,7 +38,9 @@ class Dropzone extends Component {
 
   render() {
     return (
-      <div className={`Dropzone ${this.state.highlight ? "Highlight" : ""}`}>
+      <div className={`Dropzone ${this.state.highlight ? "Highlight" : ""}`}
+        onClick={this.openFileDialog}
+      >
         <input
           ref={this.fileInputRef}
           className="Dropzone-FileInput"
