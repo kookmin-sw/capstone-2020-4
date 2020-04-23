@@ -10,7 +10,7 @@ class Dropzone extends Component {
     this.openFileDialog = this.openFileDialog.bind(this);
     this.onFilesAdded = this.onFilesAdded.bind(this);
     this.onDragOver = this.onDragOver.bind(this);
-    // this.onDragLeave = this.onDragLeave.bind(this);
+    this.onDragLeave = this.onDragLeave.bind(this);
     this.onDrop = this.onDrop.bind(this);
   }
 
@@ -31,7 +31,11 @@ class Dropzone extends Component {
   onDragOver(event) {
     event.preventDefault();
     if (this.props.disabled) return;
-    this.setState({ hightlight: true });
+    this.setState({ highlight: true });
+  }
+
+  onDragLeave(event) {
+    this.setState({ highlight: false });
   }
 
   onDrop(event) {
@@ -56,8 +60,11 @@ class Dropzone extends Component {
   render() {
     return (
       <div className={`Dropzone ${this.state.highlight ? "Highlight" : ""}`}
+        onDragOver={this.onDragOver}
+        onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
         onClick={this.openFileDialog}
+        style={{ cursor: this.props.disabled ? "default" : "pointer" }}
       >
         <input
           ref={this.fileInputRef}
