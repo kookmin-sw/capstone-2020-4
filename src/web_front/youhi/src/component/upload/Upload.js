@@ -13,6 +13,8 @@ class Upload extends Component {
       successfullUploaded: false,
     }
     this.onFilesAdded = this.onFilesAdded.bind(this);
+    this.uploadFiles = this.uploadFiles.bind(this);
+    this.sendRequest = this.sendRequest.bind(this);
     this.renderActions = this.renderActions.bind(this);
   }
 
@@ -20,6 +22,20 @@ class Upload extends Component {
     this.setState((prevState) => ({
       files: prevState.files.concat(files),
     }));
+  }
+
+  async uploadFiles() {
+    this.setState({ uploading: true });
+    const promises = [];
+    this.state.files.forEach((file) => {
+      promises.push(this.sendRequest(file));
+    });
+    await Promise.all(promises);
+    this.setState({ successfullUploaded: true, uploading: false });
+  }
+
+  sendRequest() {
+
   }
 
   renderActions() {
