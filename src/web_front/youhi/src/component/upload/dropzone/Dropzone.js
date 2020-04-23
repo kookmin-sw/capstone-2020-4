@@ -9,7 +9,7 @@ class Dropzone extends Component {
 
     this.openFileDialog = this.openFileDialog.bind(this);
     this.onFilesAdded = this.onFilesAdded.bind(this);
-    // this.onDragOver = this.onDragOver.bind(this);
+    this.onDragOver = this.onDragOver.bind(this);
     // this.onDragLeave = this.onDragLeave.bind(this);
     this.onDrop = this.onDrop.bind(this);
   }
@@ -26,6 +26,12 @@ class Dropzone extends Component {
       const array = this.fileListToArray(files);
       this.props.onFilesAdded(array);
     }
+  }
+
+  onDragOver(event) {
+    event.preventDefault();
+    if (this.props.disabled) return;
+    this.setState({ hightlight: true });
   }
 
   onDrop(event) {
