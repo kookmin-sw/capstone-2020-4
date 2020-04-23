@@ -223,11 +223,122 @@ def resume_and_evaluate(param_optimizer):
         else:
             print("==> no checkpoint found at '{}'".format(resume))
 
+def resume_and_evaluate(param_optimizer):
+    model = build_model()
+    optimizer = param_optimizer
+    if resume:
+        if os.path.isfile(resume):
+
+            print("==> loading checkpoint '{}'".format(resume))
+            checkpoint = torch.load(resume)
+            start_epoch = checkpoint['epoch']
+            best_prec1 = checkpoint['best_prec1']
+            model.load_state_dict(checkpoint['state_dict'])
+            optimizer.load_state_dict(checkpoint['optimizer'])
+        else:
+            print("==> no checkpoint found at '{}'".format(resume))
+
     if demo:
         model.eval()
-        webcam_inference(model)
+        #         flow_test(model)
+        rgb_test(model)
 
-def webcam_inference(param_model):
+    def rgb_test(param_model):
+        model = param_model
+        frame_count = 0
+        clip_mean = [0.485, 0.456, 0.406] * args.new_length
+        clip_std = [0.229, 0.224, 0.225] * args.new_length
+
+        normalize = video_transforms.Normalize(mean=clip_mean,
+                                               std=clip_std)
+        # config the transform to match the network's format
+        transform = video_transforms.Compose([
+            # video_transforms.Scale((256)),
+            video_transforms.CenterCrop((224)),
+            video_transforms.ToTensor(),
+            normalize,
+        ])
+        # config the transform to match the network's format
+        #     transform = transforms.Compose([
+        #             transforms.Resize((342, 256)),
+        #             transforms.RandomCrop(224),
+        #             transforms.ToTensor(),
+        #             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])])
+
+        # prepare the translation dictionary label-action
+        data_handler = UCF101_splitter(os.getcwd() + '/datasets/ucf101_splits/', None)
+        data_handler.get_action_index()
+        class_to_idx = data_handler.action_label
+        print("hi")
+        print(class_to_idx)
+        idx_to_class = {v: k for k, v in class_to_idx.items()}
+
+        # Start looping on frames received from webcam
+        vs = cv2.VideoCapture("haha.avi")
+        softmax = torch.nn.Softmax()
+        nn_output = torch.tensor(np.zeros((1, 23)), dtype=torch.float32).cuda()
+        sampled_list = []
+        while True:
+            # read each frame and prepare it for feedforward in nn (resize and type)
+            ret, orig_frame = vs.read()
+            orig_frame = cv2.resize(orig_frame, (340, 256), interpolation=cv2.INTER_LINEAR)
+            if ret is False:
+                break
+
+            frame = cv2.cvtColor(orig_frame, cv2.COLOR_BGR2RGB)
+
+            sampled_list.append(frame)
+            clip_input = np.concatenate(sampled_list, axis=2)
+            #         frame = Image.fromarray(frame)
+            frame = transform(frame).view(1, 3, 224, 224).cuda()
+            frame = frame.float().cuda(async=True)
+            # feed the frame to the neural network
+            nn_output = model(frame)
+            #         nn_output = softmax(nn_output)
+            #         nn_output = nn_output.data.cpu().numpy()
+            #         preds = nn_output.argsort()[0][-5:][::-1]
+            #         pred_classes = [(idx_to_class[str(pred+1)], nn_output[0, pred]) for pred in preds]
+            #         sampld_list = []
+            # vote for class with 25 consecutive frames
+            if frame_count % 10 == 0:
+                nn_output = softmax(nn_output)
+                nn_output = nn_output.data.cpu().numpy()
+                preds = nn_output.argsort()[0][-5:][::-1]
+                pred_classes = [(idx_to_class[str(pred + 1)], nn_output[0, pred]) for pred in preds]
+
+                # reset the process
+                nn_output = torch.tensor(np.zeros((1, 23)), dtype=torch.float32).cuda()
+                sampled_list = []
+
+            # Display the resulting frame and the classified action
+            red = (0, 0, 255)
+            green = (0, 255, 0)
+            blue = (255, 0, 0)
+            white = (255, 255, 255)
+            yellow = (0, 255, 255)
+            cyan = (255, 255, 0)
+            magenta = (255, 0, 255)
+            thickness = 2
+            center_x = int(342 / 2.0)
+            center_y = int(256 / 2.0)
+            location = (center_x - 170, center_y + 80)
+            fontScale = 1.5
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            y0, dy = 180, 20
+            for i in xrange(5):
+                y = y0 + i * dy
+                #             print(y)
+                #             cv2.putText(orig_frame, 'sibal', location, font, fontScale, blue, thickness)
+                cv2.putText(orig_frame, '{} - {:.2f}'.format(pred_classes[i][0], pred_classes[i][1]),
+                            (5, y), font, 0.5, (0, 0, 255), 2)
+                print('{} - {:.2f}'.format(pred_classes[i][0], pred_classes[i][1]))
+            cv2.imwrite("temp/" + str(frame_count) + ".jpg", orig_frame)
+            frame_count += 1
+
+        # When everything done, release the capture
+        vs.release()
+
+def flow_test(param_model):
     model = param_model
     frame_count = 0
     clip_mean = [0.5, 0.5] * args.new_length
