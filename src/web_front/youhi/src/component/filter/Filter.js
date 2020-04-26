@@ -4,8 +4,7 @@ import "./Filter.css";
 import NewWindow from "react-new-window";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import Login from "../login/login";
-
+import LoginModal from "../filter/exception/exception";
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -48,7 +47,7 @@ function Filter() {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      test
+      Test
     </div>
   );
 
@@ -74,10 +73,9 @@ function Filter() {
             <button className="Filter-box Filter-voice-filter" />
           </div>
         </div>
+        {LoginModal()}
       </div>
-      <div className="Filter-feedback-button-wrapper">
-        <button className="Filter-feedback-button">이의신청 및 문의하기</button>
-      </div>
+
     </div>
   );
 }

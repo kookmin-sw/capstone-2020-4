@@ -25,8 +25,8 @@ class Login extends Component {
         return (
             <Container>
                 <GoogleLogin 
-                    clientId= {process.env.REACT_APP_Google}
-                    buttonText="Google"
+                    clientId= '918500591677-ppbhdcpu07o9d36g21ckkrqrqs55s61b.apps.googleusercontent.com'
+                    buttonText="Login"
                     onSuccess={this.responseGoogle}
                     onFailure={this.resposneFail}
                 />
