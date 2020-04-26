@@ -60,6 +60,13 @@ class Upload extends Component {
         resolve(req.response);
       });
 
+      req.upload.addEventListener("error", (event) => {
+        const copy = { ...this.state.uploadProgress };
+        copy[file.name] = { state: "error", percentage: 0 };
+        this.setState({ uploadProgress: copy });
+        reject(req.response);
+      });
+
       var xhr = new XMLHttpRequest();
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
