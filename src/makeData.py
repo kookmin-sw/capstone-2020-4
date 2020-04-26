@@ -26,5 +26,5 @@ def printTime(t):
     f.close()
 
 
-printTime(3)
+#printTime(3)
 writeCSV("33")

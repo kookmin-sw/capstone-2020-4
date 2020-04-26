@@ -1,0 +1,4 @@
+그는	그/NP + 는/JX우리	우리/NP당의	당/NNG + 의/JKG마지막	마지막/NNG희망과	희망/NNG + 과/JC목표는	목표/NNG + 는/JX내후년	내후년/NNG3월의	3/SN + 월/NNB + 의/JKG대선	대선/NNG승리다	승리/NNG + 이/VCP + 다/EC
+이번	이번/NNG총선	총선/NNG패배를	패배/NNG + 를/JKO처절하게	처절/NNG + 하/XSA + 게/EC반성하고	반성/NNG + 하/XSV + 고/EC환골탈태해	환골/NNG + 탈태/NNG + 하/XSV + 여/EC대선	대선/NNG필승의	필승/NNG + 의/JKG준비를	준비/NNG + 를/JKO하는	하/VV + 는/ETM게	것/NNB + 이/JKS
+지금	지금/MAG우리가	우리/NP + 가/JKS해야	하/VV + 여야/EC할	하/VX + ㄹ/ETM일이라며	일/NNG + 이/VCP + 라며/EC바로	바로/MAG그래서	그/MAJ + 렇/VA + 어/EC + 서/MAJ김종인씨를	김종인/NNP + 씨/NNB + 를/JKO비대위원장으로	비/XPN + 대위원장/NNG + 으로/JKB모시는	모시/VV + 는/ETM게	것/NNB + 이/JKS
+좋다고	좋/VA + 다고/EC의원과	의원/NNG + 과/JC당선인	당선/NNG + 이/VCP + ㄴ/ETM다수가	다수/NNG + 가/JKS결정했던	결정/NNG + 하/XSV + 였/EP + 던/ETM것이라고	것/NNB + 이/VCP + 라고/EC강조했다	강조/NNG + 하/XSV + 였/EP + 다/EC
