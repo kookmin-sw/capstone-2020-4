@@ -34,8 +34,13 @@ class Upload extends Component {
     this.setState({ successfullUploaded: true, uploading: false });
   }
 
-  sendRequest() {
-
+  sendRequest(file) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(
+      "GET",
+      `https://j2s6y0lok9.execute-api.ap-northeast-2.amazonaws.com/prod/%7Bproxy+7D?name=${file.name}`
+    );  
+    xhr.send();
   }
 
   renderActions() {
