@@ -4,6 +4,8 @@ import Dropzone from "./dropzone/Dropzone";
 import Text from "./text/Text";
 import "./Upload.css";
 
+var signedURL;
+
 class Upload extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +37,23 @@ class Upload extends Component {
   }
 
   sendRequest(file) {
+    var req = new XMLHttpRequest();
     var xhr = new XMLHttpRequest();
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        signedURL = JSON.parse(this.responseText);
+        console.log(signedURL.signed_url);
+        console.log(signedURL.requestId);
+        var data = new FormData();
+        data.append("file", file, `${file.name}`);
+        req.open(
+          "PUT",
+          signedURL.signed_url
+        );
+        req.send(file);
+      }
+    });
+    
     xhr.open(
       "GET",
       `https://j2s6y0lok9.execute-api.ap-northeast-2.amazonaws.com/prod/%7Bproxy+7D?name=${file.name}`
