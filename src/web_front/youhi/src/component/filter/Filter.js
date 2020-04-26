@@ -4,6 +4,7 @@ import "./Filter.css";
 import NewWindow from "react-new-window";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import Login from "../login/login";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
