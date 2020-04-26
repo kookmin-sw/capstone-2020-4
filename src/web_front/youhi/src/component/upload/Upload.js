@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import UploadElementor from "./upload_elementor/UploadElementor";
 import Dropzone from "./dropzone/Dropzone";
 import Progress from "./progress/Progress";
@@ -15,7 +15,7 @@ class Upload extends Component {
       uploaing: false,
       uploadProgress: {},
       successfullUploaded: false,
-    }
+    };
     this.onFilesAdded = this.onFilesAdded.bind(this);
     this.uploadFiles = this.uploadFiles.bind(this);
     this.sendRequest = this.sendRequest.bind(this);
@@ -41,7 +41,7 @@ class Upload extends Component {
   sendRequest(file) {
     return new Promise((resolve, reject) => {
       var req = new XMLHttpRequest();
-      
+
       req.upload.addEventListener("progress", (event) => {
         if (event.lengthComputable) {
           const copy = { ...this.state.uploadProgress };
@@ -68,40 +68,43 @@ class Upload extends Component {
           console.log(signedURL.requestId);
           var data = new FormData();
           data.append("file", file, `${file.name}`);
-          req.open(
-            "PUT",
-            signedURL.signed_url
-          );
+          req.open("PUT", signedURL.signed_url);
           req.send(file);
         }
       });
-      
+
       xhr.open(
         "GET",
         `https://j2s6y0lok9.execute-api.ap-northeast-2.amazonaws.com/prod/%7Bproxy+7D?name=${file.name}`
-      );  
-      xhr.send();  
-    })
+      );
+      xhr.send();
+    });
   }
 
   renderActions() {
     return (
       <div className="Actions">
-        <button className="Upload-button Upload-upload-button">업로드</button>
+        <button
+          className="Upload-button Upload-upload-button"
+          disabled={this.state.files.length < 0 || this.state.uploading}
+          onClick={this.uploadFiles}
+        >
+          업로드
+        </button>
         <button className="Upload-button Upload-filter-button">필터</button>
       </div>
     );
   }
-  
+
   render() {
     return (
       <div className="Upload">
         <UploadElementor />
         <div className="Upload-outer-flex-items">
-          <Dropzone 
+          <Dropzone
             onFilesAdded={this.onFilesAdded}
             disabled={this.state.uploading || this.state.successfullUploaded}
-          />  
+          />
           <div className="Upload-inner-flex-items">
             <Text />
             <div className="Upload-files">
