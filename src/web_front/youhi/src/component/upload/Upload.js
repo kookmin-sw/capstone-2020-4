@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import UploadElementor from "./upload_elementor/UploadElementor";
 import Dropzone from "./dropzone/Dropzone";
+import Progress from "./progress/Progress";
 import Text from "./text/Text";
 import "./Upload.css";
 
@@ -12,6 +13,7 @@ class Upload extends Component {
     this.state = {
       files: [],
       uploaing: false,
+      uploadProgress: {},
       successfullUploaded: false,
     }
     this.onFilesAdded = this.onFilesAdded.bind(this);
@@ -37,28 +39,42 @@ class Upload extends Component {
   }
 
   sendRequest(file) {
-    var req = new XMLHttpRequest();
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        signedURL = JSON.parse(this.responseText);
-        console.log(signedURL.signed_url);
-        console.log(signedURL.requestId);
-        var data = new FormData();
-        data.append("file", file, `${file.name}`);
-        req.open(
-          "PUT",
-          signedURL.signed_url
-        );
-        req.send(file);
-      }
-    });
-    
-    xhr.open(
-      "GET",
-      `https://j2s6y0lok9.execute-api.ap-northeast-2.amazonaws.com/prod/%7Bproxy+7D?name=${file.name}`
-    );  
-    xhr.send();
+    return new Promise((resolve, reject) => {
+      var req = new XMLHttpRequest();
+      
+      req.upload.addEventListener("progress", (event) => {
+        if (event.lengthComputable) {
+          const copy = { ...this.state.uploadProgress };
+          copy[file.name] = {
+            state: "pending",
+            percentage: (event.loaded / event.total) * 100,
+          };
+          this.setState({ uploadProgress: copy });
+        }
+      });
+
+      var xhr = new XMLHttpRequest();
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          signedURL = JSON.parse(this.responseText);
+          console.log(signedURL.signed_url);
+          console.log(signedURL.requestId);
+          var data = new FormData();
+          data.append("file", file, `${file.name}`);
+          req.open(
+            "PUT",
+            signedURL.signed_url
+          );
+          req.send(file);
+        }
+      });
+      
+      xhr.open(
+        "GET",
+        `https://j2s6y0lok9.execute-api.ap-northeast-2.amazonaws.com/prod/%7Bproxy+7D?name=${file.name}`
+      );  
+      xhr.send();  
+    })
   }
 
   renderActions() {
