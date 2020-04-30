@@ -7,10 +7,11 @@ import wave
 from cutAudio import countFile
 from makeData import writeCSV
 from makeData import writeTXT
-from makeData import printTime
+from makeData import stampTime
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
+from google.cloud import speech_v1
 
 def frame_rate_channel(audio_file_name):
     print(audio_file_name)
@@ -39,6 +40,63 @@ def transcribe_gcs(gcs_uri):
         print(u'Transcript: {}'.format(result.alternatives[0].transcript))
         #print('Confidence: {}'.format(result.alternatives[0].confidence))
         #writeCSV(result.alternatives[0].transcript)  #save csv file
+
+def sample_long_running_recognize(local_file_path):
+        """
+        Print start and end time of each word spoken in audio file from Cloud Storage
+
+        Args:
+          storage_uri URI for audio file in Cloud Storage, e.g. gs://[BUCKET]/[FILE]
+        """
+
+        client = speech_v1.SpeechClient()
+
+        # storage_uri = 'gs://cloud-samples-data/speech/brooklyn_bridge.flac'
+
+        # When enabled, the first result returned by the API will include a list
+        # of words and the start and end time offsets (timestamps) for those words.
+        enable_word_time_offsets = True
+
+        # The language of the supplied audio
+        language_code = "ko-KR"
+        config = {
+            "enable_word_time_offsets": enable_word_time_offsets,
+            "language_code": language_code,
+            "audio_channel_count" : 2,
+            #" sample_rate_hertz" : 44100
+
+        }
+        with io.open(local_file_path, "rb") as f:
+            content = f.read()
+        audio = {"content": content}
+
+        operation = client.long_running_recognize(config, audio)
+
+        print(u"Waiting for operation to complete...")
+        response = operation.result()
+
+        # The first result includes start and end time word offsets
+        result = response.results[0]
+        # First alternative is the most probable result
+        alternative = result.alternatives[0]
+        print(u"Transcript: {}".format(alternative.transcript))
+        # Print the start and end time of each word
+        for word in alternative.words:
+            print(u"Word: {}".format(word.word))
+            print(
+                u"Start time: {} seconds {} nanos".format(
+                    word.start_time.seconds, word.start_time.nanos
+                )
+            )
+            print(
+                u"End time: {} seconds {} nanos".format(
+                    word.end_time.seconds, word.end_time.nanos
+                )
+            )
+        for word in alternative.words:
+            stampTime(word.word, word.start_time.seconds, word.start_time.nanos, word.end_time.seconds, word.end_time.nanos)
+            writeTXT(word.word)
+
 
 def sample_recognize(local_file_path):
     """
@@ -95,11 +153,9 @@ def implicit():
 #implicit()
 #transcribe_gcs('gs://youtubespeech/theaudio.wav')
 
-#num = countFile('C:\\Users\\01097\\PycharmProjects\\untitled\\voice', '.wav')
-num = countFile('/home/ubuntu/capstone-2020-4/src/voice', '.wav')
-for i in range(num):
-    #printTime(i)
+num = countFile('C:\\Users\\01097\\PycharmProjects\\untitled\\voice', '.wav')
+#num = countFile('/home/ubuntu/capstone-2020-4/src/voice', '.wav')
+#for i in range(num):
     #sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile' + str(i) + '.wav')
-    sample_recognize('/home/ubuntu/capstone-2020-4/src/voice/cutfile' + str(i) + '.wav')
-# sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile888.wav')
-# print(frame_rate_channel('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile12.wav'))
+    #sample_recognize('/home/ubuntu/capstone-2020-4/src/voice/cutfile' + str(i) + '.wav')
+sample_long_running_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\test01.wav')
