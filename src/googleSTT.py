@@ -155,7 +155,7 @@ def implicit():
 
 num = countFile('C:\\Users\\01097\\PycharmProjects\\untitled\\voice', '.wav')
 #num = countFile('/home/ubuntu/capstone-2020-4/src/voice', '.wav')
-for i  in range(num):
+for i in range(num):
     #sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile' + str(i) + '.wav')
     #sample_recognize('/home/ubuntu/capstone-2020-4/src/voice/cutfile' + str(i) + '.wav')
     sample_long_running_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile'+str(i) +'.wav', i)

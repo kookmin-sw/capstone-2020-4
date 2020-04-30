@@ -84,6 +84,17 @@ def cutting(AUDIO_FILE):
 
     # beginning.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile888.wav", format = 'wav')
 
+def mute(FILE_PATH, starttime, endtime):
+    wav = AudioSegment.from_wav(FILE_PATH)
+    beep = AudioSegment.from_wav("C:\\Users\\01097\\PycharmProjects\\untitled\\beep.wav")
+    lenOfWav = wav.duration_seconds
+    #w2 = wav[51000:60000]-100
+    #w1 = wav[0:50000] + w2 + wav[61000: 157000]
+    w1 = wav[:starttime-1] + beep[:endtime-starttime] + wav[endtime+1:]
+
+
+    w1.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\mute.wav", format = 'wav')
+
 
 def countFile(path,extension):
   list_dir = []
@@ -101,3 +112,4 @@ def countFile(path,extension):
 #cutting("sin.wav")
 
 #countFile("C:\\Users\\01097\\PycharmProjects\\untitled\\voice", ".wav")
+mute(".\\voice\\untitled.wav", 1700, 2800)

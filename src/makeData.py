@@ -20,7 +20,7 @@ def writeTXT(sentence):
 def stampTime(word, start, start_nano, end, end_nano, cnt):
     f = open('C:\\Users\\01097\\PycharmProjects\\untitled\\csv\\time.txt', 'a')
     # f = open('/home/ubuntu/capstone-2020-4/src/csv/write.csv', 'a')
-    f.write(str(word) + "/" + str(start + cnt*50) +"." +str(start_nano) + "/" + str(end + cnt*50) + "." +str(end_nano)) # 몇번째 파일인지 따라 50초 씩 시간 추가
+    f.write(str(word) + "/" + str(round(start*1000 + (start_nano/1000000)) + 50000*cnt) + "/" + str(round(end*1000 + (end_nano/1000000)) + 50000*cnt)) # ms로 단위 변환
     f.write("\n")
 
     f.close()
