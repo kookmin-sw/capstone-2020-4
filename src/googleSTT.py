@@ -41,7 +41,7 @@ def transcribe_gcs(gcs_uri):
         #print('Confidence: {}'.format(result.alternatives[0].confidence))
         #writeCSV(result.alternatives[0].transcript)  #save csv file
 
-def sample_long_running_recognize(local_file_path):
+def sample_long_running_recognize(local_file_path, num):
         """
         Print start and end time of each word spoken in audio file from Cloud Storage
 
@@ -94,7 +94,7 @@ def sample_long_running_recognize(local_file_path):
                 )
             )
         for word in alternative.words:
-            stampTime(word.word, word.start_time.seconds, word.start_time.nanos, word.end_time.seconds, word.end_time.nanos)
+            stampTime(word.word, word.start_time.seconds, word.start_time.nanos, word.end_time.seconds, word.end_time.nanos, num)
             writeTXT(word.word)
 
 
@@ -155,7 +155,7 @@ def implicit():
 
 num = countFile('C:\\Users\\01097\\PycharmProjects\\untitled\\voice', '.wav')
 #num = countFile('/home/ubuntu/capstone-2020-4/src/voice', '.wav')
-#for i in range(num):
+for i  in range(num):
     #sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile' + str(i) + '.wav')
     #sample_recognize('/home/ubuntu/capstone-2020-4/src/voice/cutfile' + str(i) + '.wav')
-sample_long_running_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\test01.wav')
+    sample_long_running_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile'+str(i) +'.wav', i)

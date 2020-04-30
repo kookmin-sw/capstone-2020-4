@@ -3,6 +3,7 @@ import os
 import librosa
 import numpy as np
 import wave, array
+import math
 from pydub import AudioSegment
 
 
@@ -63,6 +64,7 @@ def cutting(AUDIO_FILE):
 
     ten_seconds = 10 * 1000
     five_seconds = 5 * 1000
+    fifty_seconds = ten_seconds * 5
     one_min = ten_seconds * 6
 
     first_10_seconds = wav[:ten_seconds*2]
@@ -71,11 +73,14 @@ def cutting(AUDIO_FILE):
     last_5_seconds = wav[-5000:]
     beginning = first_5_seconds
 
-    for i in range(round(lenOfWav/5)):
+
+    #print(math.trunc(lenOfWav/50))
+    for i in range(math.trunc(lenOfWav/50)+1):
         print(i)
-        section = wav[five_seconds*i:five_seconds*(i+1)]
-        #section.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile"+str(i)+".wav", format = 'wav')
-        section.export("/home/ubuntu/capstone-2020-4/src/voice/cutfile" + str(i) + ".wav", format='wav')
+        #section = wav[five_seconds*i:five_seconds*(i+1)]
+        section = wav[fifty_seconds*i:fifty_seconds*(i+1)]
+        section.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile"+str(i)+".wav", format = 'wav')
+        #section.export("/home/ubuntu/capstone-2020-4/src/voice/cutfile" + str(i) + ".wav", format='wav')
 
     # beginning.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile888.wav", format = 'wav')
 
@@ -91,9 +96,8 @@ def countFile(path,extension):
   return count
 
 
-
 #make_stereo("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile2.wav", "stereo.wav")
 # cutAudioFile("test07.wav")
-cutting("/home/ubuntu/capstone-2020-4/src/voice_raw/test10.wav")
+#cutting("sin.wav")
 
 #countFile("C:\\Users\\01097\\PycharmProjects\\untitled\\voice", ".wav")
