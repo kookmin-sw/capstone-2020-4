@@ -25,6 +25,15 @@ io.on('connection', function (socket) {
          a = String(data);
          io.to(clients[id]).emit("abc", "complete");
          console.log("complete");
+         var exec = require('child_process').exec,
+              ls;
+         ls = exec("sudo python3.6 down.py " + data, function (error, stdout, stderr){
+                console.log('stderr: ' + stderr);
+                if (error !== null) {
+                        console.log('exec error: ' + error);
+                }
+          });
+          console.log("done");
         }
         if(data === "isdone"){
           console.log(data);
