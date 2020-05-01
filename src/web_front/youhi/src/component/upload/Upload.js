@@ -29,7 +29,7 @@ class Upload extends Component {
   }
 
   async uploadFiles() {
-    this.setState({ uploading: true });
+    this.setState({ uploadProgress: {}, uploading: true });
     const promises = [];
     this.state.files.forEach((file) => {
       promises.push(this.sendRequest(file));
@@ -88,6 +88,26 @@ class Upload extends Component {
     });
   }
 
+  renderProgress(file) {
+    const uploadProgress = this.state.uploadProgress[file.name];
+    if (this.state.uploading || this.state.successfullUploaded) {
+      return (
+        <div className="Upload-progress">
+          <Progress progress={uploadProgress ? uploadProgress.percentage : 0} />
+          <img
+            className="Upload-check-icon"
+            alt="done"
+            src={require("../../img/check_circle.png")}
+            style={{
+              opacity:
+                uploadProgress && uploadProgress.state === "done" ? 0.5 : 0,
+            }}
+          />
+        </div>
+      );
+    }
+  }
+
   renderActions() {
     return (
       <div className="Actions">
@@ -119,6 +139,7 @@ class Upload extends Component {
                 return (
                   <div key={file.name} className="Upload-Row">
                     <span className="Upload-Filename">{file.name}</span>
+                    {this.renderProgress(file)}
                   </div>
                 );
               })}
