@@ -11,7 +11,7 @@ function App() {
       <Navbar />
       <Introduction />
       <Upload />
-      <Filter/>
+      <Filter />
     </div>
   );
 }
