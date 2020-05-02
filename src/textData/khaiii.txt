@@ -1,4 +1,201 @@
-그는	그/NP + 는/JX우리	우리/NP당의	당/NNG + 의/JKG마지막	마지막/NNG희망과	희망/NNG + 과/JC목표는	목표/NNG + 는/JX내후년	내후년/NNG3월의	3/SN + 월/NNB + 의/JKG대선	대선/NNG승리다	승리/NNG + 이/VCP + 다/EC
-이번	이번/NNG총선	총선/NNG패배를	패배/NNG + 를/JKO처절하게	처절/NNG + 하/XSA + 게/EC반성하고	반성/NNG + 하/XSV + 고/EC환골탈태해	환골/NNG + 탈태/NNG + 하/XSV + 여/EC대선	대선/NNG필승의	필승/NNG + 의/JKG준비를	준비/NNG + 를/JKO하는	하/VV + 는/ETM게	것/NNB + 이/JKS
-지금	지금/MAG우리가	우리/NP + 가/JKS해야	하/VV + 여야/EC할	하/VX + ㄹ/ETM일이라며	일/NNG + 이/VCP + 라며/EC바로	바로/MAG그래서	그/MAJ + 렇/VA + 어/EC + 서/MAJ김종인씨를	김종인/NNP + 씨/NNB + 를/JKO비대위원장으로	비/XPN + 대위원장/NNG + 으로/JKB모시는	모시/VV + 는/ETM게	것/NNB + 이/JKS
-좋다고	좋/VA + 다고/EC의원과	의원/NNG + 과/JC당선인	당선/NNG + 이/VCP + ㄴ/ETM다수가	다수/NNG + 가/JKS결정했던	결정/NNG + 하/XSV + 였/EP + 던/ETM것이라고	것/NNB + 이/VCP + 라고/EC강조했다	강조/NNG + 하/XSV + 였/EP + 다/EC
+좋/VA 아요/EC
+구/MAG 독/NNG
+부탁/NNG 드리/VV 겠/EP 습니다/EC
+안녕/NNG 하/XSA 세요/EC
+신대리/NNG 이/VCP ㅂ니다/EC
+다/MAG 들/XSN
+반갑/VA 습니다/EC
+오늘/NNG 은/JX
+우리나라/NNG
+대한민국/NNP 을/JKO
+욕/NNG 을/JKO
+하/VV 였/EP 어/EC
+어떤/MM
+일본인비제/NNG 이/JKS
+새끼/NNG 를/JKO
+따르/VV 고/EC
+하/VV ㅂ니다/EC
+야이/NNG
+시발/NNG
+원숭이/NNG
+새끼/NNG 야/JX
+잘/MAG
+들/VV 어/EC
+끝/NNG 까지/JX
+봐/IC
+이/MM
+새끼/NNG 야/JX
+원숭이/NNG
+우울/NNG 하/XSA 여서/EC
+빠져나오/VV ㄴ/ETM
+개코원/NNP 숭이/NNG
+새끼/NNG
+아니/VCN 랄까/EC 보/VX 아/EC
+씨발새끼/NNG
+집안/NNG
+꼬라지/NNG 가/JKS
+딸/NNG
+원숭이/NNG 들/XSN 이/JKS
+개/NNG
+새끼/NNG
+쓰레기/NNG 도/JX
+치우/VV 고/EC
+살/VV 아라/EC
+이/MM
+씨발새끼/NNG 야/JX
+이/MM
+개새끼/NNG 야/JX
+너/NP
+좆/NNG
+같/VA 은/ETM
+새끼/NNG 야/JX
+시발/NNG
+새끼/NNG 야/JX
+개새끼/NNG 야/JX
+시발/NNG
+년/NNP 아/JKV
+이/MM
+개새끼/NNG 야/JX
+씨발놈/NNG
+턱/NNG 주가리/NNP
+치/VV 어/EC
+보/VV 라고/EC
+좆/NNG 같/VA 은/ETM
+대가리/NNG
+이/MM
+시발/NNG
+새끼/NNG
+쓰레기/NNG 이/VCP 라면/EC
+이/MM
+개새끼/NNG 야/JX
+여기/NP 는/JX
+내일/NNG
+중/NNB
+뭐/NP 이/VCP 야/EC
+이것/NP 이/JKS
+한국/NNP 에서/JKB
+만들/VV ㄴ/ETM
+씨발놈/NNG
+개새끼/NNG 가/JKS
+마전/NNG
+씹새끼/NNG 야/JX
+아오/NNP
+시발/NNG
+개새끼/NNG 야/JX
+더럽/VA ㄴ/ETM
+새끼/NNG
+이거/NP
+이/MM
+새끼/NNG
+생김새/NNG 부터/JX
+강간범/NNG
+살/VV 는/ETM
+것/NNB 이/JKS
+역시/MAG 나/JC
+더럽/VA ㄴ/ETM
+새끼/NNG
+없/VA 어/EC
+이/MM
+시발/NNG
+새끼/NNG
+이거/NP
+치/VV 어/EC
+맞/VV 아도/EC
+새끼/NNG 야/JX
+이/MM
+개새끼/NNG 야/JX
+이/MM
+옆/NNG 에/JKB
+있/VV 는/ETM
+인형/NNG
+뭐/NP 이/VCP 야/EC
+이거/NP
+뭐/NP 이/VCP 야/EC
+이/MM
+시발/NNG
+개새끼/NNG 야/JX
+뭐/NP 이/VCP 야/EC
+모르/VV 아/EC
+시발/NNG
+밤/NNG 마다/JX
+이/MM
+씨/NNG 부/NNP 랄/SP
+새끼/NNG
+개/NNG
+새끼/NNG
+6/SN 분/NNB
+가르치/VV 어/EC
+비비/VV 면서/EC
+딱지/NNG 는/JX
+시발/NNG
+더럽/VA ㄴ/ETM
+새끼/NNG
+이거/NP
+어/IC
+개/NNG
+새끼/NNG
+인형/NNG 을/JKO
+또/MAG
+뭐/NP 이/VCP 야/EC
+왜/MAG
+다리/NNG 를/JKO
+벌리/VV 고/EC
+있/VV 어/EC
+씹새끼/NNG 야/JX
+개새끼/NNG 가/JKS
+뭔/MM
+짓거리/NNG
+하/VV 여서/EC
+2/SN 명/NNB 한테/JKB
+시발/NNG
+개/NNG
+새끼/NNG
+개/NNG
+같/VA 은/ETM
+새끼/NNG
+시발/NNG
+이거/NP
+노래/NNG
+씨발놈/NNG 들/XSN 아/EC
+자갈/NNG 을/JKO
+지워/NNG
+밟/VV 아야/EC
+되/VV 어/EC
+바로/MAG
+바로/MAG
+바로/MAG
+바로/MAG
+이/MM
+개/NNG
+새끼/NNG
+시발/NNG
+새끼/NNG
+시발/NNG
+좆/NNG 같/VA 은/ETM
+개/NNP 씨/NNB 발/NNP
+쌍놈/NNG 의/JKG
+새끼/NNG
+있/VV 어/EC
+너/NP
+때문/NNB 에/JKB
+일본/NNP
+자체/NNG 가/JKS
+욕/NNG 을/JKO
+먹/VV 는/ETM
+걸/VV 는/MAG
+나/NP 는/JX
+뭐/NP ㄹ/JKO
+하/VV 지/EC
+않/VX 아/EC
+네/IC
+같/VA 은/ETM
+씨발새끼/NNG
+나/NP 가/NNP
+뒈지/VV 어/EC
+버리/VV 어야/EC
+되/VV 어/EC
+이/MM
+개새끼/NNG 야/JX
+씹새끼/NNG 야/JX
+안/MAG
+하/MAJ 냐/EC
