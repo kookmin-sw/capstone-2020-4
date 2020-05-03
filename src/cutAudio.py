@@ -112,4 +112,4 @@ def countFile(path,extension):
 #cutting("sin.wav")
 
 #countFile("C:\\Users\\01097\\PycharmProjects\\untitled\\voice", ".wav")
-mute(".\\voice\\untitled.wav", 1700, 2800)
+#mute(".\\voice\\untitled.wav", 1700, 2800)
