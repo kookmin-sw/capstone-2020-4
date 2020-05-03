@@ -1,3 +1,4 @@
+# !/usr/bin/env python3
 import sys, math, argparse, re
 import fasttext
 import cs_sim
