@@ -3,6 +3,8 @@ import fasttext
 import cs_sim
 from cutAudio import mute
 
+model = fasttext.load_model('/home/ubuntu/fastText/mywork/model_test.bin')
+
 def go(tokenized_khaiii_fname):
   count = 0
   with open(tokenized_khaiii_fname, 'r', encoding='utf-8') as f1:
@@ -17,7 +19,6 @@ def go(tokenized_khaiii_fname):
 
 def filter(tokenList, Line):
   swearList = ['시발']
-  model = fasttext.load_model('/home/ubuntu/fastText/mywork/model_test.bin')
   for token in tokenList:
     for check in swearList:
       similarity = cs_sim.calculate(model.get_word_vector(token), model.get_word_vector(check))
