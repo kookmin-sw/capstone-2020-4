@@ -6,6 +6,7 @@ import Text from "./text/Text";
 import "./Upload.css";
 
 var signedURL;
+var uniqueNum;
 const io = require("socket.io-client");
 const ioClient = io.connect("http://13.125.127.181:4567");
 
@@ -30,6 +31,9 @@ class Upload extends Component {
     }));
 
     ioClient.emit("ready", `${files[0].name}`);
+    ioClient.on("number", (data) => {
+      uniqueNum = data;
+    });
   }
 
   async uploadFiles() {
