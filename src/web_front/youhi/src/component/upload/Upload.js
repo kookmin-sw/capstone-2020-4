@@ -6,6 +6,8 @@ import Text from "./text/Text";
 import "./Upload.css";
 
 var signedURL;
+const io = require("socket.io-client");
+const ioClient = io.connect("http://13.125.127.181:4567");
 
 class Upload extends Component {
   constructor(props) {
@@ -26,6 +28,8 @@ class Upload extends Component {
     this.setState((prevState) => ({
       files: prevState.files.concat(files),
     }));
+
+    ioClient.emit("ready", `${files[0].name}`);
   }
 
   async uploadFiles() {
