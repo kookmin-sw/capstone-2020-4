@@ -25,7 +25,30 @@ for file in file_list:
         print(file, labels[0], scores[0])
         if labels[0] == "smoke" or labels[0] == "knife":
             if scores[0] > 0.6:
-                video_list.append(path)
+                video_list.append(file)
 
 print(video_list)
+
+def ffmpeg_extract_subclip(filename, t1, t2, targetname=None):
+    """ Makes a new video file playing video file ``filename`` between
+    the times ``t1`` and ``t2``. """
+    name, ext = os.path.splitext(filename)
+    if not targetname:
+        T1, T2 = [int(1000*t) for t in [t1, t2]]
+        targetname = "%sSUB%d_%d.%s" % (name, T1, T2, ext)
+
+    cmd = [get_setting("FFMPEG_BINARY"),
+           "-i", filename,
+           "-ss", "%0.2f"%t1,
+           "-t", "%0.2f"%(t2-t1),
+           "-c:v",  "libx264",  "-c:a", "aac",
+           "-strict", "experimental", "-b:a", "128k",
+           targetname]
+
+    subprocess_call(cmd)
+
+for video in video_list:
+    video_name = video.split(".")[0]
+    ffmpeg_extract_subclip("./smoke.avi", int(video_name), int(video_name) + 3, targetname=f"./smoke/{video_name}.mp4")
+
 
