@@ -1,4 +1,4 @@
-{\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset129 \'b8\'bc\'c0\'ba \'b0\'ed\'b5\'f1;}}
+{\rtf1\ansi\ansicpg949\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset129 \'b8\'bc\'c0\'ba \'b0\'ed\'b5\'f1;}}
 {\*\generator Riched20 10.0.18362}\viewkind4\uc1 
 \pard\sa200\sl276\slmult1\f0\fs20\lang18 import os\par
 import time\par
@@ -14,7 +14,8 @@ import torch.backends.cudnn as cudnn\par
 import torch.optim\par
 import torch.utils.data\par
 import torchvision.transforms as transforms\par
-\par
+import json\par
+from collections import OrderedDict\par
 import video_transforms\par
 import models\par
 import datasets\par
@@ -31,6 +32,8 @@ parser.add_argument('--resume', default='./checkpoints', type=str, metavar='PATH
 parser.add_argument('--demo', dest='demo', action='store_true', help='use model inference on video')\par
 parser.add_argument('--label', default='smoke', type=str,\par
                     help='input label')\par
+parser.add_argument('--video', default='', type=str,\par
+                    help='input video')\par
 \par
 best_prec1 = 0\par
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   \par
@@ -101,6 +104,8 @@ def main():\par
     demo = args.demo\par
     global label\par
     label = args.label\par
+    global video\par
+    video = args.video\par
     print("Building model ... ")\par
     flow_model = flow_build_model()\par
 #     print("Model %s is loaded. " % (args.arch))\par
@@ -140,93 +145,102 @@ def resume_and_evaluate(flow_optimizer, flow_model):\par
     \par
 def flow_test(param_model):\par
     model = param_model\par
-    frame_count = 0\par
-    clip_mean = [0.5, 0.5] * 10\par
-    clip_std = [0.226, 0.226] * 10\par
+    video_list = os.listdir(video)\par
     f = open("flow_result.txt", 'w')\par
-    normalize = video_transforms.Normalize(mean=clip_mean,\par
-                                               std=clip_std)\par
-    # config the transform to match the network's format\par
-    transform = video_transforms.Compose([\par
-                # video_transforms.Scale((256)),\par
-                video_transforms.CenterCrop((224)),\par
-                video_transforms.ToTensor(),\par
-                normalize,\par
-            ])\par
+    for file in video_list:\par
+        f.write(file + "\\n")\par
+#         file_data = OrderedDict()\par
+        frame_count = 0\par
+        clip_mean = [0.5, 0.5] * 10\par
+        clip_std = [0.226, 0.226] * 10\par
+        normalize = video_transforms.Normalize(mean=clip_mean,\par
+                                                   std=clip_std)\par
+        # config the transform to match the network's format\par
+        transform = video_transforms.Compose([\par
+                    # video_transforms.Scale((256)),\par
+                    video_transforms.CenterCrop((224)),\par
+                    video_transforms.ToTensor(),\par
+                    normalize,\par
+                ])\par
 \par
-    # prepare the translation dictionary label-action\par
-    data_handler = UCF101_splitter(os.getcwd()+'/datasets/ucf101_splits/', None)\par
-    data_handler.get_action_index()\par
-    class_to_idx = data_handler.action_label\par
-    idx_to_class = \{v: k for k, v in class_to_idx.items()\}\par
+        # prepare the translation dictionary label-action\par
+        data_handler = UCF101_splitter(os.getcwd()+'/datasets/ucf101_splits/', None)\par
+        data_handler.get_action_index()\par
+        class_to_idx = data_handler.action_label\par
+        idx_to_class = \{v: k for k, v in class_to_idx.items()\}\par
 \par
-    # Start looping on frames received from webcam\par
-    vs = cv2.VideoCapture("sibal/very_sad.avi")\par
-    softmax = torch.nn.Softmax()\par
-    nn_output = torch.FloatTensor(2*10,224,224)\par
-    count = 0\par
-    idx = 0\par
-    temp = ''\par
-    x = []\par
-    sampled_list = []\par
-    flow_value = []\par
-    while (vs.isOpened()):\par
-        ret, image = vs.read()\par
-        if ret is False:\par
-            break\par
-        else:\par
-            image = cv2.resize(image,(342, 256), interpolation=cv2.INTER_LINEAR)\par
-            x.append(temp)\par
-            if count == 11:\par
-                sampled_list = []\par
-    #             input_var = torch.autograd.Variable(clip_input, volatile=True)    \par
-                temp = ''\par
-                input_var = clip_input.view(1, 20, 224, 224).cuda()\par
-                output = model(input_var)\par
-                output = softmax(output)\par
-                output = output.data.cpu().numpy()\par
-                preds = output.argsort()[0][-5:][::-1]\par
-                pred_classes = [(idx_to_class[str(pred+1)], output[0, pred]) for pred in preds]\par
-                value = 0\par
-                for i in range(5):\par
-                    if pred_classes[i][0] == label:\par
-                        value = pred_classes[i][1]\par
-                        \par
-                    temp += '\{\} - \{:.2f\}\\n'.format(pred_classes[i][0], pred_classes[i][1])\par
-                flow_value.append(value)\par
-                f.write(str(value) + "\\n")\par
-                nn_output = torch.FloatTensor(2*10,224,224)\par
-                count = 1\par
-\par
-            if count == 0:\par
-                old_frame = image.copy()\par
-                prev = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)\par
-\par
+        # Start looping on frames received from webcam\par
+        vs = cv2.VideoCapture(video + file)\par
+        softmax = torch.nn.Softmax()\par
+        nn_output = torch.FloatTensor(2*10,224,224)\par
+        count = 0\par
+        idx = 0\par
+        temp = ''\par
+        x = []\par
+        sampled_list = []\par
+        flow_value = []\par
+        while (vs.isOpened()):\par
+            ret, image = vs.read()\par
+            if ret is False:\par
+                break\par
             else:\par
-                next = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)\par
-                flow = cv2.calcOpticalFlowFarneback(prev, next, 1, 0.5, 3, 15, 3, 5, 1.2, 0)\par
-                horz = cv2.normalize(flow[...,0], None, 0, 255, cv2.NORM_MINMAX)\par
-                vert = cv2.normalize(flow[...,1], None, 0, 255, cv2.NORM_MINMAX)\par
-                horz = horz.astype('uint8')\par
-                vert = vert.astype('uint8')\par
-                imgH = Image.fromarray(horz)\par
-                imgV = Image.fromarray(vert)\par
+                image = cv2.resize(image,(342, 256), interpolation=cv2.INTER_LINEAR)\par
+                x.append(temp)\par
+                if count == 11:\par
+                    sampled_list = []\par
+        #             input_var = torch.autograd.Variable(clip_input, volatile=True)    \par
+                    temp = ''\par
+                    input_var = clip_input.view(1, 20, 224, 224).cuda()\par
+                    output = model(input_var)\par
+                    output = softmax(output)\par
+                    output = output.data.cpu().numpy()\par
+                    preds = output.argsort()[0][-5:][::-1]\par
+                    pred_classes = [(idx_to_class[str(pred+1)], output[0, pred]) for pred in preds]\par
+                    value = 0\par
+                    for i in range(5):\par
+                        if pred_classes[i][0] == label:\par
+                            value = pred_classes[i][1]\par
 \par
-                sampled_list.append(np.expand_dims(imgH, 2))\par
-                sampled_list.append(np.expand_dims(imgV, 2))\par
+                        temp += '\{\} - \{:.2f\}\\n'.format(pred_classes[i][0], pred_classes[i][1])\par
+                    flow_value.append(value)\par
+                    f.write(str(value) + "\\n")\par
+                    nn_output = torch.FloatTensor(2*10,224,224)\par
+                    count = 1\par
 \par
-                clip_input = np.concatenate(sampled_list, axis=2)\par
-                clip_input = transform(clip_input)\par
-                clip_input = clip_input.float().cuda(async=True)\par
-                imgH.close()\par
-                imgV.close()\par
-                prev = next.copy()\par
-                \par
-            count += 1\par
-            idx += 1\par
+                if count == 0:\par
+                    old_frame = image.copy()\par
+                    prev = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)\par
 \par
-    vs.release()\par
-    f.close()\par
+                else:\par
+                    next = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)\par
+                    flow = cv2.calcOpticalFlowFarneback(prev, next, 1, 0.5, 3, 15, 3, 5, 1.2, 0)\par
+                    horz = cv2.normalize(flow[...,0], None, 0, 255, cv2.NORM_MINMAX)\par
+                    vert = cv2.normalize(flow[...,1], None, 0, 255, cv2.NORM_MINMAX)\par
+                    horz = horz.astype('uint8')\par
+                    vert = vert.astype('uint8')\par
+                    imgH = Image.fromarray(horz)\par
+                    imgV = Image.fromarray(vert)\par
+\par
+                    sampled_list.append(np.expand_dims(imgH, 2))\par
+                    sampled_list.append(np.expand_dims(imgV, 2))\par
+\par
+                    clip_input = np.concatenate(sampled_list, axis=2)\par
+                    clip_input = transform(clip_input)\par
+                    clip_input = clip_input.float().cuda(async=True)\par
+                    imgH.close()\par
+                    imgV.close()\par
+                    prev = next.copy()\par
+\par
+                count += 1\par
+                idx += 1\par
+        f.write("----\\n")\par
+#         file_data[file] = flow_value\par
+#         with open('flow.json', 'w', encoding="utf-8") as make_file:\par
+#             json.dump(file_data, make_file, ensure_ascii=False, indent="\\t")\par
+        print(idx)\par
+        vs.release()\par
+        \par
+    f.close()    \par
     return flow_value\par
 \par
 if __name__ == '__main__':\par
