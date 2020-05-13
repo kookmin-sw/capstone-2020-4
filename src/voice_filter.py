@@ -19,11 +19,11 @@ def go(tokenized_khaiii_fname):
       #print(tokenList)
 
 def filter(tokenList, Line):
-  swearList = ['시발']
+  swearList = ['시발','새끼', '좆']
   for token in tokenList:
     for check in swearList:
       similarity = cs_sim.calculate(model.get_word_vector(token), model.get_word_vector(check))
-      if (similarity >= 0.7):
+      if (similarity >= 0.6):
        print(similarity)
        stringMatch(token, Line)
        #print(token)
@@ -46,6 +46,7 @@ def soundFilter(FILE_PATH):
     for j, line in enumerate(f):
       if i == (j+1):
         timeLine = line.split('/')
+        sentence = timeLine[0]
         startT = timeLine[1]
         endT = timeLine[2]
     #mute(".\\voice\\mute.wav",int(startT), int(endT))
