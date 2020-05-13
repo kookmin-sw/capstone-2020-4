@@ -41,16 +41,19 @@ def stringMatch(token,Line):
 
 def soundFilter(FILE_PATH):
   print(timeList)
+  f1 = open('/home/ubuntu/capstone-2020-4/src/textData/filter.txt', 'a', encoding='utf-8')
   for i in timeList:
-    f = open(FILE_PATH, 'r', encoding='utf-8')
-    for j, line in enumerate(f):
+    f2 = open(FILE_PATH, 'r', encoding='utf-8')
+    for j, line in enumerate(f2):
       if i == (j+1):
         timeLine = line.split('/')
         sentence = timeLine[0]
         startT = timeLine[1]
         endT = timeLine[2]
-    #mute(".\\voice\\mute.wav",int(startT), int(endT))
-    mute("/home/ubuntu/capstone-2020-4/src/voice/mute.wav", int(startT), int(endT))
+        f1.write(str(sentence) + ' / ' + str((startT/1000)/60) + ' : ' + str((startT/1000)%60) + ' / ' + str((endT/1000)/60) + ' : ' + str((endT/1000)%60))
+        f1.write('\n')
+        #mute(".\\voice\\mute.wav",int(startT), int(endT))
+        mute("/home/ubuntu/capstone-2020-4/src/voice/mute.wav", int(startT), int(endT))
 
 
 
