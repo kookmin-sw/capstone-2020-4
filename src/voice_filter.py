@@ -19,7 +19,7 @@ def go(tokenized_khaiii_fname):
       #print(tokenList)
 
 def filter(tokenList, Line):
-  swearList = ['시발','새끼', '좆']
+  swearList = ['시발']
   for token in tokenList:
     for check in swearList:
       similarity = cs_sim.calculate(model.get_word_vector(token), model.get_word_vector(check))
@@ -50,7 +50,7 @@ def soundFilter(FILE_PATH):
         sentence = timeLine[0]
         startT = timeLine[1]
         endT = timeLine[2]
-        f1.write(str(sentence) + ' / ' + str((startT/1000)/60) + ' : ' + str((startT/1000)%60) + ' / ' + str((endT/1000)/60) + ' : ' + str((endT/1000)%60))
+        f1.write(str(sentence) + ' / ' + str(int((int(startT)/1000)/60)) + ' : ' + str(int((int(startT)/1000)%60)) + ' / ' + str(int((int(endT)/1000)/60)) + ' : ' + str(int((int(endT)/1000)%60)))
         f1.write('\n')
         #mute(".\\voice\\mute.wav",int(startT), int(endT))
         mute("/home/ubuntu/capstone-2020-4/src/voice/mute.wav", int(startT), int(endT))
