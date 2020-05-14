@@ -1,6 +1,6 @@
-{\rtf1\ansi\ansicpg949\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset129 \'b8\'bc\'c0\'ba \'b0\'ed\'b5\'f1;}}
+{\rtf1\ansi\ansicpg949\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset129 \'b1\'bc\'b8\'b2;}{\f1\fnil\fcharset129 \'b8\'bc\'c0\'ba \'b0\'ed\'b5\'f1;}}
 {\*\generator Riched20 10.0.18362}\viewkind4\uc1 
-\pard\sa200\sl276\slmult1\f0\fs20\lang18 import os\par
+\pard\f0\fs22\lang18 import os\par
 import time\par
 import argparse\par
 import shutil\par
@@ -18,13 +18,10 @@ import json\par
 from collections import OrderedDict\par
 import video_transforms\par
 import models\par
-import datasets\par
 \par
 model_names = sorted(name for name in models.__dict__\par
     if name.islower() and not name.startswith("__")\par
     and callable(models.__dict__[name]))\par
-\par
-dataset_names = sorted(name for name in datasets.__all__)\par
 \par
 parser = argparse.ArgumentParser(description='PyTorch Two-Stream Action Recognition')\par
 parser.add_argument('--resume', default='./checkpoints', type=str, metavar='PATH',\par
@@ -46,7 +43,7 @@ class UCF101_splitter():\par
 \par
     def get_action_index(self):\par
         self.action_label=\{\}\par
-        with open(self.path+'classInd.txt') as f:\par
+        with open(self.path+'/classInd.txt') as f:\par
             content = f.readlines()\par
             content = [x.strip('\\r\\n') for x in content]\par
         f.close()\par
@@ -146,7 +143,7 @@ def resume_and_evaluate(flow_optimizer, flow_model):\par
 def flow_test(param_model):\par
     model = param_model\par
     video_list = os.listdir(video)\par
-    f = open("flow_result.txt", 'w')\par
+    f = open(video + "flow_result.txt", 'w')\par
     for file in video_list:\par
         f.write(file + "\\n")\par
 #         file_data = OrderedDict()\par
@@ -164,7 +161,7 @@ def flow_test(param_model):\par
                 ])\par
 \par
         # prepare the translation dictionary label-action\par
-        data_handler = UCF101_splitter(os.getcwd()+'/datasets/ucf101_splits/', None)\par
+        data_handler = UCF101_splitter(os.getcwd(), None)\par
         data_handler.get_action_index()\par
         class_to_idx = data_handler.action_label\par
         idx_to_class = \{v: k for k, v in class_to_idx.items()\}\par
@@ -245,5 +242,8 @@ def flow_test(param_model):\par
 \par
 if __name__ == '__main__':\par
     main()\par
+\par
+
+\pard\sa200\sl276\slmult1\f1\fs20\par
 }
  
