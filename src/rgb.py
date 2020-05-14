@@ -15,13 +15,10 @@ import torchvision.transforms as transforms
 
 import video_transforms
 import models
-import datasets
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
     and callable(models.__dict__[name]))
-
-dataset_names = sorted(name for name in datasets.__all__)
 
 parser = argparse.ArgumentParser(description='PyTorch Two-Stream Action Recognition')
 parser.add_argument('--resume', default='./checkpoints', type=str, metavar='PATH',
@@ -43,7 +40,7 @@ class UCF101_splitter():
 
     def get_action_index(self):
         self.action_label={}
-        with open(self.path+'classInd.txt') as f:
+        with open(self.path + '/classInd.txt') as f:
             content = f.readlines()
             content = [x.strip('\r\n') for x in content]
         f.close()
@@ -143,7 +140,7 @@ def resume_and_evaluate(rgb_optimizer, rgb_model):
 
 def rgb_test(param_model):
     model = param_model
-    f = open("rgb_result.txt", 'w')
+    f = open(video + "rgb_result.txt", 'w')
     video_list = os.listdir(video)
     for file in video_list:
         f.write(file + "\n")
@@ -162,7 +159,7 @@ def rgb_test(param_model):
                 ])
 
         # prepare the translation dictionary label-action
-        data_handler = UCF101_splitter(os.getcwd()+'/datasets/ucf101_splits/', None)
+        data_handler = UCF101_splitter(os.getcwd(), None)
         data_handler.get_action_index()
         class_to_idx = data_handler.action_label
         idx_to_class = {v: k for k, v in class_to_idx.items()}
@@ -230,3 +227,4 @@ def rgb_test(param_model):
 
 if __name__ == '__main__':
     main()
+
