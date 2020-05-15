@@ -2,7 +2,8 @@ import argparse
 import os
 from detecto.core import Model
 from detecto import utils, visualize
-
+from moviepy.tools import subprocess_call
+from moviepy.config import get_setting
 from torchvision import transforms
 parser = argparse.ArgumentParser(description='Argparse Tutorial')
 parser.add_argument('--dir', type=str,
@@ -18,6 +19,7 @@ game_list = []
 
 for file in file_list:
     path = args.dir + file
+    print(path)
     image = utils.read_image(path)
     prediction = model.predict(image)
     labels, boxes, scores = prediction
@@ -28,6 +30,8 @@ for file in file_list:
                 video_list.append(file)
 
 print(video_list)
+os.system("mkdir " + args.dir + "/smoke")
+os.system("mkdir " + args.dir + "/Knife")
 
 def ffmpeg_extract_subclip(filename, t1, t2, targetname=None):
     """ Makes a new video file playing video file ``filename`` between
@@ -49,6 +53,8 @@ def ffmpeg_extract_subclip(filename, t1, t2, targetname=None):
 
 for video in video_list:
     video_name = video.split(".")[0]
-    ffmpeg_extract_subclip("./smoke.avi", int(video_name), int(video_name) + 3, targetname=f"./smoke/{video_name}.mp4")
+    ffmpeg_extract_subclip("./smoke.avi", int(video_name), int(video_name) + 3, targetname=args.dir + f"/smoke/{video_name}.mp4")
 
+os.system("python3.6 flow.py --demo --label smoke --video " + args.dir +"/smoke/ & python3.6 rgb.py --demo --label smoke --video " + args.dir + "/smoke/")
+os.system("python3.6 main.py --video " + args.dir + "/smoke")
 
