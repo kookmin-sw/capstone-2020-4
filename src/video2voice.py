@@ -13,8 +13,6 @@ def video2voice(IN_PATH, OUT_PATH):
 
 
 if __name__ == '__main__':
-  count = 0
-  timeList = []
   parser = argparse.ArgumentParser()
   parser.add_argument('--input', type=str)
   parser.add_argument('--output', type = str)
