@@ -9,16 +9,16 @@ def writeCSV(sentence):
 
     f.close()
 
-def writeTXT(sentence):
-    f = open('C:\\Users\\01097\\PycharmProjects\\untitled\\csv\\write.txt', 'a', encoding='utf-8')
+def writeTXT(sentence, FILE_PATH):
+    f = open(FILE_PATH, 'a', encoding='utf-8')
     #f = open('/home/ubuntu/capstone-2020-4/src/csv/write.csv', 'a', encoding = 'utf-8')
     data = sentence + "\n"
     f.write(data)
 
     f.close()
 
-def stampTime(word, start, start_nano, end, end_nano, cnt):
-    f = open('C:\\Users\\01097\\PycharmProjects\\untitled\\csv\\time.txt', 'a', encoding='utf-8')
+def stampTime(FILE_PATH, word, start, start_nano, end, end_nano, cnt):
+    f = open(FILE_PATH, 'a', encoding='utf-8')
     # f = open('/home/ubuntu/capstone-2020-4/src/csv/write.csv', 'a', encoding = 'utf-8')
     f.write(str(word) + "/" + str(round(start*1000 + (start_nano/1000000)) + 50000*cnt) + "/" + str(round(end*1000 + (end_nano/1000000)) + 50000*cnt)) # ms로 단위 변환
     f.write("\n")

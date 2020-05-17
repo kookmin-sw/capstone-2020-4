@@ -2,6 +2,7 @@
 import io
 import os
 import json
+import sys, math, argparse, re
 #from cutAudio import cutAudioFile
 import wave
 from cutAudio import countFile
@@ -41,7 +42,7 @@ def transcribe_gcs(gcs_uri):
         #print('Confidence: {}'.format(result.alternatives[0].confidence))
         #writeCSV(result.alternatives[0].transcript)  #save csv file
 
-def sample_long_running_recognize(local_file_path, num):
+def sample_long_running_recognize(local_file_path, time_path, text_path, num):
         """
         Print start and end time of each word spoken in audio file from Cloud Storage
 
@@ -97,8 +98,8 @@ def sample_long_running_recognize(local_file_path, num):
                 )
             )
         for word in alternative.words:
-            stampTime(word.word, word.start_time.seconds, word.start_time.nanos, word.end_time.seconds, word.end_time.nanos, num)
-            writeTXT(word.word)
+            stampTime(time_path, word.word, word.start_time.seconds, word.start_time.nanos, word.end_time.seconds, word.end_time.nanos, num)
+            writeTXT(word.word, text_path)
 
 
 def sample_recognize(local_file_path):
@@ -157,9 +158,21 @@ def implicit():
 #transcribe_gcs('gs://youtubespeech/theaudio.wav')
 
 #num = countFile('C:\\Users\\01097\\PycharmProjects\\untitled\\voice', '.wav')
-num = countFile('/home/ubuntu/capstone-2020-4/src/voice', '.wav')
-for i in range(num):
+#num = countFile('/home/ubuntu/capstone-2020-4/src/voice', '.wav')
+#for i in range(num):
     #sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile' + str(i) + '.wav')
     #sample_recognize('/home/ubuntu/capstone-2020-4/src/voice/cutfile' + str(i) + '.wav')
-    sample_long_running_recognize('/home/ubuntu/capstone-2020-4/src/voice/vutfile'+str(i)+'.wav', i)
+    #sample_long_running_recognize('/home/ubuntu/capstone-2020-4/src/voice/vutfile'+str(i)+'.wav', i)
     #sample_long_running_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile'+str(i) +'.wav', i)
+
+if __name__ == '__main__':
+  parser = argparse.ArgumentParser()
+  parser.add_argument('--input', type=str)
+  parser.add_argument('--time', type = str)
+  parser.add_argument('--text', type = str)
+  parser.add_argument('--count', type = str)
+  args = parser.parse_args()
+
+  num = countFile(args.count, '.wav')
+  for i in range(num):
+      sample_long_running_recognize(args.input + str(i) + '.wav', args.time, args.text, i)
