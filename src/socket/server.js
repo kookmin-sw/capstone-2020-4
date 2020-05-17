@@ -33,6 +33,14 @@ io.on('connection', function (socket) {
                         console.log('exec error: ' + error);
                 }
           });
+        var exec = require('child_process').exec,
+              ls;
+          ls = exec("python3.6 object_detect.py " + dir, function (error, stdout,
+                console.log('stderr: ' + stderr);
+                if (error !== null) {
+                        console.log('exec error: ' + error);
+                }
+          });
           console.log("done");
         }
         if(data === "isdone"){
