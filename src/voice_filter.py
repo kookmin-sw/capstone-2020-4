@@ -31,7 +31,7 @@ def filter(tokenList, Line):
 def stringMatch(token,Line):
   f = open('/home/ubuntu/capstone-2020-4/src/textData/result.txt','a')
   #f = open('.\\csv\\result.txt', 'a')
-  swearList = ['시발', '씨발', '병신', '좆', '개새끼', '씨발새끼', '새끼', '씨발놈', '씹새끼', '씨부랄', '개씨발']
+  swearList = ['시발', '씨발', '병신', '좆', '개새끼', '씨발새끼', '새끼', '씨발놈', '씹새끼', '씨부랄', '개씨발', '딸치']
   for swear in swearList:
     if swear in token:
       f.write(str(Line))
