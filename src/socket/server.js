@@ -1,4 +1,3 @@
-
 var io = require('socket.io').listen(4567);
 var flag = new Array();
 var idx = 0;
@@ -18,7 +17,6 @@ io.on('connection', function (socket) {
     })
     socket.on('complete', function (data) {
          var id = data.split('.');
-
          id = id[0];
          console.log(data);
          var a = "";
@@ -27,15 +25,22 @@ io.on('connection', function (socket) {
          console.log("complete");
          var exec = require('child_process').exec,
               ls;
-         ls = exec("sudo python3.6 down.py " + data, function (error, stdout, stderr){
+          ls = exec("sudo python3.6 down.py " + data, function (error, stdout, stderr) {
                 console.log('stderr: ' + stderr);
                 if (error !== null) {
                         console.log('exec error: ' + error);
                 }
           });
-        var exec = require('child_process').exec,
+          console.log("done");
+
+       })
+
+    socket.on('msg', function (data) {
+        if(data === "complete"){
+          console.log(data);
+          var exec = require('child_process').exec,
               ls;
-          ls = exec("python3.6 object_detect.py " + dir, function (error, stdout,
+          ls = exec("python3.6 down.py " + data, function (error, stdout, stderr) {
                 console.log('stderr: ' + stderr);
                 if (error !== null) {
                         console.log('exec error: ' + error);
