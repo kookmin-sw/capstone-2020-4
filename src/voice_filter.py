@@ -1,61 +1,25 @@
-<<<<<<< HEAD
-import sys, math, argparse, re
-import fasttext
-import cs_sim
-
-def go(tokenized_khaiii_fname):
-  with open(tokenized_khaiii_fname, 'r', encoding='utf-8') as f1:
-    for line in f1:
-=======
 # !/usr/bin/env python3
-(import sys, math, argparse, re)
+import sys, math, argparse, re
 import fasttext
 import cs_sim
 from cutAudio import mute
 
-model = fasttext.load_model('/home/ubuntu/fastText/mywork/model_test.bin')
+model = fasttext.load_model('/home/ubuntu/voice_classification/server/model_skipgram.bin')
 
 def go(tokenized_khaiii_fname):
   count = 0
   with open(tokenized_khaiii_fname, 'r', encoding='utf-8') as f1:
     for line in f1:
       count = count + 1
->>>>>>> SpeechToText
       tokenList = line.split()
       for i in range(0, len(tokenList)):
         cutPos = tokenList[i].find('/')
         tokenList[i] = tokenList[i][0:cutPos] #tokenList에는 한글 형태소만 들어있음.
-<<<<<<< HEAD
-      filter(tokenList)
-
-def filter(tokenList):
-  swearList = ['시발', '씨발', '병신', '좆']
-  #model = fasttext.load_model('./model_skipgram.bin')
-  for token in tokenList:
-    for check in swearList:
-      similarity = cs_sim.calculate(model.get_word_vector(token), model.get_word_vector(check)))
-      if (similarity >= 0.7):
-        stringMatch(token, swearList)
-
-def stringMatch(token, swearList):
-  for swear in swearList:
-    if swear in token:
-      print("Swear detected!")
-      sys.exit()
-
-
-if __name__ == '__main__':
-  parser = argparse.ArgumentParser()
-  parser.add_argument('--input', type=str)
-  args = parser.parse_args()
-
-  go(args.input)
-=======
       filter(tokenList, count)
       #print(tokenList)
 
 def filter(tokenList, Line):
-  swearList = ['시발']
+  swearList = ['새끼']
   for token in tokenList:
     for check in swearList:
       similarity = cs_sim.calculate(model.get_word_vector(token), model.get_word_vector(check))
@@ -65,19 +29,18 @@ def filter(tokenList, Line):
        #print(token)
 
 def stringMatch(token,Line):
-  f = open('/home/ubuntu/capstone-2020-4/src/textData/result.txt','a')
-  #f = open('.\\csv\\result.txt', 'a')
+  #f = open('/home/ubuntu/voice_classification/textData/number.txt','a')
   swearList = ['시발', '씨발', '병신', '좆', '개새끼', '씨발새끼', '새끼', '씨발놈', '씹새끼', '씨부랄', '개씨발', '딸치']
   for swear in swearList:
     if swear in token:
-      f.write(str(Line))
-      f.write('\n')
+      #f.write(str(Line))
+      #f.write('\n')
       timeList.append(Line)
       break
 
-def soundFilter(FILE_PATH):
+def soundFilter(FILE_PATH, OUT_PATH, AUDIO):
   print(timeList)
-  f1 = open('/home/ubuntu/capstone-2020-4/src/textData/filter.txt', 'a', encoding='utf-8')
+  f1 = open(OUT_PATH, 'a', encoding='utf-8')
   for i in timeList:
     f2 = open(FILE_PATH, 'r', encoding='utf-8')
     for j, line in enumerate(f2):
@@ -89,7 +52,7 @@ def soundFilter(FILE_PATH):
         f1.write(str(sentence) + ' / ' + str(int((int(startT)/1000)/60)) + ' : ' + str(int((int(startT)/1000)%60)) + ' / ' + str(int((int(endT)/1000)/60)) + ' : ' + str(int((int(endT)/1000)%60)))
         f1.write('\n')
         #mute(".\\voice\\mute.wav",int(startT), int(endT))
-        mute("/home/ubuntu/capstone-2020-4/src/voice/mute.wav", int(startT), int(endT))
+        mute(AUDIO, int(startT), int(endT))
 
 
 
@@ -99,8 +62,9 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('--input', type=str)
   parser.add_argument('--time', type = str)
+  parser.add_argument('--filter', type=str)
+  parser.add_argument('--audio', type=str)
   args = parser.parse_args()
 
   go(args.input)
-  soundFilter(args.time)
->>>>>>> SpeechToText
+  soundFilter(args.time, args.filter, args.audio)

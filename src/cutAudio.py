@@ -1,9 +1,9 @@
 ### https://github.com/jiaaro/pydub ###
 import os
-import librosa
+#import librosa
 import numpy as np
 import wave, array
-import math
+import math, sys, argparse, re
 from pydub import AudioSegment
 
 
@@ -58,7 +58,7 @@ def make_stereo(file1, output):
     ofile.close()
 
 
-def cutting(AUDIO_FILE):
+def cutting(AUDIO_FILE, OUT_PATH):
     wav = AudioSegment.from_wav(AUDIO_FILE)
     lenOfWav = wav.duration_seconds
 
@@ -79,15 +79,15 @@ def cutting(AUDIO_FILE):
         print(i)
         #section = wav[five_seconds*i:five_seconds*(i+1)]
         section = wav[fifty_seconds*i:fifty_seconds*(i+1)]
-        section.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile"+str(i)+".wav", format = 'wav')
-        #section.export("/home/ubuntu/capstone-2020-4/src/voice/cutfile" + str(i) + ".wav", format='wav')
+        #section.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile"+str(i)+".wav", format = 'wav')
+        section.export(OUT_PATH +"/cutfile"+ str(i) + ".wav", format='wav')
 
     # beginning.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile888.wav", format = 'wav')
 
 def mute(FILE_PATH, starttime, endtime):
     wav = AudioSegment.from_wav(FILE_PATH)
     #beep = AudioSegment.from_wav("C:\\Users\\01097\\PycharmProjects\\untitled\\beep.wav")
-    beep = AudioSegment.from_wav("/home/ubuntu/capstone-2020-4/src/voice/beep.wav")
+    beep = AudioSegment.from_wav("/home/ubuntu/voice_classification/voice_raw/beep.wav")
     lenOfWav = wav.duration_seconds
     #w2 = wav[51000:60000]-100
     #w1 = wav[0:50000] + w2 + wav[61000: 157000]
@@ -95,7 +95,7 @@ def mute(FILE_PATH, starttime, endtime):
 
 
     #w1.export("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\mute.wav", format = 'wav')
-    w1.export("/home/ubuntu/capstone-2020-4/src/voice/mute.wav", format = 'wav')
+    w1.export(FILE_PATH, format = 'wav')
 
 
 def countFile(path,extension):
@@ -111,7 +111,16 @@ def countFile(path,extension):
 
 #make_stereo("C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile2.wav", "stereo.wav")
 # cutAudioFile("test07.wav")
-#cutting("sin.wav")
+#cutting("./voice_raw/0.wav")
 
 #countFile("C:\\Users\\01097\\PycharmProjects\\untitled\\voice", ".wav")
 #mute(".\\voice\\untitled.wav", 1700, 2800)
+
+if __name__ == '__main__':
+  parser = argparse.ArgumentParser()
+  parser.add_argument('--input', type=str)
+  parser.add_argument('--output', type = str)
+  args = parser.parse_args()
+
+  cutting(args.input, args.output)
+  print("finished cutting audio files")

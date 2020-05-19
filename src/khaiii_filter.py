@@ -16,7 +16,8 @@ def khaiii_tokenize(corpus_fname, output_fname):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input_path', type=str, help='Location of input files')
-    parser.add_argument('--output_path', type=str, help='Location of output files')
+    parser.add_argument('--input', type=str, help='Location of input files')
+    parser.add_argument('--output', type=str, help='Location of output files')
     args = parser.parse_args()
-    khaiii_tokenize(args.input_path, args.output_path)
+    khaiii_tokenize(args.input, args.output)
+    print("finished khaiii tokenize")

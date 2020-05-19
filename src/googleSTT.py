@@ -52,8 +52,6 @@ def sample_long_running_recognize(local_file_path, time_path, text_path, num):
 
         client = speech_v1.SpeechClient()
         
-        credential_path = '/home/ubuntu/temp/capstone.json'
-        os.environ['GOOGLE_APPLICAITON_CREDENTIALS'] = credential_path
 
         # storage_uri = 'gs://cloud-samples-data/speech/brooklyn_bridge.flac'
 
@@ -157,13 +155,6 @@ def implicit():
 #implicit()
 #transcribe_gcs('gs://youtubespeech/theaudio.wav')
 
-#num = countFile('C:\\Users\\01097\\PycharmProjects\\untitled\\voice', '.wav')
-#num = countFile('/home/ubuntu/capstone-2020-4/src/voice', '.wav')
-#for i in range(num):
-    #sample_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile' + str(i) + '.wav')
-    #sample_recognize('/home/ubuntu/capstone-2020-4/src/voice/cutfile' + str(i) + '.wav')
-    #sample_long_running_recognize('/home/ubuntu/capstone-2020-4/src/voice/vutfile'+str(i)+'.wav', i)
-    #sample_long_running_recognize('C:\\Users\\01097\\PycharmProjects\\untitled\\voice\\cutfile'+str(i) +'.wav', i)
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -175,4 +166,6 @@ if __name__ == '__main__':
 
   num = countFile(args.count, '.wav')
   for i in range(num):
-      sample_long_running_recognize(args.input + str(i) + '.wav', args.time, args.text, i)
+      sample_long_running_recognize(args.input +"/cutfile"+ str(i) + '.wav', args.time, args.text, i)
+
+  print("finished Speech To Text")

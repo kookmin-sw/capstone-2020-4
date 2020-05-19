@@ -1,26 +1,32 @@
 import os
 import sys, math, argparse, re
-import fasttext
+#import fasttext
 import cs_sim, googleSTT, video2voice, voice_filter, khaiii_filter, makeData, cutAudio
 
+parser = argparse.ArgumentParser(description='Argparse Tutorial')
+parser.add_argument('--dir', type=str,
+                    help='an integer for printing repeatably')
 
+args = parser.parse_args()
+print(args.dir)
 #os.system("export GOOGLE_APPLICATION_CREDENTIALS=\"/home/ubuntu/voice_classification/capstone.json\"")
 
-num = 2
+num = args.dir.split(".")[0]
 
-os.system("mkdir " + str(num)) 
-os.system("mkdir " + "./" + str(num) + "/textData")
-os.system("mkdir " + "./" + str(num) + "/voice_raw")
-os.system("mkdir " + "./" + str(num) + "/voice")
-os.system("mkdir " + "./" + str(num) + "/video")
+os.system("mkdir " + "/home/ubuntu/voice_classification/" + str(num)) 
+os.system("mkdir " + "/home/ubuntu/voice_classification/" + str(num) + "/textData")
+os.system("mkdir " + "/home/ubuntu/voice_classification/" + str(num) + "/voice_raw")
+os.system("mkdir " + "/home/ubuntu/voice_classification/" + str(num) + "/voice")
+os.system("mkdir " + "/home/ubuntu/voice_classification/" + str(num) + "/video")
 
-os.system("cp /home/ubuntu/voice_classification/video/0.mp4 /home/ubuntu/voice_classification/" + str(num) + "/video")
+os.system("cp /home/ubuntu/voice_classification/server/" + args.dir +" /home/ubuntu/voice_classification/" + str(num) + "/video")
+#os.system("cp /home/ubuntu/voice_classification/" + args.dir + " /home/ubuntu/voice_classification/" + str(num) + "/video")
 
-os.system("python video2voice.py --input ./" + str(num) + "/video/0.mp4 --output ./" + str(num) + "/voice_raw/0.wav")
-os.system("python cutAudio.py --input ./" + str(num) + "/voice_raw/0.wav --output ./" + str(num) +"/voice")
-os.system("python3 googleSTT.py --input ./" + str(num) + "/voice --time ./" + str(num) + "/textData/time.txt --text ./" + str(num) + "/textData/write.txt --count ./" + str(num) + "/voice")
-os.system("python3 khaiii_filter.py --input ./" + str(num) + "/textData/write.txt --output ./" + str(num) + "/textData/khaiii.txt")
+os.system("python /home/ubuntu/voice_classification/video2voice.py --input /home/ubuntu/voice_classification/" + str(num) + "/video/" + args.dir + " --output /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/0.wav")
+os.system("python /home/ubuntu/voice_classification/cutAudio.py --input /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/0.wav --output /home/ubuntu/voice_classification/" + str(num) +"/voice")
+os.system("python3 /home/ubuntu/voice_classification/googleSTT.py --input /home/ubuntu/voice_classification/" + str(num) + "/voice --time /home/ubuntu/voice_classification/" + str(num) + "/textData/time.txt --text /home/ubuntu/voice_classification/" + str(num) + "/textData/write.txt --count /home/ubuntu/voice_classification/" + str(num) + "/voice")
+os.system("python3 /home/ubuntu/voice_classification/khaiii_filter.py --input /home/ubuntu/voice_classification/" + str(num) + "/textData/write.txt --output /home/ubuntu/voice_classification/" + str(num) + "/textData/khaiii.txt")
 
 os.system("mv /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/0.wav /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/mute.wav")
 
-os.system("python3 voice_filter.py --input ./" + str(num) + "/textData/khaiii.txt --time ./" + str(num) + "/textData/time.txt --filter ./" + str(num) + "/textData/filter.txt --audio ./" + str(num) + "/voice_raw/mute.wav")
+os.system("python3 /home/ubuntu/voice_classification/voice_filter.py --input /home/ubuntu/voice_classification/" + str(num) + "/textData/khaiii.txt --time /home/ubuntu/voice_classification/" + str(num) + "/textData/time.txt --filter /home/ubuntu/voice_classification/" + str(num) + "/textData/filter.txt --audio /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/mute.wav")
