@@ -16,3 +16,7 @@ from detectron2.data import MetadataCatalog
 from moviepy.tools import subprocess_call
 from moviepy.config import get_setting
 
+## client ID 얻어오기
+parser = argparse.ArgumentParser()
+parser.add_argument('--dir', type=str)
+args = parser.parse_args()
