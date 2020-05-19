@@ -49,10 +49,40 @@ def soundFilter(FILE_PATH, OUT_PATH, AUDIO):
         sentence = timeLine[0]
         startT = timeLine[1]
         endT = timeLine[2]
-        f1.write(str(sentence) + ' / ' + str(int((int(startT)/1000)/60)) + ' : ' + str(int((int(startT)/1000)%60)) + ' / ' + str(int((int(endT)/1000)/60)) + ' : ' + str(int((int(endT)/1000)%60)))
+        f1.write(str(sentence) + ' / ' + calc_time(startT, endT))
         f1.write('\n')
         #mute(".\\voice\\mute.wav",int(startT), int(endT))
         mute(AUDIO, int(startT), int(endT))
+
+
+def calc_time(startT, endT):
+    start_min = int((int(startT) / 1000) / 60)
+    start_sec = int((int(startT) / 1000) % 60)
+    end_min = int((int(endT) / 1000) / 60)
+    end_sec = int((int(endT) / 1000) % 60)
+
+    if(start_min >= 0 and start_min <= 9):
+        start_min = "0" + str(start_min)
+    else:
+        start_min = str(start_min)
+
+    if(start_sec >= 0 and start_sec <= 9):
+        start_sec = "0" + str(start_sec)
+    else:
+        start_sec = str(start_sec)
+
+    if(end_min >= 0 and end_min <= 9):
+        end_min = "0" + str(end_min)
+    else:
+        end_min = str(end_min)
+
+    if(end_sec >= 0 and end_sec <=9):
+        end_sec = "0" + str(end_sec)
+    else:
+        end_sec = str(end_sec)
+
+    print(start_min + ":" + start_sec + "~" + end_min + ":" + end_sec)
+
 
 
 
