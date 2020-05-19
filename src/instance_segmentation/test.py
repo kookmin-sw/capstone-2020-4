@@ -20,3 +20,7 @@ from moviepy.config import get_setting
 parser = argparse.ArgumentParser()
 parser.add_argument('--dir', type=str)
 args = parser.parse_args()
+
+## 고유번호마다 폴더를 생성, 라벨 폴더 생성.
+os.system("mkdir " + args.dir + "/smoke")
+os.system("mkdir " + args.dir + "/Knife")
