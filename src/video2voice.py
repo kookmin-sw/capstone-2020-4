@@ -10,12 +10,15 @@ def video2voice(IN_PATH, OUT_PATH):
 
     print("finished extract voice")
 
-
-
 if __name__ == '__main__':
+  count = 0
+  timeList = []
   parser = argparse.ArgumentParser()
   parser.add_argument('--input', type=str)
   parser.add_argument('--output', type = str)
   args = parser.parse_args()
 
   video2voice(args.input, args.output)
+
+
+
