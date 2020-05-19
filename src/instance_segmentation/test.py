@@ -24,3 +24,12 @@ args = parser.parse_args()
 ## 고유번호마다 폴더를 생성, 라벨 폴더 생성.
 os.system("mkdir " + args.dir + "/smoke")
 os.system("mkdir " + args.dir + "/Knife")
+
+## predictor 생성
+cfg = get_cfg()
+cfg.MODEL.ROI_HEADS.NUM_CLASSES = 5
+cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_101_FPN_3x.yaml"))
+cfg.MODEL.WEIGHTS = "/content/drive/My Drive/detectron_model/model_00025_710.pth"
+cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5   # set the testing threshold for this model
+cfg.DATASETS.TEST = ("test",)
+predictor = DefaultPredictor(cfg)
