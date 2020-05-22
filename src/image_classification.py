@@ -62,13 +62,15 @@ if __name__ == "__main__":
 
     ckpt = torch.load(weights_file, map_location=device)
     custom_model.load_state_dict(ckpt['custom_model'])
-
+    idx = 0
+    result = []
     custom_model.eval()
     #
     with torch.no_grad():
         softmax = torch.torch.nn.Softmax()
         for image_source in image_names:
             image_name = image_source.split(".")[0]
+            video_name = image_name.split("_")[0]
             type = image_source.split(".")[1]
             if type == "jpg":
                 image = Image.open(os.path.join(dir_path, image_source))
@@ -85,6 +87,15 @@ if __name__ == "__main__":
                 preds = pred_y.argsort()[0][-5:][::-1]
                 pred_classes = [(pred, pred_y[0, pred]) for pred in preds]
                 if pred_classes[0][0] == 1:
-                    f.write(image_name + ":blood")
-            
-            
+                    if len(result) == 0:
+                        result.append(video_name)
+                        f.write(video_name + "\n")
+                        idx += 1
+                    elif result[idx - 1] != video_name:
+                        result.append(video_name)
+                        f.write(video_name + "\n")
+                        idx += 1
+    f.close()                 
+    print(args.dir)
+    os.system("python3.6 upload.py --dir " + args.dir + "blood_result.txt")
+
