@@ -23,12 +23,12 @@ def video_processing(file_name, video_path):
         width = video.get(3)
         height = video.get(4)
 
-        if (int(video.get(1)) % 150 == 0):
-            frame = cv2.resize(frame, (720, 480))
+        if (int(video.get(1)) % 30 == 0):
+            frame = cv2.resize(frame, (342, 256))
             result_path = video_path.split(".")[FILE_PATH_INDEX] + str(idx) + ".jpg"
             result_file_path.append(result_path)
             cv2.imwrite(result_path, frame)
-            idx += 5
+            idx += 1
 
         if not ret:
             break
@@ -50,9 +50,8 @@ def lambda_handler(event, context):
         tmpframe = tmpkey[0]
         idx = 0
         for upload_path in result_path:
-            s3_client.upload_file(upload_path, 'youhi-project', tmpframe + "/" + tmpframe + str(idx) + ".jpg")
-
-            idx += 5
+            s3_client.upload_file(upload_path, 'youhi-project', tmpframe + "/" + str(idx) + ".jpg")
+            idx += 1
 
         sio = socketio.Client()
         sio.connect('http://13.209.93.181:4567')
