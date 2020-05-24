@@ -30,3 +30,7 @@ os.system("python3 /home/ubuntu/voice_classification/khaiii_filter.py --input /h
 os.system("mv /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/0.wav /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/mute.wav")
 
 os.system("python3 /home/ubuntu/voice_classification/voice_filter.py --input /home/ubuntu/voice_classification/" + str(num) + "/textData/khaiii.txt --time /home/ubuntu/voice_classification/" + str(num) + "/textData/time.txt --filter /home/ubuntu/voice_classification/" + str(num) + "/textData/filter.txt --audio /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/mute.wav")
+
+os.system("python /home/ubuntu/voice_classifiaction/image2text.py --text /home/ubuntu/voice_classification/" + str(num) + "/textData/result.txt --image /home/ubuntu/voice_classification/server/" + str(num) + "/" + "--bound /home/ubuntu/voice_classification/" + str(num) + "/textData/bound.txt --khaiii /home/ubuntu/voice_classification/" + str(num) + "/textData/khaiii_sub.txt --position /home/ubuntu/voice_classification/" + str(num) + "/textData/test.txt")
+      
+os.system("python /home/ubuntu/voice_classification/server/upload.py --dir /home/ubuntu/voice_classification/" + str(num) + "/textData/test.txt")
