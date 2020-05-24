@@ -71,7 +71,6 @@ if line != ['']:
                 break
             else:
                 if int(video.get(1)) % 3 == 0:
-                    frame = cv2.resize(frame, (720, 480))
                     cv2.imwrite(dir + "/blood/temp/"+ video_name + "_" + str(idx) + ".jpg", frame)
                     idx += 1
 
