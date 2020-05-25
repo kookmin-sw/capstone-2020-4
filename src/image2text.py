@@ -20,7 +20,8 @@ def detect_text(path):
 
     response = client.text_detection(image=image)
     texts = response.text_annotations
-    return texts[0].description.replace("\n", " ")
+    if len(texts) != 0:
+        return texts[0].description.replace("\n", " ")
     #
     # for text in texts:
     #     print("{}".format(text.description))
@@ -59,7 +60,7 @@ def detect_bound(path, BOUND_PATH):
                  for vertex in text.bounding_poly.vertices])
         f.write(text.description.replace("\n", " ") + "+")
 #         print(text.properties)
-        f.write('{}/'.format(','.join(vertices)))
+        f.write('{}/'.format(' '.join(vertices)))
          #print(vertices[0])
     f.write("\n")
     if response.error.message:
@@ -76,7 +77,7 @@ def run_detect(TEXT_FILE, FILE_PATH, BOUND_PATH):
     list = natsort.natsorted(list)    
 
     for file in list:
-        if file.endswitch("jpg"):
+        if file.endswith("jpg"):
             filename = FILE_PATH + file
             print(filename + "\n")
             try:
@@ -164,8 +165,9 @@ if __name__ == "__main__":
     parser.add_argument('--text', type = str)
     parser.add_argument('--image', type = str)
     parser.add_argument('--bound', type = str)
-    parser.add_arguemnt('--khaiii', type = str)
-    parser.add_arguemnt('--position', type = str)
+    parser.add_argument('--khaiii', type = str)
+    parser.add_argument('--position', type = str)
+    args = parser.parse_args()
     f = open(args.bound, 'w', encoding = 'utf-8')
     run_detect(args.text, args.image, args.bound)
     f.close()
