@@ -3,6 +3,7 @@ import fasttext
 import cs_sim
 from google.cloud import vision
 from khaiii import KhaiiiApi
+import natsort
 
 model = fasttext.load_model('/home/ubuntu/voice_classification/server/model_skipgram.bin')
 
@@ -19,7 +20,8 @@ def detect_text(path):
 
     response = client.text_detection(image=image)
     texts = response.text_annotations
-    return texts[0].description.replace("\n", " ")
+    if len(texts) != 0:
+        return texts[0].description.replace("\n", " ")
     #
     # for text in texts:
     #     print("{}".format(text.description))
@@ -35,18 +37,54 @@ def detect_text(path):
     #         '{}\nFor more info on error messages, check: '
     #         'https://cloud.google.com/apis/design/errors'.format(
     #             response.error.message))
+    
+def detect_bound(path, BOUND_PATH):
+    """Detects text in the file."""
+   
+    client = vision.ImageAnnotatorClient()
 
-def run_detect(TEXT_FILE, FILE_PATH):
+    with io.open(path, 'rb') as image_file:
+        content = image_file.read()
+
+    image = vision.types.Image(content=content)
+
+    response = client.text_detection(image=image)
+    texts = response.text_annotations
+    #return vertex[0].replace("\n", " ")
+    
+    for text in texts:
+         #f.write("{}".format(text.description))
+         #f.write(text.description) 
+
+        vertices = (['({},{})'.format(vertex.x, vertex.y)
+                 for vertex in text.bounding_poly.vertices])
+        f.write(text.description.replace("\n", " ") + "+")
+#         print(text.properties)
+        f.write('{}/'.format(' '.join(vertices)))
+         #print(vertices[0])
+    f.write("\n")
+    if response.error.message:
+         raise Exception(
+             '{}\nFor more info on error messages, check: '
+             'https://cloud.google.com/apis/design/errors'.format(
+                 response.error.message))    
+    
+
+
+def run_detect(TEXT_FILE, FILE_PATH, BOUND_PATH):
     f = open(TEXT_FILE, "w", encoding="UTF-8")
     list = os.listdir(FILE_PATH)      #"subtitle/"
+    list = natsort.natsorted(list)    
 
     for file in list:
-        filename = FILE_PATH + file
-        print(filename + "\n")
-        try:
-          f.write(str(detect_text(filename))+ "\n")
-        except IsADirectoryError:
-          print("directory Except")
+        if file.endswith("jpg"):
+            filename = FILE_PATH + file
+            print(filename + "\n")
+            try:
+              f.write(str(detect_text(filename))+ "\n")
+              detect_bound(filename, BOUND_PATH)
+            except IsADirectoryError:
+              print("directory Except")
 
     #khaiii_tokenize("./result.txt", "./khaiii_sub.txt")
 
@@ -96,10 +134,42 @@ def stringMatch(token,Line):
       #f.write(str(Line))
       #f.write('\n')
       print(token)
+      timeList.append(str(Line) +'/'+ token)
       break
+
+def checkBound(BOUND_PATH, OUT_PATH):
+    f2 = open(OUT_PATH, 'w', encoding = 'utf-8')
+  #for i in range(len(timeList))
+    for i in timeList:
+        f3 = open(BOUND_PATH, 'r', encoding = 'utf-8')
+        boundPoint = i.split('/')
+        imgNum = boundPoint[0]
+        word = boundPoint[1]
+        for x in range(int(imgNum) - 1):
+            temp = f3.readline()
+        line = f3.readline()
+        lines = line.split("/")
+        lines.remove('\n')
+        for components in lines:
+            component = components.split("+")
+            if component[0] in word and components != lines[0]:
+                print(imgNum + "/" + component[1])
+                f2.write(imgNum + "/" + component[1] + "\n")
+      
+        
 
 
 if __name__ == "__main__":
-
-  run_detect("./result.txt", "subtitle/")
-  khaiii_tokenize("./result.txt", "./khaiii_sub.txt")
+    timeList = []
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--text', type = str)
+    parser.add_argument('--image', type = str)
+    parser.add_argument('--bound', type = str)
+    parser.add_argument('--khaiii', type = str)
+    parser.add_argument('--position', type = str)
+    args = parser.parse_args()
+    f = open(args.bound, 'w', encoding = 'utf-8')
+    run_detect(args.text, args.image, args.bound)
+    f.close()
+    khaiii_tokenize(args.text, args.khaiii)
+    checkBound(args.bound, args.position)
