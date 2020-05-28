@@ -28,19 +28,14 @@ os.system("python /home/ubuntu/voice_classification/cutAudio.py --input /home/ub
 os.system("python3 /home/ubuntu/voice_classification/googleSTT.py --input /home/ubuntu/voice_classification/" + str(num) + "/voice --time /home/ubuntu/voice_classification/" + str(num) + "/textData/time.txt --text /home/ubuntu/voice_classification/" + str(num) + "/textData/write.txt --count /home/ubuntu/voice_classification/" + str(num) + "/voice")
 os.system("python3 /home/ubuntu/voice_classification/khaiii_filter.py --input /home/ubuntu/voice_classification/" + str(num) + "/textData/write.txt --output /home/ubuntu/voice_classification/" + str(num) + "/textData/khaiii.txt")
 
-os.system("mv /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/0.wav /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/mute.wav")
+os.system("mv /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/0.wav /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/" + str(num) + "_mute.wav")
 
-os.system("python3 /home/ubuntu/voice_classification/voice_filter.py --input /home/ubuntu/voice_classification/" + str(num) + "/textData/khaiii.txt --time /home/ubuntu/voice_classification/" + str(num) + "/textData/time.txt --filter /home/ubuntu/voice_classification/" + str(num) + "/textData/filter.txt --audio /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/mute.wav")
+os.system("python3 /home/ubuntu/voice_classification/voice_filter.py --input /home/ubuntu/voice_classification/" + str(num) + "/textData/khaiii.txt --time /home/ubuntu/voice_classification/" + str(num) + "/textData/time.txt --filter /home/ubuntu/voice_classification/" + str(num) + "/textData/" + str(num) +"_filter.txt --audio /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/" + str(num) +"_mute.wav")
 
 
       
 os.system("python /home/ubuntu/voice_classification/server/upload.py --dir /home/ubuntu/voice_classification/" + str(num) + "/textData/" + str(num) + "_subtitle_result.txt")
-os.system("python /home/ubuntu/voice_classification/server/upload.py --dir /home/ubuntu/voice_classification/" + str(num) + "/textData/filter.txt")
-os.system("python /home/ubuntu/voice_classification/server/upload.py --dir /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/mute.wav")
+os.system("python /home/ubuntu/voice_classification/server/upload.py --dir /home/ubuntu/voice_classification/" + str(num) + "/textData/" + str(num) +"_filter.txt")
+os.system("python /home/ubuntu/voice_classification/server/upload.py --dir /home/ubuntu/voice_classification/" + str(num) + "/voice_raw/" + str(num) + "_mute.wav")
 
-sio = socketio.Client()
-sio.connect('http://13.209.93.181:4567')
-sio.emit('voice', args.dir)
-sio.sleep(1)
-sio.disconnect()
-
+os.system("python /home/ubuntu/voice_classification/server/done.py --dir " + args.dir)

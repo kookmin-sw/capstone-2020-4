@@ -61,13 +61,14 @@ def sample_long_running_recognize(local_file_path, time_path, text_path, num):
 
         # The language of the supplied audio
         language_code = "ko-KR"
-        config = {
-            "enable_word_time_offsets": enable_word_time_offsets,
-            "language_code": language_code,
-            "audio_channel_count" : 2,
-            #" sample_rate_hertz" : 44100
+        config = types.RecognitionConfig(
+            enable_word_time_offsets = True,
+            encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
+            sample_rate_hertz=44100,
+            language_code='ko-KR',
+            audio_channel_count=2
 
-        }
+        )
         with io.open(local_file_path, "rb") as f:
             content = f.read()
         audio = {"content": content}
@@ -76,28 +77,29 @@ def sample_long_running_recognize(local_file_path, time_path, text_path, num):
 
         print(u"Waiting for operation to complete...")
         response = operation.result()
-
-        # The first result includes start and end time word offsets
-        result = response.results[0]
-        # First alternative is the most probable result
-        alternative = result.alternatives[0]
-        print(u"Transcript: {}".format(alternative.transcript))
-        # Print the start and end time of each word
-        for word in alternative.words:
-            print(u"Word: {}".format(word.word))
-            print(
-                u"Start time: {} seconds {} nanos".format(
-                    word.start_time.seconds, word.start_time.nanos
+        
+        for result in response.results:
+            # The first result includes start and end time word offsets
+            #result = response.results[0]
+            # First alternative is the most probable result
+            alternative = result.alternatives[0]
+            print(u"Transcript: {}".format(alternative.transcript))
+            # Print the start and end time of each word
+            for word in alternative.words:
+                print(u"Word: {}".format(word.word))
+                print(
+                    u"Start time: {} seconds {} nanos".format(
+                        word.start_time.seconds, word.start_time.nanos
+                    )
                 )
-            )
-            print(
-                u"End time: {} seconds {} nanos".format(
-                    word.end_time.seconds, word.end_time.nanos
+                print(
+                    u"End time: {} seconds {} nanos".format(
+                        word.end_time.seconds, word.end_time.nanos
+                    )
                 )
-            )
-        for word in alternative.words:
-            stampTime(time_path, word.word, word.start_time.seconds, word.start_time.nanos, word.end_time.seconds, word.end_time.nanos, num)
-            writeTXT(word.word, text_path)
+            for word in alternative.words:
+                stampTime(time_path, word.word, word.start_time.seconds, word.start_time.nanos, word.end_time.seconds, word.end_time.nanos, num)
+                writeTXT(word.word, text_path)
 
 
 def sample_recognize(local_file_path):

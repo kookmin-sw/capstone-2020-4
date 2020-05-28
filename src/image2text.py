@@ -4,12 +4,38 @@ import cs_sim
 from google.cloud import vision
 from khaiii import KhaiiiApi
 import natsort
+import re, math
+from collections import Counter
+
+Word = re.compile(r'\w+')
+
+def get_cosine(vec1, vec2):
+     intersection = set(vec1.keys()) & set(vec2.keys())
+     numerator = sum([vec1[x] * vec2[x] for x in intersection])
+
+     sum1 = sum([vec1[x]**2 for x in vec1.keys()])
+     sum2 = sum([vec2[x]**2 for x in vec2.keys()])
+     denominator = math.sqrt(sum1) * math.sqrt(sum2)
+
+     if not denominator:
+        return 0.0
+     else:
+        return float(numerator) / denominator
+
+def text_to_vector(text):
+     words = Word.findall(text)
+     return Counter(words)
+
 
 model = fasttext.load_model('/home/ubuntu/voice_classification/server/model_skipgram.bin')
 
-def detect_text(path):
+sentence = ""
+
+def detect_text(path, BOUND_PATH, name):
     """Detects text in the file."""
 
+    global sentence
+       
 
     client = vision.ImageAnnotatorClient()
 
@@ -20,59 +46,66 @@ def detect_text(path):
 
     response = client.text_detection(image=image)
     texts = response.text_annotations
+#     text1 = 'This is a foo bar sentence .'
+#     text2 = 'This sentence is similar to a foo bar sentence .'
+
+
     if len(texts) != 0:
-        return texts[0].description.replace("\n", " ")
-    #
-    # for text in texts:
-    #     print("{}".format(text.description))
+        vector1 = text_to_vector(sentence)
+        vector2 = text_to_vector(texts[0].description)
+        cosine = get_cosine(vector1, vector2)
+        
+        print(cosine)
+        if cosine < 0.6:
+            sentence = texts[0].description
+            f.write(texts[0].description.replace("\n", " ") + "\n")
+            boundfile.write(name + "/")
+            for text in texts:
+                vertices = (['({},{})'.format(vertex.x, vertex.y)
+                         for vertex in text.bounding_poly.vertices])
+                boundfile.write(text.description.replace("\n", " ") + "+")
+        #         print(text.properties)
+                boundfile.write('{}/'.format(' '.join(vertices)))
+                 #print(vertices[0])
+                print('bounds: {}'.format(','.join(vertices)))
+                print(vertices[0])
+            boundfile.write("\n")
 
-        # vertices = (['({},{})'.format(vertex.x, vertex.y)
-        #             for vertex in text.bounding_poly.vertices])
-        #
-        # print('bounds: {}'.format(','.join(vertices)))
-        # print(vertices[0])
-
-    # if response.error.message:
-    #     raise Exception(
-    #         '{}\nFor more info on error messages, check: '
-    #         'https://cloud.google.com/apis/design/errors'.format(
-    #             response.error.message))
     
-def detect_bound(path, BOUND_PATH):
-    """Detects text in the file."""
+# def detect_bound(path, BOUND_PATH):
+#     """Detects text in the file."""
    
-    client = vision.ImageAnnotatorClient()
+#     client = vision.ImageAnnotatorClient()
 
-    with io.open(path, 'rb') as image_file:
-        content = image_file.read()
+#     with io.open(path, 'rb') as image_file:
+#         content = image_file.read()
 
-    image = vision.types.Image(content=content)
+#     image = vision.types.Image(content=content)
 
-    response = client.text_detection(image=image)
-    texts = response.text_annotations
-    #return vertex[0].replace("\n", " ")
+#     response = client.text_detection(image=image)
+#     texts = response.text_annotations
+#     #return vertex[0].replace("\n", " ")
     
-    for text in texts:
-         #f.write("{}".format(text.description))
-         #f.write(text.description) 
+#     for text in texts:
+#          #f.write("{}".format(text.description))
+#          #f.write(text.description) 
 
-        vertices = (['({},{})'.format(vertex.x, vertex.y)
-                 for vertex in text.bounding_poly.vertices])
-        f.write(text.description.replace("\n", " ") + "+")
-#         print(text.properties)
-        f.write('{}/'.format(' '.join(vertices)))
-         #print(vertices[0])
-    f.write("\n")
-    if response.error.message:
-         raise Exception(
-             '{}\nFor more info on error messages, check: '
-             'https://cloud.google.com/apis/design/errors'.format(
-                 response.error.message))    
+#         vertices = (['({},{})'.format(vertex.x, vertex.y)
+#                  for vertex in text.bounding_poly.vertices])
+#         f.write(text.description.replace("\n", " ") + "+")
+# #         print(text.properties)
+#         f.write('{}/'.format(' '.join(vertices)))
+#          #print(vertices[0])
+#     f.write("\n")
+#     if response.error.message:
+#          raise Exception(
+#              '{}\nFor more info on error messages, check: '
+#              'https://cloud.google.com/apis/design/errors'.format(
+#                  response.error.message))    
     
 
 
 def run_detect(TEXT_FILE, FILE_PATH, BOUND_PATH):
-    f = open(TEXT_FILE, "w", encoding="UTF-8")
     list = os.listdir(FILE_PATH)      #"subtitle/"
     list = natsort.natsorted(list)    
 
@@ -81,8 +114,7 @@ def run_detect(TEXT_FILE, FILE_PATH, BOUND_PATH):
             filename = FILE_PATH + file
             print(filename + "\n")
             try:
-              f.write(str(detect_text(filename))+ "\n")
-              detect_bound(filename, BOUND_PATH)
+              detect_text(filename, BOUND_PATH, file)
             except IsADirectoryError:
               print("directory Except")
 
@@ -154,7 +186,7 @@ def checkBound(BOUND_PATH, OUT_PATH):
             component = components.split("+")
             if component[0] in word and components != lines[0]:
                 print(imgNum + "/" + component[1])
-                f2.write(imgNum + "/" + component[1] + "\n")
+                f2.write(lines[0] + "/" + component[1] + "\n")
       
         
 
@@ -168,8 +200,12 @@ if __name__ == "__main__":
     parser.add_argument('--khaiii', type = str)
     parser.add_argument('--position', type = str)
     args = parser.parse_args()
-    f = open(args.bound, 'w', encoding = 'utf-8')
+#     f = open(args.bound, 'w', encoding = 'utf-8')
+
+    f = open(args.text, "w", encoding="UTF-8")
+    boundfile = open(args.bound, "w", encoding="UTF-8")
     run_detect(args.text, args.image, args.bound)
     f.close()
+    boundfile.close()
     khaiii_tokenize(args.text, args.khaiii)
     checkBound(args.bound, args.position)
