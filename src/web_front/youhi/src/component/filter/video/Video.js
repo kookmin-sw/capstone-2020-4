@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import VideoModal from "./VideoModal";
+import "./VideoModal.css";
 import "./Video.css";
 
 class Video extends Component {
@@ -79,6 +81,19 @@ class Video extends Component {
     this.setState({ isModalOpen: false });
   };
 
+  renderVideoModal = () => {
+    if (this.state.check) {
+      return (
+        <VideoModal
+          isOpen={this.state.isModalOpen}
+          close={this.closeModal}
+          // labelArray={this.state.labelArray}
+          result={this.state.result}
+        />
+      );
+    }
+  };
+
   render() {
     return (
       <div className="Video">
@@ -87,8 +102,10 @@ class Video extends Component {
           disabled={!this.props.successfulFiltered}
           onClick={() => {
             this.openModal();
+            this.go();
           }}
         ></button>
+        {this.renderVideoModal()}
       </div>
     );
   }
