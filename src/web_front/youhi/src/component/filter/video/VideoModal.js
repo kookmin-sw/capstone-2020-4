@@ -16,7 +16,7 @@ const VideoModal = ({ isOpen, close, result }) => {
           <div className="VideoModal">
             <p className="title">영상 검열 결과</p>
             <div className="content">
-            <div className="VideoModal-parallel-video-tabs">
+              <div className="VideoModal-parallel-video-tabs">
                 <div className="VideoModal-tab">
                   {getLabelsCnt(result.cntArray)}
                   <div className="VideoModal-tab-subtitle">전체 결과</div>
