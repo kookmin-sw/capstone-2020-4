@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactTransitionGroup from "react-addons-css-transition-group";
+import Player from "./react_player/Player";
 import "./VideoModal.css";
 
 const VideoModal = ({ isOpen, close, result }) => {
@@ -36,6 +37,9 @@ const VideoModal = ({ isOpen, close, result }) => {
                   {result.cntArray[3]}
                   <div className="VideoModal-tab-subtitle">Smoke</div>
                 </div>
+              </div>
+              <div className="VideoModal-video-wrapper">
+                <Player />
               </div>
             </div>
             <div className="button-wrap">
