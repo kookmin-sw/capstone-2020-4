@@ -18,6 +18,11 @@ class Player extends Component {
       duration: 0,
       playbackRate: 1.0,
       loop: false,
+
+      adultDropDown: false,
+      bloodDropDown: false,
+      knifeDropDown: false,
+      smokeDropDown: false,
     };
   }
 
@@ -61,6 +66,42 @@ class Player extends Component {
 
   ref = (player) => {
     this.player = player;
+  };
+
+  adultClickFunc = () => {
+    this.setState({ adultDropDown: !this.state.adultDropDown }, () => {
+      const obj = this.adultDivRef.current;
+      obj.removeAttribute("style");
+      if (!this.state.adultDropDown) obj.style.height = "0";
+      else obj.style.maxHeight = "800px";
+    });
+  };
+
+  bloodClickFunc = () => {
+    this.setState({ bloodDropDown: !this.state.bloodDropDown }, () => {
+      const obj = this.bloodDivRef.current;
+      obj.removeAttribute("style");
+      if (!this.state.bloodDropDown) obj.style.height = "0";
+      else obj.style.maxHeight = "800px";
+    });
+  };
+
+  knifeClickFunc = () => {
+    this.setState({ knifeDropDown: !this.state.knifeDropDown }, () => {
+      const obj = this.knifeDivRef.current;
+      obj.removeAttribute("style");
+      if (!this.state.knifeDropDown) obj.style.height = "0";
+      else obj.style.maxHeight = "800px";
+    });
+  };
+
+  smokeClickFunc = () => {
+    this.setState({ smokeDropDown: !this.state.smokeDropDown }, () => {
+      const obj = this.smokeDivRef.current;
+      obj.removeAttribute("style");
+      if (!this.state.smokeDropDown) obj.style.height = "0";
+      else obj.style.maxHeight = "800px";
+    });
   };
 
   render() {
