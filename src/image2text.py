@@ -150,7 +150,7 @@ def go(tokenized_khaiii_fname):
       #print(tokenList)
 
 def filter(tokenList, Line):
-  swearList = ['새끼']
+  swearList = ['씨발']
   for token in tokenList:
     for check in swearList:
       similarity = cs_sim.calculate(model.get_word_vector(token), model.get_word_vector(check))
