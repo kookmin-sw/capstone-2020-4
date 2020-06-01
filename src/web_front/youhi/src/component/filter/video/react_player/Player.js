@@ -77,20 +77,11 @@ class Player extends Component {
   };
 
   printLabelArrayData = (label) => {
-    if (label === "smoke") {
-      this.props.func([
-        this.adultDivRef.current,
-        this.bloodDivRef.current,
-        this.knifeDivRef.current,
-        this.smokeDivRef.current,
-      ]);
-    }
     const resultCopy = this.state.result;
     const data = resultCopy.labelArray;
     const dataCnt = resultCopy.cntArray;
     const labelNum =
       label === "adult" ? 0 : label === "blood" ? 1 : label === "knife" ? 2 : 3;
-    console.log(label, labelNum, dataCnt[labelNum]);
     if (dataCnt[labelNum] > 0) {
       return data.map((element, index) => {
         const date1 = new Date(index * 1000);
@@ -188,7 +179,7 @@ class Player extends Component {
               className="react-player"
               width="100%"
               height="100%"
-              url="https://www.youtube.com/watch?v=oUFJJNQGwhk"
+              url={url}
               playing={playing}
               controls={true}
               volume={volume}
@@ -206,11 +197,9 @@ class Player extends Component {
           <div className="Player-info-dropdown" onClick={this.adultClickFunc}>
             <div className="Player-header">
               <div className="Player-icon-container">
-                <span
-                  className={`Player-dropdown-icon ${
+                <span className={`Player-dropdown-icon ${
                     this.state.adultDropDown ? "caret-down" : "caret-right"
-                  }`}
-                />
+                  }`} />
               </div>
               <div className="Player-main-title">Adult</div>
             </div>
@@ -238,6 +227,110 @@ class Player extends Component {
                     {this.printLabelArrayData("adult")}
                   </Scrollbars>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div className="Player-info-dropdown" onClick={this.bloodClickFunc}>
+            <div className="Player-header">
+              <div className="Player-icon-container">
+                <span className={`Player-dropdown-icon ${
+                    this.state.bloodDropDown ? "caret-down" : "caret-right"
+                  }`} />
+              </div>
+              <div className="Player-main-title">Blood</div>
+            </div>
+            <div
+              className={`${
+                this.state.bloodDropDown
+                  ? "Player-menu-content"
+                  : "Player-menu-content-closed"
+              }`}
+              ref={this.bloodDivRef}
+            >
+              <div className="Player-label-boxes">
+                <Scrollbars
+                  className="Player-scrollbars"
+                  style={{ width: "100%", height: "80px", textAlign: "left" }}
+                  renderTrackHorizontal={(props) => (
+                    <div
+                      {...props}
+                      style={{ display: "none" }}
+                      className="track-horizontal"
+                    />
+                  )}
+                >
+                  {this.printLabelArrayData("blood")}
+                </Scrollbars>
+              </div>
+            </div>
+          </div>
+          <div className="Player-info-dropdown" onClick={this.knifeClickFunc}>
+            <div className="Player-header">
+              <div className="Player-icon-container">
+                <span
+                  className={`Player-dropdown-icon ${
+                    this.state.knifeDropDown ? "caret-down" : "caret-right"
+                  }`}
+                />
+              </div>
+              <div className="Player-main-title">Knife</div>
+            </div>
+            <div
+              className={`${
+                this.state.knifeDropDown
+                  ? "Player-menu-content"
+                  : "Player-menu-content-closed"
+              }`}
+              ref={this.knifeDivRef}
+            >
+              <div className="Player-label-boxes">
+                <Scrollbars
+                  className="Player-scrollbars"
+                  style={{ width: "100%", height: "80px", textAlign: "left" }}
+                  renderTrackHorizontal={(props) => (
+                    <div
+                      {...props}
+                      style={{ display: "none" }}
+                      className="track-horizontal"
+                    />
+                  )}
+                >
+                  {this.printLabelArrayData("knife")}
+                </Scrollbars>
+              </div>
+            </div>
+          </div>
+          <div className="Player-info-dropdown" onClick={this.smokeClickFunc}>
+            <div className="Player-header">
+              <div className="Player-icon-container">
+                <span className={`Player-dropdown-icon ${
+                    this.state.smokeDropDown ? "caret-down" : "caret-right"
+                  }`} />
+              </div>
+              <div className="Player-main-title">Smoke</div>
+            </div>
+            <div
+              className={`${
+                this.state.smokeDropDown
+                  ? "Player-menu-content"
+                  : "Player-menu-content-closed"
+              }`}
+              ref={this.smokeDivRef}
+            >
+              <div className="Player-label-boxes">
+                <Scrollbars
+                  className="Player-scrollbars"
+                  style={{ width: "100%", height: "80px", textAlign: "left" }}
+                  renderTrackHorizontal={(props) => (
+                    <div
+                      {...props}
+                      style={{ display: "none" }}
+                      className="track-horizontal"
+                    />
+                  )}
+                >
+                  {this.printLabelArrayData("smoke")}
+                </Scrollbars>
               </div>
             </div>
           </div>
