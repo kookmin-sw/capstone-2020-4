@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
+import { Scrollbars } from "react-custom-scrollbars";
 import "./Player.css";
 
 class Player extends Component {
@@ -119,8 +120,8 @@ class Player extends Component {
       loaded,
       duration,
     } = this.state;
-    
-    return(
+
+    return (
       <div className="Player">
         <section className="section">
           <div className="player-wrapper">
@@ -144,7 +145,43 @@ class Player extends Component {
           </div>
         </section>
         <div className="Player-info-wrapper">
-
+          <div className="Player-info-dropdown" onClick={this.adultClickFunc}>
+            <div className="Player-header">
+              <div className="Player-icon-container">
+                <span
+                  className={`Player-dropdown-icon ${
+                    this.state.adultDropDown ? "caret-down" : "caret-right"
+                  }`}
+                />
+              </div>
+              <div className="Player-main-title">Adult</div>
+            </div>
+            <div
+              className={`${
+                this.state.adultDropDown
+                  ? "Player-menu-content"
+                  : "Player-menu-content-closed"
+              }`}
+              ref={this.adultDivRef}
+            >
+              <div id="Player-adult">
+                <div className="Player-label-boxes">
+                  <Scrollbars
+                    className="Player-scrollbars"
+                    style={{ width: "100%", height: "80px", textAlign: "left" }}
+                    renderTrackHorizontal={(props) => (
+                      <div
+                        {...props}
+                        style={{ display: "none" }}
+                        className="track-horizontal"
+                      />
+                    )}
+                  >
+                  </Scrollbars>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
