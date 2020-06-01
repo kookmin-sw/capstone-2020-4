@@ -24,6 +24,11 @@ class Player extends Component {
       knifeDropDown: false,
       smokeDropDown: false,
     };
+
+    this.adultDivRef = React.createRef();
+    this.bloodDivRef = React.createRef();
+    this.knifeDivRef = React.createRef();
+    this.smokeDivRef = React.createRef();
   }
 
   load = (url) => {
@@ -138,6 +143,9 @@ class Player extends Component {
             />
           </div>
         </section>
+        <div className="Player-info-wrapper">
+
+        </div>
       </div>
     );
   }
