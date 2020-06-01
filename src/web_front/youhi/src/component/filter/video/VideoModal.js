@@ -39,7 +39,7 @@ const VideoModal = ({ isOpen, close, result }) => {
                 </div>
               </div>
               <div className="VideoModal-video-wrapper">
-                <Player />
+                <Player result={result}/>
               </div>
             </div>
             <div className="button-wrap">

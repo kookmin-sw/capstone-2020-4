@@ -20,6 +20,8 @@ class Player extends Component {
       playbackRate: 1.0,
       loop: false,
 
+      result: this.props.result,
+
       adultDropDown: false,
       bloodDropDown: false,
       knifeDropDown: false,
@@ -72,6 +74,62 @@ class Player extends Component {
 
   ref = (player) => {
     this.player = player;
+  };
+
+  printLabelArrayData = (label) => {
+    if (label === "smoke") {
+      this.props.func([
+        this.adultDivRef.current,
+        this.bloodDivRef.current,
+        this.knifeDivRef.current,
+        this.smokeDivRef.current,
+      ]);
+    }
+    const resultCopy = this.state.result;
+    const data = resultCopy.labelArray;
+    const dataCnt = resultCopy.cntArray;
+    const labelNum =
+      label === "adult" ? 0 : label === "blood" ? 1 : label === "knife" ? 2 : 3;
+    console.log(label, labelNum, dataCnt[labelNum]);
+    if (dataCnt[labelNum] > 0) {
+      return data.map((element, index) => {
+        const date1 = new Date(index * 1000);
+        const mm1 = date1.getUTCMinutes();
+        const ss1 = ("0" + date1.getUTCSeconds()).slice(-2);
+
+        const diff = Math.floor(this.state.duration - index);
+        const date2 =
+          diff < 3
+            ? new Date((index + diff) * 1000)
+            : new Date((index + 3) * 1000);
+        const mm2 = date2.getUTCMinutes();
+        const ss2 = ("0" + date2.getUTCSeconds()).slice(-2);
+
+        if (element === label) {
+          if (diff < 3) {
+            return (
+              <div className="Player-label-time">
+                {`${mm1}:${ss1}`} ~ {`${mm2}:${ss2}`}
+              </div>
+            );
+          } else {
+            return (
+              <div className="Player-label-time">
+                {`${mm1}:${ss1}`} ~ {`${mm2}:${ss2}`}
+              </div>
+            );
+          }
+        } else {
+          return null;
+        }
+      });
+    } else {
+      return (
+        <div className="Player-empty-labels">
+          영상에서 해당 레이블이 검열되지 않음
+        </div>
+      );
+    }
   };
 
   adultClickFunc = () => {
@@ -177,6 +235,7 @@ class Player extends Component {
                       />
                     )}
                   >
+                    {this.printLabelArrayData("adult")}
                   </Scrollbars>
                 </div>
               </div>
