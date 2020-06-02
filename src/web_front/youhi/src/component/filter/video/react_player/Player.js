@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
 import { Scrollbars } from "react-custom-scrollbars";
+import Duration from "./Duration";
 import "./Player.css";
 
 class Player extends Component {
@@ -20,6 +21,9 @@ class Player extends Component {
       playbackRate: 1.0,
       loop: false,
 
+      ended: false,
+      checkedTime: null,
+      elapsed: 0,
       result: this.props.result,
 
       adultDropDown: false,
@@ -53,6 +57,40 @@ class Player extends Component {
 
   handleProgress = (state) => {
     console.log("onProgress", state);
+    var condition = false;
+    const data = this.state.result.labelArray;
+    const checkedTime = this.state.checkedTime;
+    const current = Math.floor(state.playedSeconds);
+
+    if (this.state.playing && data[current] !== undefined) {
+      if (data[current] === "adult") {
+        document.getElementById("0").style.backgroundColor = "red";
+      } else if (data[current] === "blood") {
+        document.getElementById("1").style.backgroundColor = "red";
+      } else if (data[current] === "knife") {
+        document.getElementById("2").style.backgroundColor = "red";
+      } else if (data[current] === "smoke") {
+        document.getElementById("3").style.backgroundColor = "red";
+      }
+      condition = true;
+    }
+
+    if (checkedTime !== null && current - checkedTime === 3) {
+      if (data[checkedTime] === "adult") {
+        document.getElementById("0").style.backgroundColor = "";
+      } else if (data[checkedTime] === "blood") {
+        document.getElementById("1").style.backgroundColor = "";
+      } else if (data[checkedTime] === "knife") {
+        document.getElementById("2").style.backgroundColor = "";
+      } else if (data[checkedTime] === "smoke") {
+        document.getElementById("3").style.backgroundColor = "";
+      }
+    }
+
+    if (condition) {
+      this.setState({ checkedTime: current });
+    }
+    
     if (!this.state.seeking) {
       this.setState({ state: state, played: state.played });
     }
@@ -158,6 +196,10 @@ class Player extends Component {
       else obj.style.maxHeight = "800px";
     });
   };
+
+  componentDidMount() {
+    this.props.func([this.adultDivRef.current, this.bloodDivRef.current, this.knifeDivRef.current, this.smokeDivRef.current]);
+  }
 
   render() {
     const {
@@ -331,6 +373,7 @@ class Player extends Component {
                 >
                   {this.printLabelArrayData("smoke")}
                 </Scrollbars>
+                {this.props.func2([this.state.adultDropDown, this.state.bloodDropDown, this.state.knifeDropDown, this.state.smokeDropDown])}
               </div>
             </div>
           </div>
@@ -339,4 +382,5 @@ class Player extends Component {
     );
   }
 }
+
 export default Player;
