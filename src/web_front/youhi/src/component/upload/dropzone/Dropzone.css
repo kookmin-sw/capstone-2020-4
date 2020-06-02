@@ -13,6 +13,8 @@
   margin: 0 50px 0 0;
 }
 
+
+
 .Highlight {
   background-color: rgb(188, 185, 236);
 }
@@ -23,6 +25,6 @@
   width: 64px;
 }
 
-.Dropzone-FileInput {
+.FileInput {
   display: none;
 }
