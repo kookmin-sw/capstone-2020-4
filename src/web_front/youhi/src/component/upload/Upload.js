@@ -1,27 +1,36 @@
 import React, { Component } from "react";
 import UploadElementor from "./upload_elementor/UploadElementor";
 import Dropzone from "./dropzone/Dropzone";
+import "./Upload.css";
 import Progress from "./progress/Progress";
 import Text from "./text/Text";
-import "./Upload.css";
+import io from "socket.io-client"
 
 var signedURL;
-var uniqueNum;
-const io = require("socket.io-client");
-const ioClient = io.connect("http://13.125.127.181:4567");
+var account;
+
+// const io = require("socket.io-client");
+// const ioClient = io.connect("http://13.209.93.181:4567");
+const ioClient = io.connect("http://localhost:4567");
 
 class Upload extends Component {
   constructor(props) {
     super(props);
     this.state = {
       files: [],
-      uploaing: false,
+      fileName: "",
+      uploading: false,
       uploadProgress: {},
       successfullUploaded: false,
+      filterButtonDisable: true,
+
+      testState: false,
     };
+
     this.onFilesAdded = this.onFilesAdded.bind(this);
     this.uploadFiles = this.uploadFiles.bind(this);
     this.sendRequest = this.sendRequest.bind(this);
+    this.orderFilter = this.orderFilter.bind(this);
     this.renderActions = this.renderActions.bind(this);
   }
 
@@ -31,9 +40,13 @@ class Upload extends Component {
     }));
 
     ioClient.emit("ready", `${files[0].name}`);
-    ioClient.on("number", (data) => {
-      uniqueNum = data;
+    ioClient.on("number", function (data) {
+      account = data;
     });
+    ioClient.on("upload", function (data) {
+      console.log(data);
+      this.setState({ filterButtonDisable: false });
+    }.bind(this));
   }
 
   async uploadFiles() {
@@ -42,13 +55,22 @@ class Upload extends Component {
     this.state.files.forEach((file) => {
       promises.push(this.sendRequest(file));
     });
-    await Promise.all(promises);
-    this.setState({ successfullUploaded: true, uploading: false });
+    try {
+      await Promise.all(promises);
+
+      this.setState({
+        successfullUploaded: true,
+        uploading: false,
+      });
+    } catch (e) {
+      // Not Production ready! Do some error handling here instead...
+      this.setState({ successfullUploaded: true, uploading: false });
+    }
   }
 
   sendRequest(file) {
     return new Promise((resolve, reject) => {
-      var req = new XMLHttpRequest();
+      const req = new XMLHttpRequest();
 
       req.upload.addEventListener("progress", (event) => {
         if (event.lengthComputable) {
@@ -75,22 +97,22 @@ class Upload extends Component {
         reject(req.response);
       });
 
-      var xhr = new XMLHttpRequest();
+      const xhr = new XMLHttpRequest();
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
           signedURL = JSON.parse(this.responseText);
           console.log(signedURL.signed_url);
-          console.log(signedURL.requestId);
-          var data = new FormData();
-          data.append("file", file, `${file.name}`);
+          // console.log(signedURL.requestId);
+          const data = new FormData();
+          data.append("file", file, `${account.value}`);
+
           req.open("PUT", signedURL.signed_url);
           req.send(file);
         }
       });
-
       xhr.open(
         "GET",
-        `https://j2s6y0lok9.execute-api.ap-northeast-2.amazonaws.com/prod/%7Bproxy+7D?name=${file.name}`
+        `https://j2s6y0lok9.execute-api.ap-northeast-2.amazonaws.com/prod/%7Bproxy+7D?name=${account.value}`
       );
       xhr.send();
     });
@@ -100,10 +122,10 @@ class Upload extends Component {
     const uploadProgress = this.state.uploadProgress[file.name];
     if (this.state.uploading || this.state.successfullUploaded) {
       return (
-        <div className="Upload-progress">
+        <div className="ProgressWrapper">
           <Progress progress={uploadProgress ? uploadProgress.percentage : 0} />
           <img
-            className="Upload-check-icon"
+            className="CheckIcon"
             alt="done"
             src={require("../../img/check_circle.png")}
             style={{
@@ -116,43 +138,95 @@ class Upload extends Component {
     }
   }
 
+  orderFilter() {
+    this.setState({ testState: !this.state.testState });
+    ioClient.emit("filter", `${account.value}`);
+    ioClient.on("result", function (data) {
+      console.log(data);
+      this.setState({ testState: !this.state.testState }, () => {
+        this.props.func(true);
+      })
+    }.bind(this));
+  }
+
   renderActions() {
-    return (
-      <div className="Actions">
-        <button
-          className="Upload-button Upload-upload-button"
-          disabled={this.state.files.length < 0 || this.state.uploading}
-          onClick={this.uploadFiles}
-        >
-          업로드
-        </button>
-        <button className="Upload-button Upload-filter-button">필터</button>
-      </div>
-    );
+    if (this.state.successfullUploaded) {
+      return (
+        <div className="Actions">
+          <button
+            className="Upload-button Upload-upload-button"
+            onClick={() =>
+              this.setState({
+                files: [],
+                successfullUploaded: false,
+                filterButtonDisable: true,
+              })
+            }
+          >
+            Clear
+          </button>
+          <button
+            className="Upload-button Upload-filter-button"
+            onClick={this.orderFilter}
+            disabled={this.state.filterButtonDisable}
+          >
+            필터
+          </button>
+        </div>
+      );
+    } else {
+      return (
+        <div className="Actions">
+          <button
+            className="Upload-button Upload-upload-button"
+            disabled={this.state.files.length === 0 || this.state.uploading}
+            onClick={this.uploadFiles}
+          >
+            업로드
+          </button>
+          <button
+            className="Upload-button Upload-filter-button"
+            disabled={true}
+          >
+            필터
+          </button>
+        </div>
+      );
+    }
   }
 
   render() {
     return (
-      <div className="Upload">
+      <div className="Upload-wrapper">
         <UploadElementor />
-        <div className="Upload-outer-flex-items">
+        <div className="Content">
           <Dropzone
             onFilesAdded={this.onFilesAdded}
             disabled={this.state.uploading || this.state.successfullUploaded}
+            filesLength={this.state.files.length}
           />
-          <div className="Upload-inner-flex-items">
+          <div className="Upload-text-buttons-container">
             <Text />
-            <div className="Upload-files">
+            <div className="Files">
               {this.state.files.map((file) => {
                 return (
-                  <div key={file.name} className="Upload-Row">
-                    <span className="Upload-Filename">{file.name}</span>
+                  <div key={file.name} className="Row">
+                    <span className="Filename">{file.name}</span>
                     {this.renderProgress(file)}
                   </div>
                 );
               })}
             </div>
-            {this.renderActions()}
+            <div className="wrap">
+              {this.renderActions()}
+              <span
+                className={`test-icon-container loading-spinner ${
+                  this.state.testState ? "" : "hide"
+                }`}
+              >
+                <div className="test-icon loading-spinner-icon" />
+              </span>
+            </div>
           </div>
         </div>
       </div>

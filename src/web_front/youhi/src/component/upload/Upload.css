@@ -1,10 +1,29 @@
+.Upload-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .Upload {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
+  width: 1903px;
+  height: 600px;
 }
 
-.Upload-outer-flex-items {
+.under-content {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  width: 100%;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 275px;
+}
+
+.Content {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -13,7 +32,52 @@
   margin-bottom: 100px;
 }
 
-.Upload-inner-flex-items {
+.Files {
+  height: 64px;
+  width: 208px;
+}
+
+.Actions {
+  display: inline-flex;
+  flex-direction: row;
+  margin-top: 20px;
+  justify-content: flex-end;
+  width: 310px;
+}
+
+.Title {
+  margin-bottom: 32px;
+  color: #555;
+}
+
+.Filename {
+  margin-bottom: 4px;
+  margin-top: 4px;
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+}
+
+.Row {
+  display: flex;
+  flex-direction: column;
+  height: 69px;
+  padding: 8px;
+}
+
+.CheckIcon {
+  opacity: 0.5;
+  margin-left: 5px;
+}
+
+.ProgressWrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+}
+
+.Upload-text-buttons-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -21,25 +85,8 @@
   margin-top: 20px;
 }
 
-.Upload-files {
-  height: 64px;
-  width: 208px;
-}
-
-.Upload-Row {
-  display: flex;
-  flex-direction: column;
-  height: 69px;
-  padding: 8px;
-}
-
-
-.Upload-Filename {
-  margin-bottom: 4px;
-  margin-top: 4px;
-  text-align: center;
-  font-size: 16px;
-  color: #555;
+.Upload-upload-button {
+  margin-right: 30px;
 }
 
 .Upload-button {
@@ -68,7 +115,49 @@
   outline: 0;
 }
 
-.Upload-upload-button {
-  margin-right: 30px;
+button:disabled {
+  background: rgb(189, 189, 189);
+  cursor: default;
 }
 
+.loading-spinner {
+  margin-left: 10px;
+  pointer-events: none;
+}
+
+.hide {
+  display: none !important;
+}
+
+.test-icon {
+  background-image: url("../../img/loading-icon.png");
+  width: 30px;
+  height: 30px;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.loading-spinner .loading-spinner-icon {
+  animation: spinIcon 2.33s linear infinite;
+}
+
+@keyframes spinIcon  {
+  0% {
+    transform: rotateZ(0deg);
+  } 
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.test-class {
+  display: flex;
+}
+
+.wrap {
+  width: 100%;
+}
