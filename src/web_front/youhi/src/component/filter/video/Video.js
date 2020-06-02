@@ -99,7 +99,6 @@ class Video extends Component {
       <div className="Video">
         <button
           className="Filter-box Filter-video-filter"
-          disabled={!this.props.successfulFiltered}
           onClick={() => {
             this.openModal();
             this.go();
