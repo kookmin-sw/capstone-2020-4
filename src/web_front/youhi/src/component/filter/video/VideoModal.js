@@ -4,6 +4,15 @@ import Player from "./react_player/Player";
 import "./VideoModal.css";
 
 const VideoModal = ({ isOpen, close, result }) => {
+  var ref = new Array(4);
+
+  const setRef = (paramRef) => {
+    ref[0] = paramRef[0];
+    ref[1] = paramRef[1];
+    ref[2] = paramRef[2];
+    ref[3] = paramRef[3];
+  }
+
   return (
     <div>
       {isOpen ? (
@@ -39,7 +48,7 @@ const VideoModal = ({ isOpen, close, result }) => {
                 </div>
               </div>
               <div className="VideoModal-video-wrapper">
-                <Player result={result}/>
+                <Player result={result} func={setRef} />
               </div>
             </div>
             <div className="button-wrap">
