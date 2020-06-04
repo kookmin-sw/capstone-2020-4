@@ -33,7 +33,7 @@ frame_count = math.floor(length / duration)
 print(frame_count)
 os.system("mkdir " + client_folder + "/smoke")
 os.system("mkdir " + client_folder + "/knife")
-os.system("mkdir " + client_folder + "/adult")
+os.system("mkdir " + client_folder + "/adult_temp")
 cfg = get_cfg()
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 5
 cfg.merge_from_file("detectron2_repo/configs/COCO-InstanceSegmentation/mask_rcnn_R_101_FPN_3x.yaml")
@@ -49,7 +49,7 @@ blood_text = open(client_folder + "/blood.txt", "w")
 file_list = os.listdir(client_folder)
 filelist = [file for file in file_list if file.endswith(".jpg")]
 video_len = len(filelist)
-#adult_check = 0
+adult_check = 0
 file = 0
 while file < len(filelist):
     file_name = str(file) + ".jpg"
@@ -63,8 +63,12 @@ while file < len(filelist):
         print(label, score)
         #adult
         if label == 0 and score >= 0.75:
-#            adult_check += 1
-            cv2.imwrite(client_folder + "/adult_temp/" + str(int(file / frame_count)) + ".jpg)
+            adult_check += 1
+            y0 = outputs["instances"].pred_boxes[0].tensor[0][0].item()
+            x0 = outputs["instances"].pred_boxes[0].tensor[0][1].item()
+            y1 = outputs["instances"].pred_boxes[0].tensor[0][2].item()
+            x1 = outputs["instances"].pred_boxes[0].tensor[0][3].item()
+            cv2.imwrite(client_folder + "/adult_temp/" + str(int(file / frame_count)) + ".jpg", im[int(x0):int(x1), int(y0):int(y1)])
             file += frame_count
         # gun
         elif (label == 1 or label == 2) and score >= 0.7:
@@ -81,8 +85,9 @@ while file < len(filelist):
     file += 1
 blood_text.close()
 
-#if adult_check >= 1:
-#	os.system("mv " + client_folder + "/adult_result.txt ../static/" + client_folder) 
+if adult_check >= 1:
+        os.system("python3.6 image_classification.py --dir " + client_folder)
+        os.system("mv " + client_folder + "/adult_result.txt ../static/" + client_folder)
 smoke_list = natsort.natsorted(smoke_list)
 knife_list = natsort.natsorted(knife_list)
 
