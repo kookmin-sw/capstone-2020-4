@@ -1,9 +1,10 @@
-.Text {
+.Text-wrapper {
   width: 415px;
   height: 285px;
+  font-family: 'Roboto';
 }
 
-.Text-text-title {
+.Text-title {
   width: auto;
   padding: 0px 16px 0px 0px;
   font-size: 23px;
@@ -12,7 +13,7 @@
   text-align: center;
 }
 
-.Text-text-description {
+.Text-box {
   font-size: 16px;
   line-height: 28px;
   width: auto;
@@ -21,14 +22,14 @@
   margin-bottom: 32px;
 }
 
-.Text-text-description ul {
+.Text-box ul {
   color: #7a7a7a;
   padding-left: 5px;
   letter-spacing: -0.25px;
   font-size: 14px;
 }
 
-.Text-text-description li {
+.Text-box li {
   padding-bottom: 20px;
 }
 
@@ -101,3 +102,5 @@
 .Text-checkbox-container .Text-text-emphasis {
   color: red;
 }
+
+
