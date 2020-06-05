@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import ReactTransitionGroup from "react-addons-css-transition-group";
 import Login from "../login/login";
 import "./FeedbackModal.css";
 
 const FeedbackModal = ({ isOpen, close, emailAddress }) => {
+  const [submitButtonRef, setSubmitButtonRef] = useState(null);
+
   return (
     <div>
       {isOpen ? (
@@ -14,12 +16,15 @@ const FeedbackModal = ({ isOpen, close, emailAddress }) => {
         >
           <div className="FeedbackModal-overlay" onClick={close} />
           <div className="FeedbackModal">
-            <p className="title">영상 검열 결과</p>
+            <p className="title">이의신청 및 문의하기</p>
             <div className="content">
-              <Login />
+              <Login func={setSubmitButtonRef} />
             </div>
             <div className="button-wrap">
-              <button onClick={close}>확인</button>
+              <button onClick={() => {
+                close();
+                submitButtonRef.click();
+              }}>제출</button>
             </div>
           </div>
         </ReactTransitionGroup>

@@ -1,0 +1,44 @@
+.Login {
+  width: 100%;
+}
+
+.Login-input-container-wrapper {
+  width: 579px;
+  padding: 18px 0px 18px 20px;
+}
+
+.Login-input-container {
+  position: relative;
+  margin: 0;
+  border: 1px solid #919191;
+  height: 38px;
+  width: 577px;
+}
+
+.Login-input {
+  width: 551px;
+  height: 100%;
+  border: none 0;
+  line-height: 36px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0 13px;
+  background-color: transparent;
+  font-size: 15px;
+  z-index: 10;
+}
+
+.Login-category {
+  display: flex;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.Login-title {
+  display: inline-block;
+  width: 132px;
+  padding: 28px 0px 28px 19px;
+  font-size: 15px;
+  letter-spacing: -1px;
+}
