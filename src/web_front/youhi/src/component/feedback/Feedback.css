@@ -1,0 +1,33 @@
+.Feedback {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 120px;
+}
+
+.Feedback-button {
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-block;
+  height: 50px;
+  min-width: 400px;
+  padding: 6px 16px;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0;
+  border-radius: 100px;
+  /* background: rgba(103, 58, 183, 1); */
+  background: black;
+  color: #fff;
+  outline: 0;
+}
