@@ -25,7 +25,7 @@ const Navbar = () => {
             Home
           </NavLink>
           <NavLink
-            to="/skill"
+            to="/description"
             className="App-Nav"
             activeStyle={{ fontWeight: "bold" , color: "white" }}
           >

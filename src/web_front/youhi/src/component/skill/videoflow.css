@@ -1,0 +1,38 @@
+.object-detection {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: wrap;
+    margin-bottom : 40px;
+}
+
+.object-title {
+    text-align: center;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 10px;
+    border-bottom: #a5b0b5 1px solid;
+}
+
+.flow_flow {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.ob-con {
+    /* background-color: #d2d2d2; */
+}
+
+.video_flow_text {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.flow-img {
+    width: 1100px;
+    height: 600px;
+}

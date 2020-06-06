@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Home from './Home';
-
+import Skill from './skill';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Navbar from './component/navbar/Navbar';
@@ -22,6 +22,7 @@ class App extends Component {
         <StyledWrapper>
           <div className="innerDiv">
             <Route exact path ='/' component = { Home }/>
+            <Route path = '/description' component = { Skill }/>
           </div>
         </StyledWrapper>
       </Router>
