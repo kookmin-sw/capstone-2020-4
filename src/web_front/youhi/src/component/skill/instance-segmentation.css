@@ -16,9 +16,8 @@
     border-bottom: #a5b0b5 1px solid;
 }
 
+
 .object-text {
-    line-height: 1.5;
-    letter-spacing: -0.5px;
     color: #7a7a7a;
     font-size : 20px;
     /* text-align: center; */
@@ -37,26 +36,11 @@
     margin-bottom: 40px;
 }
 
-.rcnn {
-    display: flex;
-    justify-content: center;
-    margin-top: 120px;
-}
-
 .object-space {
     width: 100px;
 }
 
-.font-in {
-    font-weight: 700;
-}
 
-.rcnn-img {
-    height: 200px;
-    border: 1px solid black;
-    justify-content: center;
-    width: 300px;
-}
 
 .ob-con {
     /* background-color: #d2d2d2; */
