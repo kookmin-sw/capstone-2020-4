@@ -2,9 +2,10 @@ import React, {useState} from "react";
 import Introduction from "./component/introduction/Introduction";
 import Upload from "./component/upload/Upload";
 import Filter from './component/filter/Filter';
+import Footer from './component/footer/footer';
 import "./App.css";
 
-import Loginmodal from "./component/filter/exception/exception";
+
 
 function Home() {
     const [showResult, setShowResult ] = useState(false);
@@ -16,6 +17,7 @@ function Home() {
         <Upload func={setShowResult}/>
         <Filter showResult={showResult}/>
       </div>
+      <Footer/>
     </div>
   );
 }
