@@ -1,23 +1,33 @@
-import React, {useState} from "react";
-import Introduction from "./component/introduction/Introduction";
-import Upload from "./component/upload/Upload";
-import Filter from './component/filter/Filter';
+import React, { Component } from 'react';
 import './App.css';
+import Home from './Home';
+import Skill from './Skill';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import styled from 'styled-components';
 import Navbar from './component/navbar/Navbar';
+import Footer from './component/footer/footer';
 
-const App = () => {
-  const [showResult, setShowResult] = useState(false);
-
-  return (
-    <div className="App">
+const StyledWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  .innerDiv {
+    width: 100%;
+  }
+`;
+class App extends Component {
+  render() {
+    return (
+      <Router>
       <Navbar />
-      <div className="Total">
-      <Introduction />
-      <Upload func={setShowResult} />
-      <Filter showResult={showResult} />
-      </div>
-    </div>
-  )
+        <StyledWrapper>
+          <div className="innerDiv">
+            <Route exact path ='/' component = { Home }/>
+            <Route path = '/skill' component = { Skill }/>
+          </div>
+        </StyledWrapper>
+      </Router>
+    )
+  }
 }
 
 export default App;
