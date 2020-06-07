@@ -5,13 +5,15 @@ import "./Dropzone.css";
 class Dropzone extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       highlight: false,
       fileUrl: null,
+      isModalOpen: false,
     };
     this.fileInputRef = React.createRef();
     this.inputDivRef = React.createRef();
 
+    
     this.openFileDialog = this.openFileDialog.bind(this);
     this.onFilesAdded = this.onFilesAdded.bind(this);
     this.onDragOver = this.onDragOver.bind(this);
@@ -21,14 +23,17 @@ class Dropzone extends Component {
 
   openFileDialog() {
     if (this.props.disabled) return;
-    this.fileInputRef.current.click();
+    if (this.props.filesLength === 0) {
+      this.fileInputRef.current.click();
+    } else {
+      this.openModal();
+    }
   }
 
   onFilesAdded(evt) {
     if (this.props.disabled) return;
-    const files = evt.target.files; 
-    console.log("files", files);
-    if (this.props.onFilesAdded) {
+    const files = evt.target.files;
+    if (this.props.onFilesAdded && files.length > 0) {
       const array = this.fileListToArray(files);
       this.props.onFilesAdded(array);
     }
@@ -48,7 +53,7 @@ class Dropzone extends Component {
     event.preventDefault();
     if (this.props.disabled) return;
     const files = event.dataTransfer.files;
-    if (this.props.onFilesAdded) {
+    if (this.props.onFilesAdded && files.length > 0) {
       const array = this.fileListToArray(files);
       this.props.onFilesAdded(array);
     }
@@ -68,12 +73,16 @@ class Dropzone extends Component {
   renderView = () => {
     const condition = this.props.filesLength ? true : false;
     if (condition) {
-      return (
-        <ReactPlayer url={this.state.fileUrl} />
-      );
+      return <ReactPlayer url={this.state.fileUrl} />;
     } else {
       return (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <img
             alt="upload"
             className="Icon"
@@ -87,7 +96,7 @@ class Dropzone extends Component {
         </div>
       );
     }
-  }
+  };
 
   componentDidUpdate() {
     if (this.props.filesLength) {
