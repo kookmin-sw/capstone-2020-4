@@ -19,18 +19,17 @@ def go(tokenized_khaiii_fname):
       #print(tokenList)
 
 def filter(tokenList, Line):
-  swearList = ['새끼']
+  swearList = ['씨발']
   for token in tokenList:
     for check in swearList:
       similarity = cs_sim.calculate(model.get_word_vector(token), model.get_word_vector(check))
-      if (similarity >= 0.6):
-       print(similarity)
-       stringMatch(token, Line)
+      if (similarity >= 0.55):
+          stringMatch(token, Line)
        #print(token)
 
 def stringMatch(token,Line):
   #f = open('/home/ubuntu/voice_classification/textData/number.txt','a')
-  swearList = ['시발', '씨발', '병신', '좆', '개새끼', '씨발새끼', '새끼', '씨발놈', '씹새끼', '씨부랄', '개씨발', '딸치']
+  swearList = ['시발', '씨발', '병신', '좆', '개새끼', '씨발새끼', '새끼', '씨발놈', '씹새끼', '씨부랄', '개씨발', '딸치', '따먹다', '따먹', '씨빨', '시발새끼', '존나', '년', '련', '지랄']
   for swear in swearList:
     if swear in token:
       #f.write(str(Line))
@@ -49,7 +48,7 @@ def soundFilter(FILE_PATH, OUT_PATH, AUDIO):
         sentence = timeLine[0]
         startT = timeLine[1]
         endT = timeLine[2]
-        f1.write(str(sentence) + ' / ' + calc_time(startT, endT))
+        f1.write(str(sentence) + " / " + calc_time(startT, endT))
         f1.write('\n')
         #mute(".\\voice\\mute.wav",int(startT), int(endT))
         mute(AUDIO, int(startT), int(endT))
@@ -81,10 +80,7 @@ def calc_time(startT, endT):
     else:
         end_sec = str(end_sec)
 
-    print(start_min + ":" + start_sec + "~" + end_min + ":" + end_sec)
-
-
-
+    return start_min + ":" + start_sec + "~" + end_min + ":" + end_sec
 
 if __name__ == '__main__':
   count = 0

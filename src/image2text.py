@@ -4,8 +4,10 @@ import cs_sim
 from google.cloud import vision
 from khaiii import KhaiiiApi
 import natsort
+import cv2
 import re, math
 from collections import Counter
+from moviepy.editor import VideoFileClip
 
 Word = re.compile(r'\w+')
 
@@ -96,7 +98,8 @@ def detect_text(path, BOUND_PATH, name, jpg_num):
 # def detect_bound(path, BOUND_PATH):
 #     """Detects text in the file."""
    
-#     client = vision.ImageAnnotatorClient()
+#     client = vision.ImageAnnotator
+()
 
 #     with io.open(path, 'rb') as image_file:
 #         content = image_file.read()
@@ -135,16 +138,16 @@ def run_detect(TEXT_FILE, FILE_PATH, BOUND_PATH):
     for i in list:
         if i.endswith("jpg"):
             jpg_num += 1
-
-    for file in list:
-        if file.endswith("jpg"):
-            filename = FILE_PATH + file
+    file_idx = 0
+    while file_idx < len(list):
+        if list[file_idx].endswith("jpg"):
+            filename = FILE_PATH + list[file_idx]
             print(filename + "\n")
             try:
-              detect_text(filename, BOUND_PATH, file, jpg_num)
+              detect_text(filename, BOUND_PATH, list[file_idx], jpg_num)
             except IsADirectoryError:
               print("directory Except")
-
+        file_idx += int(length / duration)
     #khaiii_tokenize("./result.txt", "./khaiii_sub.txt")
 
 # def khaiii_tokenize(corpus_fname, output_fname):
@@ -262,6 +265,7 @@ def checkBound(BOUND_PATH, OUT_PATH):
 if __name__ == "__main__":
     timeList = []
     parser = argparse.ArgumentParser()
+    parser.add_argument('--video', type = str)
     parser.add_argument('--text', type = str)
     parser.add_argument('--image', type = str)
     parser.add_argument('--bound', type = str)
@@ -270,6 +274,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
 #     f = open(args.bound, 'w', encoding = 'utf-8')
 
+    clip = VideoFileClip(args.video)
+    print(clip.duration)
+    duration = clip.duration
+    cap = cv2.VideoCapture(args.video)
+    length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    print(length)
     f = open(args.text, "w", encoding="UTF-8")
     boundfile = open(args.bound, "w", encoding="UTF-8")
     run_detect(args.text, args.image, args.bound)
