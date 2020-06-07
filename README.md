@@ -1,6 +1,3 @@
-# 영상 필터링
-
-<<<<<<< HEAD
 # Welcome to YouHi! 
 
 
@@ -91,10 +88,3 @@ For our filtering criteria, we refer to the Youtube usage policy-Restriction lev
 [![youtube_img](https://img.youtube.com/vi/erF77e0dOsg/0.jpg)](https://www.youtube.com/watch?v=erF77e0dOsg?t=0s)
 
 ## 5. 결과 영상
-
-
-
-=======
-영상 필터링과 관련된 라이브러리 및 딥러닝 모델의 Src가 있는 Repository입니다.   
-Cut_Frame 등 딥러닝 모델에 쓰일 데이터셋 구축 관련 코드도 포함되어있습니다.
->>>>>>> Video_Classification
