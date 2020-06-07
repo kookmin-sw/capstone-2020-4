@@ -39,7 +39,6 @@ class Objection extends Component {
 
   clickFunc = () => {
     this.feedBackButtonDiv.current.children[0].click();
-    console.log(this.feedBackButtonDiv.current.children[0]);
   };
 
   renderFeedbackModal = () => {
