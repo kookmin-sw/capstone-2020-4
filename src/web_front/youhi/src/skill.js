@@ -4,7 +4,7 @@ import Videoflow from "./component/skill/videoflow";
 import Footer from "./component/footer/footer";
 import Object_detection from "./component/skill/object-detection";
 import Instance_segmentation from "./component/skill/instance-segmentation";
-
+import Image_classification from "./component/skill/image-classification";
 const Skill =() => {
     return (
         <div>
@@ -12,6 +12,7 @@ const Skill =() => {
             <Videoflow/>
             <Object_detection/>
             <Instance_segmentation/>
+            <Image_classification/>
             <Footer/>
         </div>
     )

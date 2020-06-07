@@ -1,0 +1,32 @@
+.object-detection {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: wrap;
+    margin-bottom : 40px;
+}
+
+.object-title {
+    text-align: center;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 10px;
+    border-bottom: #a5b0b5 1px solid;
+}
+
+
+.image-text {
+    line-height: 1.5;
+    letter-spacing: -0.5px;
+    color: #7a7a7a;
+    font-size : 20px;
+    /* text-align: center; */
+    width: 800px;
+    
+}
+
+.ob-con {
+    /* background-color: #d2d2d2; */
+}
