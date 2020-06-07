@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import emailjs from "emailjs-com";
 import "./login.css";
 
 const Login = ({ func }) => {
+  const [file, setFile] = useState(null);
   const submitButtonRef = useRef(null);
 
   function sendEmail(e) {
@@ -25,8 +26,15 @@ const Login = ({ func }) => {
       );
   }
 
+  const onFilesAdded = (evt) => {
+    const file = evt.target.files;
+    setFile(file);
+    console.log("file", file);
+  }
+
   useEffect(() => {
     func(submitButtonRef.current);
+    
   });
 
   return (
@@ -44,7 +52,12 @@ const Login = ({ func }) => {
           <div className="Login-title">이메일 주소</div>
           <div className="Login-input-container-wrapper">
             <div className="Login-input-container">
-              <input className="Login-input" type="email" name="user_email" />
+              <input
+                className="Login-input"
+                type="email"
+                name="user_email"
+                placeholder="example@gmail.com"
+              />
             </div>
           </div>
         </div>
@@ -52,17 +65,32 @@ const Login = ({ func }) => {
           <div className="Login-title">휴대폰 번호</div>
           <div className="Login-input-container-wrapper">
             <div className="Login-input-container">
-              <input className="Login-input" type="text" name="user_phone" />
+              <input
+                className="Login-input"
+                type="text"
+                name="user_phone"
+                placeholder="010-1234-5678"
+              />
             </div>
           </div>
         </div>
         <div className="Login-category">
           <div className="Login-title">파일 첨부</div>
-          <input type="file" name="user_file" />
+          <div className="Login-attachment-wrapper">
+            <div className="Login-attachment">
+              <span className="txt-placeholder">{file !== null ? file[0].name : "첨부파일 추가"}</span>
+              <span className="Login-attachment-icon" />
+              <input type="file" name="user_file" onChange={onFilesAdded}/>
+            </div>
+          </div>
         </div>
         <div className="Login-category">
           <div className="Login-title">문의 내용</div>
-          <textarea className="Login-input" name="message" />
+          <div className="Login-input-container-wrapper">
+            <div className="Login-input-container Login-textarea">
+              <textarea className="Login-input" name="message" />
+            </div>
+          </div>
         </div>
         <input
           ref={submitButtonRef}

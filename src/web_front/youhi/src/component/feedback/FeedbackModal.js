@@ -26,7 +26,7 @@ const FeedbackModal = ({ isOpen, close, emailAddress }) => {
           <div className="FeedbackModal">
             <p className="title">이의신청 및 문의하기</p>
             <div className="content">
-              {/* <Login func={setSubmitButtonRef} /> */}
+              <Login func={setSubmitButtonRef} />
             </div>
             <div className="button-wrap">
               <button
