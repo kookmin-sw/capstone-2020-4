@@ -62,26 +62,26 @@ while file < len(filelist):
         score = outputs["instances"].scores[0].item()
         print(label, score)
         #adult
-        if label == 0 and score >= 0.75:
+        if label == 0 and score >= 0.90:
             adult_check += 1
             y0 = outputs["instances"].pred_boxes[0].tensor[0][0].item()
             x0 = outputs["instances"].pred_boxes[0].tensor[0][1].item()
             y1 = outputs["instances"].pred_boxes[0].tensor[0][2].item()
             x1 = outputs["instances"].pred_boxes[0].tensor[0][3].item()
             cv2.imwrite(client_folder + "/adult_temp/" + str(int(file / frame_count)) + ".jpg", im[int(x0):int(x1), int(y0):int(y1)])
-            file += frame_count
+            file += int(frame_count * 3)
         # gun
         elif (label == 1 or label == 2) and score >= 0.7:
             blood_text.write(str(file) + ",")
-            file += frame_count
+            file += int(frame_count * 3)
         # knife
         elif label == 3 and score >= 0.75:
             knife_list.append(str(file))
-            file += frame_count
+            file += int(frame_count * 3)
         # smoke
-        elif label == 4 and score >= 0.75:
+        elif label == 4 and score >= 0.85:
             smoke_list.append(str(file))
-            file += frame_count
+            file += int(frame_count * 3)
     file += 1
 blood_text.close()
 
@@ -92,7 +92,7 @@ smoke_list = natsort.natsorted(smoke_list)
 knife_list = natsort.natsorted(knife_list)
 
 sio = socketio.Client()
-sio.connect("http://3.34.55.213:1234")
+sio.connect("Put voice_instance_IP Address")
 os.system("aws s3 cp " + client_folder + "/blood.txt " +  "s3://youhi-project/" + client_folder + "/blood.txt")
 sio.emit("complete", args.dir)
 sio.sleep(1)
@@ -131,6 +131,7 @@ if len(smoke_list) != 0:
         video_name = math.floor(int(smoke_list[x])/frame_count)
         ffmpeg_extract_subclip(args.dir, math.floor(int(smoke_list[x])/frame_count), math.floor(int(smoke_list[x])/frame_count) + 3, targetname=client_folder + f"/smoke/{video_name}.mp4")
     video_name = math.floor(int(smoke_list[len(smoke_list)-1])/frame_count)
+    print(video_name, duration)
     if duration - math.floor(int(smoke_list[len(smoke_list)-1])/frame_count) > 3:
         ffmpeg_extract_subclip(args.dir, math.floor(int(smoke_list[len(smoke_list)-1])/frame_count), math.floor(int(smoke_list[len(smoke_list)-1])/frame_count) + 3, targetname=client_folder + f"/smoke/{video_name}.mp4")
     else:
@@ -138,4 +139,5 @@ if len(smoke_list) != 0:
     os.system("python3.6 flow.py --demo --label smoke --video " + client_folder +"/smoke/ & python3.6 rgb.py --demo --label smoke --video " + client_folder + "/smoke/")
     os.system("python3.6 fusion.py --video " + client_folder + "/smoke/ --label smoke")
 
-os.system("rm -r " + client_folder)
+#os.system("rm -r " + client_folder)
+os.system("mv " + args.dir + " ../static/" + client_folder)
