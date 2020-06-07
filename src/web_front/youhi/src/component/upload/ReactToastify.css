@@ -3,7 +3,7 @@
   -webkit-transform: translate3d(0, 0, 9999px);
   position: fixed;
   padding: 4px;
-  width: 300px;
+  width: 350px;
   box-sizing: border-box;
   color: #fff;
 }
@@ -68,6 +68,7 @@
       justify-content: space-between;
   max-height: 800px;
   overflow: hidden;
+  /* font-family: sans-serif; */
   font-size: 14px;
   align-items: center;
   cursor: pointer;
@@ -83,6 +84,7 @@
 .Toastify__toast--default {
   background: #fff;
   color: #aaa;
+  color: #7a7a7a;
 }
 .Toastify__toast--info {
   background: #3498db;
@@ -165,6 +167,8 @@
   transform-origin: right;
 }
 .Toastify__progress-bar--default {
+  /* background: linear-gradient(to right, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55); */
+  /* background: rgb(99, 68, 198); */
   background: rgba(255, 255, 255, 0.7);
 }
 .Toastify__progress-bar--dark {
