@@ -3,22 +3,16 @@ import ReactTransitionGroup from "react-addons-css-transition-group";
 import Player from "./react_player/Player";
 import "./VideoModal.css";
 
+const dropDown = new Array(4);
+
 const VideoModal = ({ isOpen, close, result, clientID }) => {
-  var ref = new Array(4);
-  var dropDown = new Array(4);
+  const [ref, setRef] = useState(null);
 
   const allTabRef = useRef(null);
   const adultTabRef = useRef(null);
   const bloodTabRef = useRef(null);
   const knifeTabRef = useRef(null);
   const smokeTabRef = useRef(null);
-
-  const setRef = (paramRef) => {
-    ref[0] = paramRef[0];
-    ref[1] = paramRef[1];
-    ref[2] = paramRef[2];
-    ref[3] = paramRef[3];
-  }
 
   const setDropDown = (paramDropDown) => {
     dropDown[0] = paramDropDown[0];
@@ -28,40 +22,42 @@ const VideoModal = ({ isOpen, close, result, clientID }) => {
   }
 
   useEffect(() => {
-    allTabRef.current.addEventListener('click', (event) => {
-      console.log(ref[0]);
-      console.log(ref[1]);
-      console.log(ref[2]);
-      console.log(ref[3]);
-      if (dropDown[0] && dropDown[1] && dropDown[2] && dropDown[3]) { 
-        ref[0].click();
-        ref[1].click();
-        ref[2].click();
-        ref[3].click();
-      } else {  
-        if (!dropDown[0])
+    console.log(ref);
+    console.log(dropDown);
+    if (ref !== null) {
+      allTabRef.current.addEventListener("click", (event) => {
+        console.log(ref);
+        console.log(dropDown);
+        if (dropDown[0] && dropDown[1] && dropDown[2] && dropDown[3]) {
+          console.log("if");
+          console.log(dropDown);
           ref[0].click();
-        if (!dropDown[1])
           ref[1].click();
-        if (!dropDown[2])
           ref[2].click();
-        if (!dropDown[3])
           ref[3].click();
-      }
-    })
-    adultTabRef.current.addEventListener('click', () => {
-      ref[0].click();
-    })
-    bloodTabRef.current.addEventListener('click', () => {
-      ref[1].click();
-    })
-    knifeTabRef.current.addEventListener('click', () => {
-      ref[2].click();
-    })
-    smokeTabRef.current.addEventListener('click', () => {
-      ref[3].click();
-    })
-  });
+        } else {
+          console.log("else");
+          console.log(dropDown);
+          if (!dropDown[0]) ref[0].click();
+          if (!dropDown[1]) ref[1].click();
+          if (!dropDown[2]) ref[2].click();
+          if (!dropDown[3]) ref[3].click();
+        }
+      });
+      adultTabRef.current.addEventListener("click", () => {
+        ref[0].click();
+      });
+      bloodTabRef.current.addEventListener("click", () => {
+        ref[1].click();
+      });
+      knifeTabRef.current.addEventListener("click", () => {
+        ref[2].click();
+      });
+      smokeTabRef.current.addEventListener("click", () => {
+        ref[3].click();
+      });
+    }
+  }, [ref]);
 
   return (
     <div>
