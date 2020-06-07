@@ -8,7 +8,7 @@ class Player extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: "./static/0/0.mp4",
+      url: `./static/${this.props.clientID}/${this.props.clientID}.mp4`,
       pip: false,
       playing: false,
       controls: false,
@@ -31,6 +31,11 @@ class Player extends Component {
       knifeDropDown: false,
       smokeDropDown: false,
     };
+
+    this.adultDivWrapper = React.createRef();
+    this.bloodDivWrapper = React.createRef();
+    this.knifeDivWrapper = React.createRef();
+    this.smokeDivWrapper = React.createRef();
 
     this.adultDivRef = React.createRef();
     this.bloodDivRef = React.createRef();
@@ -75,7 +80,7 @@ class Player extends Component {
       condition = true;
     }
 
-    if (checkedTime !== null && current - checkedTime === 3) {
+    if (checkedTime !== null && current - checkedTime === 3 && !condition) {
       if (data[checkedTime] === "adult") {
         document.getElementById("0").style.backgroundColor = "";
       } else if (data[checkedTime] === "blood") {
@@ -86,11 +91,17 @@ class Player extends Component {
         document.getElementById("3").style.backgroundColor = "";
       }
     }
-
     if (condition) {
       this.setState({ checkedTime: current });
     }
-    
+
+    // if (this.state.ended) {
+    //   document.getElementById("0").style.fontWeight = "";
+    //   document.getElementById("1").style.fontWeight = "";
+    //   document.getElementById("2").style.fontWeight = "";
+    //   document.getElementById("3").style.fontWeight = "";
+    // }
+
     if (!this.state.seeking) {
       this.setState({ state: state, played: state.played });
     }
@@ -198,7 +209,34 @@ class Player extends Component {
   };
 
   componentDidMount() {
-    this.props.func([this.adultDivRef.current, this.bloodDivRef.current, this.knifeDivRef.current, this.smokeDivRef.current]);
+    console.log("componentDidMount");
+    this.props.func([
+      this.adultDivWrapper.current,
+      this.bloodDivWrapper.current,
+      this.knifeDivWrapper.current,
+      this.smokeDivWrapper.current,
+    ]);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const condition =
+      prevState.adultDropDown !== this.state.adultDropDown ||
+      prevState.bloodDropDown !== this.state.bloodDropDown ||
+      prevState.knifeDropDown !== this.state.knifeDropDown ||
+      prevState.smokeDropDown !== this.state.smokeDropDown;
+    if (condition) {
+      console.log("componentDidUpdate");
+      console.log(this.state.adultDropDown);
+      console.log(this.state.bloodDropDown);
+      console.log(this.state.knifeDropDown);
+      console.log(this.state.smokeDropDown);
+      this.props.func2([
+        this.state.adultDropDown,
+        this.state.bloodDropDown,
+        this.state.knifeDropDown,
+        this.state.smokeDropDown,
+      ]);
+    }
   }
 
   render() {
@@ -236,12 +274,18 @@ class Player extends Component {
           </div>
         </section>
         <div className="Player-info-wrapper">
-          <div className="Player-info-dropdown" onClick={this.adultClickFunc}>
+          <div
+            className="Player-info-dropdown"
+            onClick={this.adultClickFunc}
+            ref={this.adultDivWrapper}
+          >
             <div className="Player-header">
               <div className="Player-icon-container">
-                <span className={`Player-dropdown-icon ${
+                <span
+                  className={`Player-dropdown-icon ${
                     this.state.adultDropDown ? "caret-down" : "caret-right"
-                  }`} />
+                  }`}
+                />
               </div>
               <div className="Player-main-title">Adult</div>
             </div>
@@ -272,12 +316,18 @@ class Player extends Component {
               </div>
             </div>
           </div>
-          <div className="Player-info-dropdown" onClick={this.bloodClickFunc}>
+          <div
+            className="Player-info-dropdown"
+            onClick={this.bloodClickFunc}
+            ref={this.bloodDivWrapper}
+          >
             <div className="Player-header">
               <div className="Player-icon-container">
-                <span className={`Player-dropdown-icon ${
+                <span
+                  className={`Player-dropdown-icon ${
                     this.state.bloodDropDown ? "caret-down" : "caret-right"
-                  }`} />
+                  }`}
+                />
               </div>
               <div className="Player-main-title">Blood</div>
             </div>
@@ -306,7 +356,11 @@ class Player extends Component {
               </div>
             </div>
           </div>
-          <div className="Player-info-dropdown" onClick={this.knifeClickFunc}>
+          <div
+            className="Player-info-dropdown"
+            onClick={this.knifeClickFunc}
+            ref={this.knifeDivWrapper}
+          >
             <div className="Player-header">
               <div className="Player-icon-container">
                 <span
@@ -342,12 +396,18 @@ class Player extends Component {
               </div>
             </div>
           </div>
-          <div className="Player-info-dropdown" onClick={this.smokeClickFunc}>
+          <div
+            className="Player-info-dropdown"
+            onClick={this.smokeClickFunc}
+            ref={this.smokeDivWrapper}
+          >
             <div className="Player-header">
               <div className="Player-icon-container">
-                <span className={`Player-dropdown-icon ${
+                <span
+                  className={`Player-dropdown-icon ${
                     this.state.smokeDropDown ? "caret-down" : "caret-right"
-                  }`} />
+                  }`}
+                />
               </div>
               <div className="Player-main-title">Smoke</div>
             </div>
@@ -373,7 +433,6 @@ class Player extends Component {
                 >
                   {this.printLabelArrayData("smoke")}
                 </Scrollbars>
-                {this.props.func2([this.state.adultDropDown, this.state.bloodDropDown, this.state.knifeDropDown, this.state.smokeDropDown])}
               </div>
             </div>
           </div>

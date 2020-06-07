@@ -14,39 +14,45 @@ class Video extends Component {
       bloodCnt: 0,
       knifeCnt: 0,
       smokeCnt: 0,
-      result: {}
+      result: {},
     };
   }
 
   go = async () => {
+    const clientID = this.props.clientID;
     var res,
       data,
       result = { labelArray: [], cntArray: [] };
-    res = await fetch("./static/0/adult_result.txt");
+    res = await fetch(`./static/${clientID}/adult_result.txt`);
     data = await res.text();
-    result = data.length ? this.collectLabelData(result, data, "adult") : this.addZero(result);
+    result = data.length
+      ? this.collectLabelData(result, data, "adult")
+      : this.addZero(result);
 
-    res = await fetch("./static/0/blood_result.txt");
+    res = await fetch(`./static/${clientID}/blood_result.txt`);
     data = await res.text();
-    result = data.length ? this.collectLabelData(result, data, "blood") : this.addZero(result);
+    result = data.length
+      ? this.collectLabelData(result, data, "blood")
+      : this.addZero(result);
 
-    res = await fetch("./static/0/knife_result.txt");
+    res = await fetch(`./static/${clientID}/knife_result.txt`);
     data = await res.text();
-    result = data.length ? this.collectLabelData(result, data, "knife") : this.addZero(result);
+    result = data.length
+      ? this.collectLabelData(result, data, "knife")
+      : this.addZero(result);
 
-    res = await fetch("./static/0/smoke_result.txt");
+    res = await fetch(`./static/${clientID}/smoke_result.txt`);
     data = await res.text();
-    result = data.length ? this.collectLabelData(result, data, "smoke") : this.addZero(result);
+    result = data.length
+      ? this.collectLabelData(result, data, "smoke")
+      : this.addZero(result);
 
     this.setState(
       {
         result: result,
         check: true,
       },
-      () => {
-        console.log(this.state.result.labelArray);
-        console.log(this.state.result.cntArray);
-      }
+      () => { }
     );
   };
 
@@ -54,7 +60,7 @@ class Video extends Component {
     var resultCopy = result;
     resultCopy.cntArray.push(0);
     return resultCopy;
-  }
+  };
 
   collectLabelData = (result, data, label) => {
     var resultCopy = result;
@@ -62,9 +68,11 @@ class Video extends Component {
       const dataArray = data.split("\n");
       var i = 0;
       for (; i < dataArray.length; i++) {
-        resultCopy.labelArray[parseInt(dataArray[i])] = label;
+        if (dataArray[i] !== "") {
+          resultCopy.labelArray[parseInt(dataArray[i])] = label;
+        }
       }
-      resultCopy.cntArray.push(dataArray.length);
+      resultCopy.cntArray.push(dataArray.length - 1);
     } else {
       resultCopy.cntArray.push(0);
     }
@@ -87,8 +95,8 @@ class Video extends Component {
         <VideoModal
           isOpen={this.state.isModalOpen}
           close={this.closeModal}
-          // labelArray={this.state.labelArray}
           result={this.state.result}
+          clientID={this.props.clientID}
         />
       );
     }

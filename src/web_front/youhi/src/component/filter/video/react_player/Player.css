@@ -126,3 +126,11 @@
   font-size: 16px;
   color: #c2c2c2;
 }
+
+audio {
+  background: #f6f6f6;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 19px 51px 0 rgba(0, 0, 0, 0.16),
+    0 14px 19px 0 rgba(0, 0, 0, 0.07);
+}
