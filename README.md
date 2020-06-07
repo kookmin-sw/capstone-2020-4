@@ -53,7 +53,7 @@ _필터링 기준은 다음과 같이 [YouTube 이용정책 - 연령별 제한 �
    ![Lee_In_Pyeong](https://user-images.githubusercontent.com/43363576/76700753-f0be8c00-66fd-11ea-8d2c-e914ac913b4f.jpg)
 
 <pre>메일: jinipyung@gmail.com
-역할: Video Classfication, FastText 학습을 위한 데이터셋 구축 및 FastText 모델링과 학습
+역할: FastText 모델링과 학습, 웹 페이지와 웹 서버 구축
 </pre>
 
    #### 이주형
