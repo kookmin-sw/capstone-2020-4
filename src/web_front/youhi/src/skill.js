@@ -5,6 +5,7 @@ import Footer from "./component/footer/footer";
 import Object_detection from "./component/skill/object-detection";
 import Instance_segmentation from "./component/skill/instance-segmentation";
 import Image_classification from "./component/skill/image-classification";
+import STT from "./component/skill/stt";
 const Skill =() => {
     return (
         <div>
@@ -13,6 +14,7 @@ const Skill =() => {
             <Object_detection/>
             <Instance_segmentation/>
             <Image_classification/>
+            <STT/>
             <Footer/>
         </div>
     )
