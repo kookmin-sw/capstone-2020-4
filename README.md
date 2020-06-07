@@ -1,5 +1,3 @@
-# 영상 필터링
-
 # Welcome to YouHi! 
 
 
