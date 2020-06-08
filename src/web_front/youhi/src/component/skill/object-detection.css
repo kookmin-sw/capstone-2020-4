@@ -44,34 +44,10 @@
   margin: 0 0 16px;
 } 
 
-.Object-detection-image {
-}
-
 .Object-detection-image > img{
   width: 100%;
   max-width: 450px;
-  height: 80%;
+  height: 70%;
   padding: 0 10px 10px 10px;
   box-sizing: inherit;
-}
-
-.rcnn {
-  display: flex;
-  justify-content: center;
-  margin-top: 120px;
-}
-
-.object-space {
-  width: 100px;
-}
-
-.font-in {
-  font-weight: 700;
-}
-
-.rcnn-img {
-  height: 200px;
-  border: 1px solid black;
-  justify-content: center;
-  width: 300px;
 }
