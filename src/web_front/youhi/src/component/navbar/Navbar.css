@@ -1,9 +1,18 @@
 
 .nav-wrapper {
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
   height: 100px;
+}
+
+.nav-flex-first-items {
+  display: flex;
+  align-items: center;
+}
+
+.nav-flex-second-items {
+  margin: 0px 30px 5px 0px;
 }
 
 #project-name {
@@ -28,6 +37,7 @@
 }
 
 .main-header {
+  width: 100%;
 }
 
 .topnav {
@@ -40,7 +50,7 @@
 
 .App-Nav {
   overflow: hidden;
-  float: right;
+  /* float: right; */
   color: gray;
   text-align: center;
   margin-top: 13px;
@@ -65,4 +75,5 @@
   color: white;
   font-size: 25px;
   font-weight: bold;
+  margin-bottom: 5px;
 }
