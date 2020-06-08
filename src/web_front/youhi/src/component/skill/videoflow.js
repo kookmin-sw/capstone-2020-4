@@ -15,7 +15,6 @@ class Videoflow extends Component {
         </div>
         <div className="flow_flow">
           <div>
-            <div className="video_flow_text">filtering flow </div>
             <img src={Filteringflow} alt="" className="flow-img" />
           </div>
         </div>
