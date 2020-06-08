@@ -11,6 +11,7 @@ class Videoflow extends Component {
       <div className="flow-container">
         <div className="object-detection">
           <div className="object-title"> Youhi Filtering Flow </div>
+          <div className="object-bar" />
         </div>
         <div className="flow_flow">
           <div>

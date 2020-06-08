@@ -3,7 +3,6 @@
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: wrap;
-    margin-bottom : 40px;
 }
 
 .object-title {
@@ -13,7 +12,6 @@
     font-weight: 900;
     text-align: center;
     margin-bottom: 10px;
-    border-bottom: #a5b0b5 1px solid;
 }
 
 .object-bar {
@@ -29,10 +27,7 @@
     line-height: 1.5;
     letter-spacing: -0.5px;
     color: #7a7a7a;
-    font-size : 20px;
-    /* text-align: center; */
     width: 800px;
-    
 }
 
 .object1-img {

@@ -9,7 +9,7 @@ class Object_detection extends Component {
       <div className="ob-con">
         <div className="object-detection">
           <div className="object-title"> Object Detection </div>
-          {/* <div className = "object-bar"></div> */}
+          <div className = "object-bar"></div>
         </div>
         <div className="object1">
           <div className="object-text">
