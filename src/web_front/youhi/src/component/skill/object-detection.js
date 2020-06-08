@@ -6,29 +6,22 @@ import rcnn from "../../img/rcnn.png";
 class Object_detection extends Component {
   render() {
     return (
-      <div className="ob-con">
-        <div className="object-detection">
-          <div className="object-title"> Object Detection </div>
-          <div className = "object-bar"></div>
-        </div>
-        <div className="object1">
-          <div className="object-text">
-            객체 탐지는 이미지에서 찾고 싶은 관심 객체를 배경과 구분해 식별하는
-            자동화 기법이다. 이 기술은 아래의 사진처럼 이미지에서 새와 사람 등의
-            객체를 자동으로 탐지해낸다. 이러한 객체 탐지는 딥러닝을 통해
-            이루어진다. <br />
-            <br />
-            객체 탐지 기술은 2개 이상, 즉 N개의 객체를 탐지해 분류할 수 있어야
-            한다. 많은 객체를 탐지하는 데 한계가 있으므로 다수의 사각형 상자
-            위치와 크기를 가정해 컨볼루션 신경망을 변형한 후 이를 객체
-            분류(Object Classification)에 활용한다. 이러한 사각형 상자를
-            ‘윈도우(Window)’라고 부른다. 각 창의 크기와 위치는 객체의 존재
-            여부에 따라 결정될 수 있고 객체가 있는 경우에는 그 범주도 결정할 수
-            있다. 본 프로젝트에서는 다음과 같은 알고리즘을 사용한다.
-          </div>
-          <div className="object-space"></div>
-          <div>
-            <img src={object1} alt="" className="object1-img" />
+      <div className="Object-detection">
+        <div className="Object-detection-first-container-wrapper">
+          <div className="Object-detection-first-container">
+            <div className="Object-detection-title-text-container">
+              <div className="Object-detection-title"> Object Detection </div>
+              <div className="Object-detection-title-bar" />
+              <p className="Object-detection-text">
+                Object Detection(객체 탐지)는 이미지에서 찾고 싶은 관심 객체를
+                배경과 구분해 식별하는, 딥러닝을 통한 자동화 기법입니다. Object
+                Detection은 YOLO, SSD 계열의 1-Stage Detector와 R-CNN 계열의
+                2-Stage hello my name is inpyeong
+              </p>
+            </div>
+            <div className="Object-detection-image">
+              <img src={object1} alt="" />
+            </div>
           </div>
         </div>
         <div className="rcnn">

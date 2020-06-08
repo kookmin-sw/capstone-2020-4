@@ -3,10 +3,10 @@ import Introduction from "./component/introduction/Introduction";
 import Videoflow from "./component/skill/videoflow";
 import Footer from "./component/footer/footer";
 import Object_detection from "./component/skill/object-detection";
-import Instance_segmentation from "./component/skill/instance-segmentation";
-import Image_classification from "./component/skill/image-classification";
-import STT from "./component/skill/stt";
-import Web from "./component/skill/web";
+// import Instance_segmentation from "./component/skill/instance-segmentation";
+// import Image_classification from "./component/skill/image-classification";
+// import STT from "./component/skill/stt";
+// import Web from "./component/skill/web";
 
 const Skill =() => {
     return (
@@ -14,10 +14,10 @@ const Skill =() => {
             <Introduction/>
             <Videoflow/>
             <Object_detection/>
-            <Instance_segmentation/>
+            {/* <Instance_segmentation/>
             <Image_classification/>
             <STT/>
-            <Web/>
+            <Web/> */}
             <Footer/>
         </div>
     )
