@@ -8,6 +8,9 @@ class FrontEnd extends Component {
       <div className="Front-end">
         <div className="Front-end-container-wrapper">
           <div className="Front-end-container">
+            <span className="Front-end-image">
+              <img src={react} alt="" />
+            </span>
             <div className="Front-end-title-text-container">
               <div className="Front-end-title">
                 Front End
@@ -22,9 +25,6 @@ class FrontEnd extends Component {
                 컴포넌트 별 관리가 편하고, 디버깅 및 코드 수정이 비교적 간단하기
               </p>
             </div>
-            <span className="Front-end-image">
-              <img src={react} alt="" />
-            </span>
           </div>
         </div>
       </div>

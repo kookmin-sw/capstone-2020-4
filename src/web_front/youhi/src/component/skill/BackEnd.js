@@ -8,9 +8,6 @@ class BackEnd extends Component {
       <div className="Back-end">
         <div className="Back-end-container-wrapper">
           <div className="Back-end-container">
-            <div className="Back-end-image">
-              <img src={aws} alt="" />
-            </div>
             <div className="Back-end-title-text-container">
               <div className="Back-end-title">Instance Segmentation</div>
               <div className="Back-end-title-bar" />
@@ -24,6 +21,9 @@ class BackEnd extends Component {
                 Gateway API를 이용한다. 단순 S3에 업로드하는 방식을 채택할 경우,
                 IAM 사용자의 Access Key 및 Secret Key
               </p>
+            </div>
+            <div className="Back-end-image">
+              <img src={aws} alt="" />
             </div>
           </div>
         </div>
