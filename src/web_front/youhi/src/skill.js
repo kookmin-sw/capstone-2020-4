@@ -20,7 +20,7 @@ const Skill =() => {
             <ObjectDetection/>
             <InstanceSegmentation/>
             <ImageClassification/>
-            {/* <VideoClassification /> */}
+            <VideoClassification />
             <STT/>
             <Khaiii />
             <FastText />
