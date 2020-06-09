@@ -5,6 +5,7 @@ import Footer from "./component/footer/footer";
 import ObjectDetection from "./component/skill/object-detection";
 import InstanceSegmentation from "./component/skill/instance-segmentation";
 import ImageClassification from "./component/skill/image-classification";
+import VideoClassification from "./component/skill/VideoClassification";
 import STT from "./component/skill/stt";
 import Khaiii from "./component/skill/Khaiii";
 import FastText from "./component/skill/FastText";
@@ -19,9 +20,10 @@ const Skill =() => {
             <ObjectDetection/>
             <InstanceSegmentation/>
             <ImageClassification/>
+            {/* <VideoClassification /> */}
             <STT/>
             <Khaiii />
-            {/* <FastText /> */}
+            <FastText />
             <FrontEnd/>
             <BackEnd/>
             <Footer/>
