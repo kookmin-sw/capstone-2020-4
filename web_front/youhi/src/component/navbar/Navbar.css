@@ -1,0 +1,79 @@
+
+.nav-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+}
+
+.nav-flex-first-items {
+  display: flex;
+  align-items: center;
+}
+
+.nav-flex-second-items {
+  margin: 0px 30px 5px 0px;
+}
+
+#project-name {
+  padding-top: 4px;
+  font-size: 23px;
+  font-weight: 900;
+  color: white;
+}
+
+#main-logo {
+  height: 50px;
+  margin-left: 20px;
+}
+.App-logo {
+  pointer-events: none;
+}
+
+.header-wrapper {
+  background-color: #24292e;
+  display: flex;
+  justify-content: center;
+}
+
+.main-header {
+  width: 100%;
+}
+
+.topnav {
+  width: 100%;
+}
+
+.topnav a:hover {
+  color: black;
+}
+
+.App-Nav {
+  overflow: hidden;
+  /* float: right; */
+  color: gray;
+  text-align: center;
+  margin-top: 13px;
+  text-decoration: none;
+  font-size: 20px;
+  margin-left: 35px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-box-align: center;
+}
+
+.activeStyle{
+  color: black;
+  border-bottom: 1px solid  black;
+}
+
+.nav-space {
+  width: 800px;
+}
+
+.nav-youhi {
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}

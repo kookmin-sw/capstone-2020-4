@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'NanumSquare';
+  src: url(./Font/NanumSquareOTFRegular.otf) format('otf');
+}
+@font-face {
+  font-family: 'NanumSquareOTF bold';
+  src: url(./Font/NanumSquareOTFBold.otf) format('otf');
+}
+@font-face {
+  font-family: 'NanumSquareOTF light';
+  src: url(./Font/NanumSquareOTFLight.otf) format('otf');
+}
+@font-face {
+  font-family: 'NanumSquareOTF extra bold';
+  src: url(./Font/NanumSquareOTFExtraBold.otf) format('otf');
+}
+body {
+  margin: 0;
+  font-family: 'NanumSquare';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

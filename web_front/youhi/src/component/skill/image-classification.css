@@ -1,0 +1,54 @@
+.Image-classification {
+  height: 100%;
+  margin-bottom: 100px;
+}
+
+.Image-classification-container-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.Image-classification-container {
+  display: flex;
+  justify-content: space-around;
+  width: 1100px;
+  margin: 0 auto;
+}
+
+.Image-classification-title-text-container {
+  max-width: 450px;
+}
+
+.Image-classification-title {
+  padding-top: 8px;
+  font-size: 28px;
+  font-style: italic;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.Image-classification-title-bar {
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: #a5b0b5;
+  margin: 0px auto 30px auto;
+}
+
+.Image-classification-text {
+  color: #7a7a7a;
+  font-size: 16px;
+  font-weight: 400px;
+  line-height: 2em;
+  letter-spacing: -0.25px;
+  margin: 0 0 16px;
+} 
+
+.Image-classification-image > img{
+  width: 100%;
+  max-width: 450px;
+  height: 90%;
+  padding: 0 10px 10px 10px;
+  box-sizing: inherit;
+}

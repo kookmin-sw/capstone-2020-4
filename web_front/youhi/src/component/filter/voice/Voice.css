@@ -1,0 +1,13 @@
+.Filter-box {
+  width: 100%;
+  height: calc(30vw * 493 / 684);
+}
+
+.Filter-voice-filter {
+  background-image: url('../../../img/Voice_filter_box.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  border-width: 0;
+  cursor: pointer;
+}
+
