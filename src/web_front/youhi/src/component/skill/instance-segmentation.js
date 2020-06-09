@@ -6,8 +6,8 @@ class Instance_segmentation extends Component {
   render() {
     return (
       <div className="Instance-segmentation">
-        <div className="Instance-segmentation-first-container-wrapper">
-          <div className="Instance-segmentation-first-container">
+        <div className="Instance-segmentation-container-wrapper">
+          <div className="Instance-segmentation-container">
             <div className="Instance-segmentation-image">
               <img src={seg} alt="" />
             </div>

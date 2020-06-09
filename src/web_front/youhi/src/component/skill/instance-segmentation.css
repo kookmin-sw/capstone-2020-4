@@ -3,12 +3,12 @@
   margin-bottom: 100px;
 }
 
-.Instance-segmentation-first-container-wrapper {
+.Instance-segmentation-container-wrapper {
   width: 100%;
   height: 100%;
 }
 
-.Instance-segmentation-first-container {
+.Instance-segmentation-container {
   display: flex;
   justify-content: space-around;
   width: 1100px;
