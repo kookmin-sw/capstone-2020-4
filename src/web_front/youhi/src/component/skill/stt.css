@@ -16,7 +16,7 @@
 }
 
 .STT-title-text-container {
-  max-width: 720px;
+  max-width: 450px;
 }
 
 .STT-title {
@@ -51,7 +51,7 @@
 
 .STT-image > img{
   width: 100%;
-  max-width: 700px;
+  max-width: 450px;
   height: auto;
   padding: 0 10px 10px 10px;
   box-sizing: inherit;
