@@ -1,0 +1,53 @@
+.Object-detection {
+  height: 100%;
+}
+
+.Object-detection-first-container-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.Object-detection-first-container {
+  display: flex;
+  justify-content: space-around;
+  width: 1100px;
+  margin: 0 auto;
+}
+
+.Object-detection-title-text-container {
+  max-width: 450px;
+}
+
+.Object-detection-title {
+  padding-top: 8px;
+  font-size: 28px;
+  font-style: italic;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.Object-detection-title-bar {
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: #a5b0b5;
+  margin: 0px auto 30px auto;
+}
+
+.Object-detection-text {
+  color: #7a7a7a;
+  font-size: 16px;
+  font-weight: 400px;
+  line-height: 2em;
+  letter-spacing: -0.25px;
+  margin: 0 0 16px;
+} 
+
+.Object-detection-image > img{
+  width: 100%;
+  max-width: 450px;
+  height: 70%;
+  padding: 0 10px 10px 10px;
+  box-sizing: inherit;
+}

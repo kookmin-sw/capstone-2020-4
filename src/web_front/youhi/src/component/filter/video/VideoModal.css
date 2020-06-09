@@ -1,0 +1,189 @@
+.VideoModal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.16);
+}
+
+.VideoModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1500px;
+  height: 800px;
+  border-radius: 10px;
+  background-color: #f6f6f6;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.VideoModal > * {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.VideoModal > *:first-child {
+  margin-top: 16px;
+}
+
+.VideoModal p.title {
+  font-size: 16pt;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.VideoModal .content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  border-top: 2px solid #bebebe;
+  border-bottom: 2px solid #bebebe;
+  background-repeat: no-repeat;
+}
+
+.VideoModal .content p {
+  padding: 8px;
+  font-size: 12pt;
+  color: #999;
+}
+
+.VideoModal .button-wrap {
+  margin: 0;
+}
+
+.VideoModal .button-wrap button {
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 0 0 10px 10px;
+  background-color: #f6f6f6;
+  font-size: 14pt;
+  color: black;
+  border: 0;
+  cursor: pointer;
+}
+
+.VideoModal .button-wrap button:hover {
+  background-color: #7f49c8;
+}
+
+.VideoModal .button-wrap button:active {
+  background-color: #7e49c8;
+}
+
+.VideoModal-video-wrapper {
+  width: 100%;
+}
+
+.VideoModal-overlay.Modal-anim-enter {
+  opacity: 0;
+  transition: all 0.2s;
+}
+.VideoModal-overlay.Modal-anim-enter.Modal-anim-enter-active {
+  opacity: 1;
+}
+.VideoModal-overlay.Modal-anim-leave {
+  opacity: 1;
+  transition: all 0.2s;
+}
+.VideoModal-overlay.Modal-anim-leave.Modal-anim-leave-active {
+  opacity: 0;
+}
+.VideoModal.Modal-anim-enter {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+  transition: all 0.2s;
+}
+.VideoModal.Modal-anim-enter.Modal-anim-enter-active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.VideoModal.Modal-anim-leave {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition: all 0.2s;
+}
+.VideoModal.Modal-anim-leave.Modal-anim-leave-active {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+}
+
+.VideoModal-scrollbars {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.video-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.img-text {
+  flex-direction: column;
+  flex-wrap: wrap;
+  border: black 1px;
+}
+.img-con {
+  flex-direction: row;
+  height: 50%;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.video-con {
+  width: 1000px;
+}
+
+.text-con {
+  flex-direction: row;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.space-between {
+  width: 20px;
+}
+
+.VideoModal-parallel-video-tabs {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.VideoModal-parallel-video-tabs > .VideoModal-tab {
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  width: 19.5%;
+  height: 83px;
+  background: white;
+  box-shadow: inset 0px -5px 0px #dfdfdf;
+  flex-direction: column;
+}
+
+.VideoModal-parallel-video-tabs > .VideoModal-tab > .VideoModal-tab-subtitle {
+  font-size: 15px;
+}
+
+.VideoModal-parallel-video-tabs .VideoModal-selected-indicator {
+  transition: all 0.5s ease;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 5px;
+  left: 0;
+}

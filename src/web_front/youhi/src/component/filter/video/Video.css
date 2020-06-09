@@ -1,0 +1,21 @@
+.Filter-box {
+  width: 100%;
+  height: calc(30vw * 493 / 684);
+}
+
+.Filter-video-filter {
+  background-image: url('../../../img/Video_filter_box.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  border-width: 0;
+  cursor: pointer;
+}
+
+.Video button:disabled {
+  background-image: url('../../../img/Video_filter_box.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  border-width: 0;
+  filter: blur(3px);
+  cursor: default;
+}

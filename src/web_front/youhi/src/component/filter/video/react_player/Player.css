@@ -1,0 +1,136 @@
+.Player {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.section {
+  display: inline-block;
+  max-width: 1000px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.player-wrapper {
+  width: 1000px;
+}
+
+.Player-info-wrapper {
+  display: flex;
+}
+
+.Player-info-dropdown {
+  width: 100%;
+}
+
+.react-player {
+  background: #f6f6f6;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 19px 51px 0 rgba(0, 0, 0, 0.16),
+    0 14px 19px 0 rgba(0, 0, 0, 0.07);
+}
+
+.Player-scrollbars {
+  width: 100%;
+  text-align: center;
+}
+
+.Player-info-wrapper {
+  display: flex;
+  width: 30%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Player-info-dropdown .Player-header {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 40px;
+  border-bottom: 1px solid #dadada;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Player-info-dropdown .Player-icon-container {
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 3px;
+  line-height: 20px;
+  vertical-align: text-bottom;
+}
+
+.Player-info-dropdown .Player-main-title {
+  flex: 1;
+  color: #595959;
+  letter-spacing: 0.3px;
+  padding-left: 5px;
+}
+
+.caret-right {
+  opacity: 0.5;
+  background-image: url("../../../../img/caret-right.png");
+}
+
+.caret-down {
+  opacity: 0.5;
+  background-image: url("../../../../img/caret-down.png");
+}
+
+.Player-dropdown-icon {
+  content: "";
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.Player-info-dropdown .Player-menu-content {
+  transition: max-height 500ms ease-in-out;
+  overflow-y: hidden;
+}
+
+.Player-info-dropdown .Player-menu-content-closed {
+  max-height: 0px;
+  transition: max-height 0ms linear;
+}
+
+.Player-menu-content-closed .Player-label-boxes {
+  display: none;
+}
+
+.Player-label-boxes {
+  width: calc(100% - 40px);
+  height: 100%;
+  padding: 5px 20px 5px 20px;
+}
+
+.Player-label-time {
+  color: #595959;
+  border-bottom: 1px solid #dadada;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 30px;
+}
+
+.Player-empty-labels {
+  margin: 10px 5px;
+  font-style: italic;
+  padding: 10px;
+  font-size: 16px;
+  color: #c2c2c2;
+}
+
+audio {
+  background: #f6f6f6;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 19px 51px 0 rgba(0, 0, 0, 0.16),
+    0 14px 19px 0 rgba(0, 0, 0, 0.07);
+}

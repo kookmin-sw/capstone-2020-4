@@ -1,0 +1,162 @@
+.Upload-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  width: 1903px;
+  height: 600px;
+}
+
+.under-content {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  width: 100%;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 275px;
+}
+
+.Content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin-bottom: 100px;
+}
+
+.Files {
+  height: 64px;
+  width: 208px;
+}
+
+.Actions {
+  display: inline-flex;
+  flex-direction: row;
+  margin-top: 20px;
+  justify-content: flex-end;
+  width: 310px;
+}
+
+.Title {
+  margin-bottom: 32px;
+  color: #555;
+}
+
+.Filename {
+  margin-bottom: 4px;
+  margin-top: 4px;
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+}
+
+.Row {
+  display: flex;
+  flex-direction: column;
+  height: 69px;
+  padding: 8px;
+}
+
+.CheckIcon {
+  opacity: 0.5;
+  margin-left: 5px;
+}
+
+.ProgressWrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+}
+
+.Upload-text-buttons-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.Upload-upload-button {
+  margin-right: 30px;
+}
+
+.Upload-button {
+  font-family: "Roboto medium", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+  height: 36px;
+  min-width: 88px;
+  padding: 6px 16px;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0;
+  border-radius: 100px;
+  background: rgb(99, 68, 198);
+  color: #fff;
+  outline: 0;
+}
+
+button:disabled {
+  background: rgb(189, 189, 189);
+  cursor: default;
+}
+
+.loading-spinner {
+  margin-left: 10px;
+  pointer-events: none;
+}
+
+.hide {
+  display: none !important;
+}
+
+.test-icon {
+  background-image: url("../../img/loading-icon.png");
+  width: 30px;
+  height: 30px;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.loading-spinner .loading-spinner-icon {
+  animation: spinIcon 2.33s linear infinite;
+}
+
+@keyframes spinIcon  {
+  0% {
+    transform: rotateZ(0deg);
+  } 
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.test-class {
+  display: flex;
+}
+
+.wrap {
+  width: 100%;
+}

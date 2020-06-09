@@ -1,0 +1,58 @@
+.STT {
+  height: 100%;
+  margin-bottom: 100px;
+}
+
+.STT-container-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.STT-container {
+  display: flex;
+  justify-content: space-around;
+  width: 1100px;
+  margin: 0 auto;
+}
+
+.STT-title-text-container {
+  max-width: 450px;
+}
+
+.STT-title {
+  padding-top: 8px;
+  font-size: 28px;
+  font-style: italic;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.STT-title-bar {
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: #a5b0b5;
+  margin: 0px auto 30px auto;
+}
+
+.STT-text {
+  color: #7a7a7a;
+  font-size: 16px;
+  font-weight: 400px;
+  line-height: 2em;
+  letter-spacing: -0.25px;
+} 
+
+.STT-image {
+  display: flex;
+  justify-content: center;
+}
+
+.STT-image > img{
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  padding: 0 10px 10px 10px;
+  box-sizing: inherit;
+}

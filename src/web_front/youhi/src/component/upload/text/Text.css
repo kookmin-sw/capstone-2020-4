@@ -1,0 +1,106 @@
+.Text-wrapper {
+  width: 415px;
+  height: 285px;
+  font-family: 'Roboto';
+}
+
+.Text-title {
+  width: auto;
+  padding: 0px 16px 0px 0px;
+  font-size: 23px;
+  font-weight: 600;
+  font-family: 'Roboto'; 
+  text-align: center;
+}
+
+.Text-box {
+  font-size: 16px;
+  line-height: 28px;
+  width: auto;
+  height: 206px;
+  padding: 16px;
+  margin-bottom: 32px;
+}
+
+.Text-box ul {
+  color: #7a7a7a;
+  padding-left: 5px;
+  letter-spacing: -0.25px;
+  font-size: 14px;
+}
+
+.Text-box li {
+  padding-bottom: 20px;
+}
+
+.Text-text-emphasis {
+  display: inline;
+  color: black;
+  font-weight: 600
+}
+
+.Text-checkbox-container {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.Text-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 0px;
+  height: 0px;
+}
+
+.Text-checkmark {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 17px;
+  height: 17px;
+  background-color: #eee;
+  border: 1px solid;
+}
+
+.Text-checkbox-container:hover input ~ .Text-checkmark {
+  background-color: #ccc;
+}
+
+.Text-checkbox-container input:checked ~ .Text-checkmark {
+  background-color: #6344f6;
+}
+
+.Text-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.Text-checkbox-container input:checked ~ .Text-checkmark:after {
+  display: block;
+}
+
+.Text-checkbox-container .Text-checkmark:after {
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.Text-checkbox-container .Text-text-emphasis {
+  color: red;
+}
+
+

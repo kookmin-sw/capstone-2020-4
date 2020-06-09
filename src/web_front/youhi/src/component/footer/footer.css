@@ -1,0 +1,37 @@
+.foot-wrapper {
+    background-color: #24292e;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.foot-wrapper2 {
+    width: 900px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.foot1 { 
+    width: 20%;
+}
+  
+.foot2 {
+    background-color: #24292e;
+    width: 48%;
+}
+
+.foot-sub-col {
+    color: white;
+    font-weight: 200;
+    font-size: 16px;
+}
+
+.footer-main {
+    color: white;
+    font-weight: 900;
+    font-size: 20px; 
+}
