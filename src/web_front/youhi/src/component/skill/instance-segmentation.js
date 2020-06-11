@@ -17,14 +17,12 @@ class Instance_segmentation extends Component {
               </div>
               <div className="Instance-segmentation-title-bar" />
               <p className="Instance-segmentation-text">
-                Instance segmentation(객체 분할)이란 경계 상자(Bounding Box)로
-                각 클래스들을 탐지하는 Object Detection(객체 탐지)보다 더
-                발전하여, Box 형태 안에 존재하는 실제 고유의 클래스들이 가지는
-                모양 그대로 객체의 영역만을 탐지하는 기술이다. Instance
-                segmentation은 주어진 이미지 내 각 위치 상의 픽셀들을 하나씩
-                조사하며, 현재 조사 대상인 픽셀이 어느 특정한 라벨에 해당하는
-                사물의 일부인 경우 해당 픽셀의 위치에 그 클래스를 나타내는
-                ‘값’을 표기하는 방식으로 예측 결과물을 생성한다. 반대로 조사
+                Instance Segmentation(객체 분할)이란 Box 형태 안에 존재하는 실제
+                고유의 클래스들이 가지는 모양 그대로 객체의 영역만을 탐지하는
+                기술입니다. YouHi 검열 시스템에서는 오탐률을 낮추기 위해
+                Instance Segmentation을 도입하였으며, 프레임에서 검열 라벨에
+                관한 객체를 발견한 영상에 한해서만 Video Classification 단계로
+                넘어가도록 하였습니다.
               </p>
             </div>
           </div>

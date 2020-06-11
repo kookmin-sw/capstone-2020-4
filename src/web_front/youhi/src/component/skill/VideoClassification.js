@@ -14,19 +14,19 @@ class VideoClassification extends Component {
               </div>
               <div className="Video-classification-title-bar" />
               <p className="Video-classification-text">
-                Image Classification이란 딥러닝을 통해 시각적 내용에 따라
-                이미지를 분류하는 것을 말한다. 딥러닝 신경망의 한 종류인
-                CNN(Convolutional Neural Network)을 이용하며 이미지를 입력으로
-                받고 그에 대한 class 값과 입력
+                Video Classification이란 딥러닝을 이용한 영상 태깅을 의미합니다.
+                Spatial Stream ConvNet과 Temporal Stream ConvNet으로 각각 예측된
+                결과를 Average, Conv Fusion을 통해 결합한 후 최종 태깅을
+                진행합니다.
               </p>
               <div className="Video-classification-image">
                 <img src={videoClassificationImg} alt="" />
               </div>
               <p className="Video-classification-text">
-                이미지가 특정 class라는 것에 대한 확률 값을 출력한다. CNN은 크게
-                input layer, output layer, hidden layers로 나눌 수 있고, hidden
-                layers는 보통 convolution 연산을 입력 이미지에 적용 후 다음
-                층으로 전달하는 Convolutional
+                YouHi 검열 시스템에서는 Instance Segmentation 단계에서 칼과
+                담배가 발견된 프레임이 포함된 영상들에 한해서 Video
+                Classification을 적용하며, 사람이 칼에 찔리는 장면, 흡연하는
+                장면이 등장하면 각 장면에 해당하는 라벨을 태깅합니다.
               </p>
             </div>
           </div>

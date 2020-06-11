@@ -52,7 +52,7 @@
 .STT-image > img{
   width: 100%;
   max-width: 450px;
-  height: auto;
+  height: 85%;
   padding: 0 10px 10px 10px;
   box-sizing: inherit;
 }

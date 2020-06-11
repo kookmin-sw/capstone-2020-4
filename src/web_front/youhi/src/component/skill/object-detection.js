@@ -13,13 +13,12 @@ class Object_detection extends Component {
               <div className="Object-detection-title-bar" />
               <p className="Object-detection-text">
                 Object Detection(객체 탐지)는 이미지에서 찾고 싶은 관심 객체를
-                배경과 구분해 식별하는, 딥러닝을 통한 자동화 기법입니다. Object
-                Detection은 YOLO, SSD 계열의 1-Stage Detector와 R-CNN 계열의
-                2-Stage hello my name is inpyeong 알고리즘 보다 빠르다는 것을
-                뜻한다. 각 관심 영역(RoI; Region of Interest)에 대한 피쳐 추출의
-                계산을 공유하고 딥러닝 기반의 RPN을 도입해 구현한다. 이는 단일
-                단계 방식보다 빠른 처리가 된다는 뜻이 아닌 이전 버전이라 할 수
-                있는 RCNN 알고리즘과 Fast RCNN Faster RCNN 
+                배경과 구분해 식별한 후 Bounding box 처리를 통해 관심 객체의
+                위치를 나타내는, 딥러닝을 통한 자동화 기법입니다. YouHi 검열
+                시스템에서는 우측 이미지에 나와있는 Faster RCNN 모델을 이용하여
+                Object Detection을 구현하였으며, Instance Segmentation 단계에서
+                총이 발견된 프레임에 한해서만 Object Detection을 적용하여 게임의
+                존재하는 캐릭터 객체를 탐지하도록 했습니다.
               </p>
             </div>
             <div className="Object-detection-image">

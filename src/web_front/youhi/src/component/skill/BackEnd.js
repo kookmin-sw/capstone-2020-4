@@ -9,17 +9,15 @@ class BackEnd extends Component {
         <div className="Back-end-container-wrapper">
           <div className="Back-end-container">
             <div className="Back-end-title-text-container">
-              <div className="Back-end-title">Instance Segmentation</div>
+              <div className="Back-end-title">Back-End</div>
               <div className="Back-end-title-bar" />
               <p className="Back-end-text">
-                딥러닝 모델 학습과 모델의 영상, 음성 검열 과정에 필요한 Amazon
-                EC2 instance, Amazon S3, Amazon Lambda, Amazon Gateway API를
-                생성한다. 웹 페이지의 배포를 위해 웹서버를 구축한다. 웹서버,
-                웹페이지, AWS의 원활한 상호작용을 위해 Socket 통신을 활용한다.
-                동영상이 업로드 되는 공간, 업로드 된 동영상의 프레임 추출,
-                딥러닝 모델에 넣는 작업을 위한 Amzon S3, Amazon Lambda, Amazon
-                Gateway API를 이용한다. 단순 S3에 업로드하는 방식을 채택할 경우,
-                IAM 사용자의 Access Key 및 Secret Key
+                딥러닝 모델 학습, 그리고 검열 서비스를 제공하는데 있어서 높은
+                성능의 Back-End가 요구됐습니다. 따라서 YouHi 검열 시스템은
+                강력한 기능을 제공하는 Amazon Web Services를 통해 Back-End를
+                구축했습니다. Amazon Lambda, Gateway API를 통해 웹에서 Amazon S3
+                영상 업로드 기능을 구현했으며, Amazon EC2 instan ce를 통해
+                딥러닝 모델 학습, 검열 등을 진행할 수 있었습니다.
               </p>
             </div>
             <div className="Back-end-image">

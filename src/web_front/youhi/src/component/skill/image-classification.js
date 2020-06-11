@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./image-classification.css";
-import cnn from "../../img/cnn.PNG"
+import cnn from "../../img/cnn.PNG";
 
 class Image_classfication extends Component {
   render() {
@@ -10,17 +10,16 @@ class Image_classfication extends Component {
           <div className="Image-classification-container">
             <div className="Image-classification-title-text-container">
               <div className="Image-classification-title">
-                Instance Segmentation
+                Image Classification
               </div>
               <div className="Image-classification-title-bar" />
               <p className="Image-classification-text">
-                Image Classification이란 딥러닝을 통해 시각적 내용에 따라
-                이미지를 분류하는 것을 말한다. 딥러닝 신경망의 한 종류인
-                CNN(Convolutional Neural Network)을 이용하며 이미지를 입력으로
-                받고 그에 대한 class 값과 입력 이미지가 특정 class라는 것에 대한
-                확률 값을 출력한다. CNN은 크게 input layer, output layer, hidden
-                layers로 나눌 수 있고, hidden layers는 보통 convolution 연산을
-                입력 이미지에 적용 후 다음 층으로 전달하는 Convolutional
+                Image Classification이란 합성곱 신경망(Convolutional Neural
+                Network; CNN)을 이용하여 시각적 내용에 따라 이미지를 분류하는
+                것을 말합니다. YouHi 검열 시스템에서는 Instance Segmentati on
+                단계에서 여성의 가슴 그리고 게임의 총이 탐지된 프레임에 한하여
+                Image Classification을 진행하여, 여성의 가슴 노출 그리고 피가
+                튀기는 게임 캐릭터를 검열하도록 했습니다.
               </p>
             </div>
             <div className="Image-classification-image">
